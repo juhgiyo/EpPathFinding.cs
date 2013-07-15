@@ -4,7 +4,7 @@ EpPathFinding
 
 Introduction
 ------------
-This project was started after I was inspired by [PathFinding.js](https://github.com/qiao/PathFinding.js) and [the article by D. Harabor](http://harablog.wordpress.com/2011/09/07/jump-point-search/).
+This project was started after I was inspired by [PathFinding.js by Xueqiao Xu](https://github.com/qiao/PathFinding.js) and [the article by D. Harabor](http://harablog.wordpress.com/2011/09/07/jump-point-search/).
 It comes along with a demo to show how the lagorithm execute as similar to Xueqiao Xu's [Online Demo](http://qiao.github.com/PathFinding.js/visual).
 
 License
