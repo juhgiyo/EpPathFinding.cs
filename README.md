@@ -7,6 +7,10 @@ Introduction
 This project was started after I was inspired by [PathFinding.js by Xueqiao Xu](https://github.com/qiao/PathFinding.js) and [the article by D. Harabor](http://harablog.wordpress.com/2011/09/07/jump-point-search/).
 It comes along with a demo to show how the lagorithm execute as similar to Xueqiao Xu's [Online Demo](http://qiao.github.com/PathFinding.js/visual).
 
+Imlementation Note
+------------------
+The algorithm was modified a little, so it can cross over the corners of wall if it was not fully blocked. You can test this by changing the flag for "Don't Cross Corners" on the demo.
+
 License
 -------
                     GNU GENERAL PUBLIC LICENSE
