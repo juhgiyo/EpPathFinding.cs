@@ -68,6 +68,19 @@ namespace EpPathFinding
            Node tOtherNode = (Node)iObj;
            return (int)(this.heuristicStartToEndLen - tOtherNode.heuristicStartToEndLen);
        }
+
+       public static List<GridPos> Backtrace(Node iNode)
+       {
+           List<GridPos> path = new List<GridPos>();
+           path.Add(new GridPos(iNode.x, iNode.y));
+           while (iNode.parent != null)
+           {
+               iNode = (Node)iNode.parent;
+               path.Add(new GridPos(iNode.x, iNode.y));
+           }
+           path.Reverse();
+           return path;
+       }
     }
 
     class Grid

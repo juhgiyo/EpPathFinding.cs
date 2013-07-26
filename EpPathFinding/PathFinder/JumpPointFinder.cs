@@ -190,7 +190,7 @@ namespace EpPathFinding
 
                 if (tNode.Equals(tEndNode))
                 {
-                    return Util.Backtrace(tEndNode); // rebuilding path
+                    return Node.Backtrace(tEndNode); // rebuilding path
                 }
 
                 IdentifySuccessors(iParam, tNode);
