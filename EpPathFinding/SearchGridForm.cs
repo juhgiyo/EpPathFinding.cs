@@ -313,16 +313,16 @@ namespace EpPathFinding
             {
                 m_resultLine.Add(new GridLine(m_rectangles[resultList[resultTrav].x][resultList[resultTrav].y],m_rectangles[resultList[resultTrav+1].x][resultList[resultTrav+1].y]));
             }
-            for (int widthTrav = 0; widthTrav < searchGrid.width; widthTrav++)
+            for (int widthTrav = 0; widthTrav < jumpParam.SearchGrid.width; widthTrav++)
             {
-                for (int heightTrav = 0; heightTrav < searchGrid.height; heightTrav++)
+                for (int heightTrav = 0; heightTrav < jumpParam.SearchGrid.height; heightTrav++)
                 {
-                    if (searchGrid.GetNodeAt(widthTrav, heightTrav).isOpened)
+                    if (jumpParam.SearchGrid.GetNodeAt(widthTrav, heightTrav).isOpened)
                     {
                         ResultBox resultBox = new ResultBox(widthTrav * 20, heightTrav * 20 + 50, ResultBoxType.Opened);
                         m_resultBox.Add(resultBox);
                     }
-                    if (searchGrid.GetNodeAt(widthTrav, heightTrav).isClosed)
+                    if (jumpParam.SearchGrid.GetNodeAt(widthTrav, heightTrav).isClosed)
                     {
                         ResultBox resultBox = new ResultBox(widthTrav * 20, heightTrav * 20 + 50, ResultBoxType.Closed);
                         m_resultBox.Add(resultBox);
