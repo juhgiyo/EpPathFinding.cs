@@ -48,6 +48,65 @@ namespace EpPathFinding
             this.y = iY;
         }
 
+        public override int GetHashCode()
+        {
+            return x ^ y;
+        }
+
+        public override bool Equals(System.Object obj)
+        {
+            // If parameter is null return false.
+            if (obj == null)
+            {
+                return false;
+            }
+
+            // If parameter cannot be cast to Point return false.
+            GridPos p = obj as GridPos;
+            if ((System.Object)p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return (x == p.x) && (y == p.y);
+        }
+
+        public bool Equals(GridPos p)
+        {
+            // If parameter is null return false:
+            if ((object)p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return (x == p.x) && (y == p.y);
+        }
+
+        public static bool operator ==(GridPos a, GridPos b)
+        {
+            // If both are null, or both are same instance, return true.
+            if (System.Object.ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)a == null) || ((object)b == null))
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return a.x == b.x && a.y == b.y;
+        }
+
+        public static bool operator !=(GridPos a, GridPos b)
+        {
+            return !(a == b);
+        }
+
         public int x { get; set; }
         public int y { get; set; }
     }

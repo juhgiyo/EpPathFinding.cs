@@ -136,6 +136,13 @@ namespace EpPathFinding
             }
         }
 
+        public Grid OrigGrid
+        {
+            get
+            {
+                return origGrid;
+            }
+        }
         public Node StartNode
         {
             get
