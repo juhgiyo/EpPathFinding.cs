@@ -42,7 +42,7 @@ namespace EpPathFinding
     class JumpPointParam
     {
 
-        public JumpPointParam(Grid iGrid, GridPos iStartPos, GridPos iEndPos, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR, bool iDontCrossCorner = false)
+        public JumpPointParam(Grid iGrid, GridPos iStartPos, GridPos iEndPos, bool iDontCrossCorner = false, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
         {
             switch (iMode)
             {
@@ -69,7 +69,7 @@ namespace EpPathFinding
             endNode = searchGrid.GetNodeAt(iEndPos.x, iEndPos.y);
         }
 
-        public JumpPointParam(Grid iGrid, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR, bool iDontCrossCorner = false)
+        public JumpPointParam(Grid iGrid, bool iDontCrossCorner = false, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
         {
             switch (iMode)
             {
@@ -92,6 +92,28 @@ namespace EpPathFinding
             origGrid = iGrid;
 
             searchGrid = origGrid.Clone();
+            startNode = null;
+            endNode = null;
+        }
+
+        public void SetHeuristic(HeuristicMode iMode)
+        {
+            heuristic = null;
+            switch (iMode)
+            {
+                case HeuristicMode.MANHATTAN:
+                    heuristic = new HeuristicDelegate(Heuristic.Manhattan);
+                    break;
+                case HeuristicMode.EUCLIDEAN:
+                    heuristic = new HeuristicDelegate(Heuristic.Euclidean);
+                    break;
+                case HeuristicMode.CHEBYSHEV:
+                    heuristic = new HeuristicDelegate(Heuristic.Chebyshev);
+                    break;
+                default:
+                    heuristic = new HeuristicDelegate(Heuristic.EuclideanSqr);
+                    break;
+            }
         }
 
         public void Reset(GridPos iStartPos, GridPos iEndPos)
