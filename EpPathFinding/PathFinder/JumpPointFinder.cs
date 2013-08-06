@@ -62,9 +62,8 @@ namespace EpPathFinding
             crossCorner = iCrossCorner;
 
             openList = new List<Node>();
-            origGrid = iGrid;
 
-            searchGrid = origGrid.Clone();
+            searchGrid = iGrid;
             startNode = searchGrid.GetNodeAt(iStartPos.x, iStartPos.y);
             endNode = searchGrid.GetNodeAt(iEndPos.x, iEndPos.y);
         }
@@ -89,9 +88,8 @@ namespace EpPathFinding
             crossCorner = iCrossCorner;
 
             openList = new List<Node>();
-            origGrid = iGrid;
 
-            searchGrid = origGrid.Clone();
+            searchGrid = iGrid;
             startNode = null;
             endNode = null;
         }
@@ -123,7 +121,7 @@ namespace EpPathFinding
             startNode = null;
             endNode = null;
 
-            searchGrid = origGrid.Clone();
+            searchGrid.Reset();
             startNode = searchGrid.GetNodeAt(iStartPos.x, iStartPos.y);
             endNode = searchGrid.GetNodeAt(iEndPos.x, iEndPos.y);
 
@@ -158,13 +156,6 @@ namespace EpPathFinding
             }
         }
 
-        public Grid OrigGrid
-        {
-            get
-            {
-                return origGrid;
-            }
-        }
         public Node StartNode
         {
             get
@@ -181,7 +172,6 @@ namespace EpPathFinding
         }
         protected HeuristicDelegate heuristic;
         protected bool crossCorner;
-        protected Grid origGrid;
 
         protected Grid searchGrid;
         protected Node startNode;

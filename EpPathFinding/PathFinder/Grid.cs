@@ -62,6 +62,18 @@ namespace EpPathFinding
 
        }
 
+        public void Reset(bool ?iWalkable=null)
+       {
+           if (iWalkable.HasValue)
+               walkable = iWalkable.Value;
+           this.heuristicStartToEndLen = 0;
+           this.startToCurNodeLen = 0;
+           this.heuristicCurNodeToEndLen = null;
+           this.isOpened = false;
+           this.isClosed = false;
+           this.parent = null;
+       }
+
 
        public int CompareTo(object iObj)
        {
@@ -96,6 +108,7 @@ namespace EpPathFinding
             this.nodes = BuildNodes(iWidth, iHeight, iMatrix);
         }
 
+      
         private Node[][] BuildNodes(int iWidth, int iHeight, bool[][] iMatrix)
         {
 
@@ -216,6 +229,37 @@ namespace EpPathFinding
                 neighbors.Add(tNodes[tX - 1][tY + 1]);
             }
             return neighbors;
+        }
+
+        public void Reset(bool[][] iMatrix = null)
+        {
+            for (int widthTrav = 0; widthTrav < width; widthTrav++)
+            {
+                for (int heightTrav = 0; heightTrav < height; heightTrav++)
+                {
+                    nodes[widthTrav][heightTrav].Reset();
+                }
+            }
+
+            if (iMatrix == null)
+            {
+                return;
+            }
+            if (iMatrix.Length != width || iMatrix[0].Length != height)
+            {
+                throw new System.ApplicationException("Matrix size does not fit");
+            }
+
+            for (int widthTrav = 0; widthTrav < width; widthTrav++)
+            {
+                for (int heightTrav = 0; heightTrav < height; heightTrav++)
+                {
+                    if (!iMatrix[widthTrav][heightTrav])
+                    {
+                        nodes[widthTrav][heightTrav].walkable = false;
+                    }
+                }
+            }
         }
 
         public Grid Clone()
