@@ -152,7 +152,7 @@ namespace EpPathFinding
             this.nodes[iX][iY].walkable = iWalkable;
         }
 
-        public List<Node> GetNeighbors(Node iNode, bool iDontCrossCorners)
+        public List<Node> GetNeighbors(Node iNode, bool iCrossCorners)
         {
             int tX = iNode.x;
             int tY = iNode.y;
@@ -184,7 +184,7 @@ namespace EpPathFinding
                 tS3=true;
             }
 
-            if (iDontCrossCorners)
+            if (!iCrossCorners)
             {
                 tD0=tS3 || tS0;
                 tD1=tS0 || tS1;

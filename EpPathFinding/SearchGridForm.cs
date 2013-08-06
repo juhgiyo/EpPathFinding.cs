@@ -304,7 +304,7 @@ namespace EpPathFinding
 
             Grid searchGrid=new Grid(width,height,movableMatrix);
 
-            JumpPointParam jumpParam = new JumpPointParam(searchGrid, startPos, endPos, cbDontCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
+            JumpPointParam jumpParam = new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
             
             List<GridPos> resultList = JumpPointFinder.FindPath(jumpParam);
             

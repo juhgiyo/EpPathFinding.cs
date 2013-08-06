@@ -31,7 +31,7 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnClearPath = new System.Windows.Forms.Button();
             this.btnClearWall = new System.Windows.Forms.Button();
-            this.cbDontCrossCorners = new System.Windows.Forms.CheckBox();
+            this.cbCrossCorners = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnSearch
@@ -64,28 +64,30 @@
             this.btnClearWall.UseVisualStyleBackColor = true;
             this.btnClearWall.Click += new System.EventHandler(this.btnClearWall_Click);
             // 
-            // cbDontCrossCorners
+            // cbCrossCorners
             // 
-            this.cbDontCrossCorners.AutoSize = true;
-            this.cbDontCrossCorners.Location = new System.Drawing.Point(287, 16);
-            this.cbDontCrossCorners.Name = "cbDontCrossCorners";
-            this.cbDontCrossCorners.Size = new System.Drawing.Size(140, 16);
-            this.cbDontCrossCorners.TabIndex = 4;
-            this.cbDontCrossCorners.Text = "Don\'t Cross Corners";
-            this.cbDontCrossCorners.UseVisualStyleBackColor = true;
+            this.cbCrossCorners.AutoSize = true;
+            this.cbCrossCorners.Checked = true;
+            this.cbCrossCorners.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbCrossCorners.Location = new System.Drawing.Point(287, 16);
+            this.cbCrossCorners.Name = "cbCrossCorners";
+            this.cbCrossCorners.Size = new System.Drawing.Size(107, 16);
+            this.cbCrossCorners.TabIndex = 4;
+            this.cbCrossCorners.Text = "Cross Corners";
+            this.cbCrossCorners.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // SearchGridForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(613, 262);
-            this.Controls.Add(this.cbDontCrossCorners);
+            this.Controls.Add(this.cbCrossCorners);
             this.Controls.Add(this.btnClearWall);
             this.Controls.Add(this.btnClearPath);
             this.Controls.Add(this.btnSearch);
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "SearchGridForm";
             this.Text = "Form1";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
@@ -101,7 +103,7 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnClearPath;
         private System.Windows.Forms.Button btnClearWall;
-        private System.Windows.Forms.CheckBox cbDontCrossCorners;
+        private System.Windows.Forms.CheckBox cbCrossCorners;
     }
 }
 

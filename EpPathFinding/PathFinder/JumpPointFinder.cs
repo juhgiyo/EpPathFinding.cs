@@ -42,7 +42,7 @@ namespace EpPathFinding
     class JumpPointParam
     {
 
-        public JumpPointParam(Grid iGrid, GridPos iStartPos, GridPos iEndPos, bool iDontCrossCorner = false, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
+        public JumpPointParam(Grid iGrid, GridPos iStartPos, GridPos iEndPos, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
         {
             switch (iMode)
             {
@@ -59,7 +59,7 @@ namespace EpPathFinding
                     heuristic = new HeuristicDelegate(Heuristic.EuclideanSqr);
                     break;
             }
-            dontCrossCorner = iDontCrossCorner;
+            crossCorner = iCrossCorner;
 
             openList = new List<Node>();
             origGrid = iGrid;
@@ -69,7 +69,7 @@ namespace EpPathFinding
             endNode = searchGrid.GetNodeAt(iEndPos.x, iEndPos.y);
         }
 
-        public JumpPointParam(Grid iGrid, bool iDontCrossCorner = false, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
+        public JumpPointParam(Grid iGrid, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
         {
             switch (iMode)
             {
@@ -86,7 +86,7 @@ namespace EpPathFinding
                     heuristic = new HeuristicDelegate(Heuristic.EuclideanSqr);
                     break;
             }
-            dontCrossCorner = iDontCrossCorner;
+            crossCorner = iCrossCorner;
 
             openList = new List<Node>();
             origGrid = iGrid;
@@ -130,15 +130,15 @@ namespace EpPathFinding
 
         }
 
-        public bool DontCrossCorner
+        public bool CrossCorner
         {
             get
             {
-                return dontCrossCorner;
+                return crossCorner;
             }
             set
             {
-                dontCrossCorner = value;
+                crossCorner = value;
             }
         }
 
@@ -180,7 +180,7 @@ namespace EpPathFinding
             }
         }
         protected HeuristicDelegate heuristic;
-        protected bool dontCrossCorner;
+        protected bool crossCorner;
         protected Grid origGrid;
 
         protected Grid searchGrid;
@@ -335,7 +335,7 @@ namespace EpPathFinding
             {
                 return Jump(iParam, iX + tDx, iY + tDy, iX, iY);
             }
-            else if (!iParam.DontCrossCorner)
+            else if (iParam.CrossCorner)
             {
                 return Jump(iParam, iX + tDx, iY + tDy, iX, iY);
             }
@@ -382,7 +382,7 @@ namespace EpPathFinding
                         {
                             tNeighbors.Add(new GridPos(tX + tDx, tY + tDy));
                         }
-                        else if (!iParam.DontCrossCorner)
+                        else if (iParam.CrossCorner)
                         {
                             tNeighbors.Add(new GridPos(tX + tDx, tY + tDy));
                         }
@@ -394,7 +394,7 @@ namespace EpPathFinding
                         {
                             tNeighbors.Add(new GridPos(tX - tDx, tY + tDy));
                         }
-                        else if (!iParam.DontCrossCorner)
+                        else if (iParam.CrossCorner)
                         {
                             tNeighbors.Add(new GridPos(tX - tDx, tY + tDy));
                         }
@@ -406,7 +406,7 @@ namespace EpPathFinding
                         {
                             tNeighbors.Add(new GridPos(tX + tDx, tY - tDy));
                         }
-                        else if (!iParam.DontCrossCorner)
+                        else if (iParam.CrossCorner)
                         {
                             tNeighbors.Add(new GridPos(tX + tDx, tY - tDy));
                         }
@@ -432,7 +432,7 @@ namespace EpPathFinding
                                 tNeighbors.Add(new GridPos(tX - 1, tY + tDy));
                             }
                         }
-                        else if (!iParam.DontCrossCorner)
+                        else if (iParam.CrossCorner)
                         {
                             if (!iParam.SearchGrid.IsWalkableAt(tX + 1, tY) && iParam.SearchGrid.IsWalkableAt(tX + 1, tY + tDy))
                             {
@@ -460,7 +460,7 @@ namespace EpPathFinding
                                 tNeighbors.Add(new GridPos(tX + tDx, tY - 1));
                             }
                         }
-                        else if (!iParam.DontCrossCorner)
+                        else if (iParam.CrossCorner)
                         {
                             if (!iParam.SearchGrid.IsWalkableAt(tX, tY + 1) && iParam.SearchGrid.IsWalkableAt(tX + tDx, tY + 1))
                             {
@@ -477,7 +477,7 @@ namespace EpPathFinding
             // return all neighbors
             else
             {
-                tNeighborNodes = iParam.SearchGrid.GetNeighbors(iNode, iParam.DontCrossCorner);
+                tNeighborNodes = iParam.SearchGrid.GetNeighbors(iNode, iParam.CrossCorner);
                 for (int i = 0; i < tNeighborNodes.Count; i++)
                 {
                     tNeighborNode = tNeighborNodes[i];
