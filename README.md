@@ -13,21 +13,21 @@ The usage and the demo has been made very similar to [PathFinding.js](https://gi
 
 You first need to build a grid-map. (For example: width 64 and height 32): 
 
-'''c#
+```c#
 Grid searchGrid = new Grid(64, 32);
-'''
+```
 
 By default, every nodes in the grid will allow to be walked through. To set whether a node at a given coordinate is walkable or not, use the 'SetWalkableAt' function.
 
 For example, in order to set the node at (10 , 20) to be un-walkable, where 10 is the x coordinate (from left to right), and 20 is the y coordinate (from top to bottom): 
 
-'''c#
+```c#
 searchGrid.SetWalkableAt(10, 20, false);
-'''
+```
 
 You may also use in a 2-d array while instantiating the 'Grid' class. It will initiate all the nodes in the grid with the walkability indicated by the array. (true for walkable otherwise not walkable): 
 
-'''c#
+```c#
 bool [][] movableMatrix = new bool [width][];
 for(int widthTrav=0; widthTrav< 64; widthTrav++)
 {
@@ -39,35 +39,35 @@ for(int widthTrav=0; widthTrav< 64; widthTrav++)
 }
 
 Grid searchGrid = new Grid(64,32, movableMatrix);
-'''
+```
 
 In order to search the route from (10,10) to (20,10), you need to create 'JumpPointParam' class with grid and start/end positions. (Note: both the start point and end point must be walkable): 
 
-'''c#
+```c#
 GridPos startPos=new GridPos(10,10); 
 GridPos endPos = new GridPos(20,10);  
 JumpPointParam jpParam = new JumpPointParam(searchGrid,startPos,endPos ); 
-'''
+```
 
 You can also set/change the start and end positions later. (However the start and end positions must be set before the actual search): 
 
-'''c#
+```c#
 JumpPoinParam jpParam = new JumpPointParam(searchGrid);
 jpParam.Reset(new GridPos(10,10), new GridPos(20,10)); 
-'''
+```
 
 To find a path, simply run 'FindPath' function with 'JumpPointParam' object created above: 
 
-'''c#
+```c#
 List<GridPos> resultPathList = JumpPointFinder.FindPath(jpParam); 
-'''
+```
 
 'JumpPointParam' class can be used as much as you want with different start/end positions unlike [PathFinding.js](https://github.com/qiao/PathFinding.js): 
 
-'''c#
+```c#
 jpParam.Reset(new GridPos(15,15), new GridPos(20,15));
 resultPathList = JumpPointFinder.FindPath(jpParam); 
-'''
+```
 
 Advanced Usage
 ------------
@@ -75,29 +75,29 @@ When instantiating the 'JumpPointParam', you may pass in additional parameters t
 
 In order to make search able to walk diagonally across corner of two diagonal unwalkable nodes:   
 
-'''c#
+```c#
 JumpPointParam jpParam = new JumpPointParam(searchGrid,true);   
-'''
+```
 
 To make it unable to walk diagonally across two diagonal unwalkable corners: 
 
-'''c#
+```c#
 JumpPointParam jpParam = new JumpPointParam(searchGrid,false);   
-'''
+```
 
 The predefined heuristics are 'Heuristic.EUCLIDEANSQR' (default), 'Heuristic.MANHATTAN', 'Heuristic.EUCLIDEAN', and 'Heuristic.CHEBYSHEV'.   
 
 To use the 'MANHATTAN' heuristic:
 
-'''c#
+```c#
 JumpPointParam jpParam = new JumpPointParam(searchGrid,true, Heuristic.MANHATTAN); 
-'''
+```
 
 You can always change the heuristics later with 'SetHeuristic' function: 
 
-'''c#
+```c#
 jpParam.SetHeuristic(Heuristic.MANHATTAN);
-'''
+```
 
 License
 -------
