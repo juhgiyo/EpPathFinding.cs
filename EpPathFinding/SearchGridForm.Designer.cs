@@ -88,7 +88,7 @@
             this.Controls.Add(this.btnSearch);
             this.MaximizeBox = false;
             this.Name = "SearchGridForm";
-            this.Text = "Form1";
+            this.Text = "EpPathFinding Demo";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
