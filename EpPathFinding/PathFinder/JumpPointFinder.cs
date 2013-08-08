@@ -1,7 +1,7 @@
 ﻿/*! 
 @file JumpPointFinder.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
-		<http://github.com/juhgiyo/eppathfinding>
+		<http://github.com/juhgiyo/eppathfinding.cs>
 @date July 16, 2013
 @brief Jump Point Search Algorithm Interface
 @version 2.0
