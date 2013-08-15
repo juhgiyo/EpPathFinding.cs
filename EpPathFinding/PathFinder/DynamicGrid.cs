@@ -178,9 +178,12 @@ namespace EpPathFinding
 
             if (iWalkableGridList == null)
                 return;
-            foreach (GridPos gridPos in iWalkableGridList)
+            foreach (KeyValuePair<GridPos, Node> keyValue in nodes)
             {
-                SetWalkableAt(gridPos.x, gridPos.y, true);
+                if (iWalkableGridList.Contains(keyValue.Key))
+                    SetWalkableAt(keyValue.Key, true);
+                else
+                    SetWalkableAt(keyValue.Key, false);
             }
 
         }
