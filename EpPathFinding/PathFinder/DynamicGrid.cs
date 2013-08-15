@@ -93,7 +93,7 @@ namespace EpPathFinding
             }
         }
 
-        public override bool IsInside(int iX, int iY)
+        protected override bool IsInside(int iX, int iY)
         {
             GridPos pos = new GridPos(iX, iY);
             return IsInside(pos);
@@ -111,7 +111,7 @@ namespace EpPathFinding
             return IsWalkableAt(pos);
         }
 
-        public override bool IsInside(GridPos iPos)
+        protected override bool IsInside(GridPos iPos)
         {
             if (nodes.ContainsKey(iPos))
             {
