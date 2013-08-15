@@ -42,7 +42,7 @@ namespace EpPathFinding
     class JumpPointParam
     {
 
-        public JumpPointParam(Grid iGrid, GridPos iStartPos, GridPos iEndPos, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
+        public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
         {
             switch (iMode)
             {
@@ -68,7 +68,7 @@ namespace EpPathFinding
             endNode = searchGrid.GetNodeAt(iEndPos.x, iEndPos.y);
         }
 
-        public JumpPointParam(Grid iGrid, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
+        public JumpPointParam(BaseGrid iGrid, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
         {
             switch (iMode)
             {
@@ -148,7 +148,7 @@ namespace EpPathFinding
             }
         }
 
-        public Grid SearchGrid
+        public BaseGrid SearchGrid
         {
             get
             {
@@ -173,7 +173,7 @@ namespace EpPathFinding
         protected HeuristicDelegate heuristic;
         protected bool crossCorner;
 
-        protected Grid searchGrid;
+        protected BaseGrid searchGrid;
         protected Node startNode;
         protected Node endNode;
 

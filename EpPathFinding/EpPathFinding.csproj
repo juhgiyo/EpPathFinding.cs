@@ -61,6 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PathFinder\BaseGrid.cs" />
+    <Compile Include="PathFinder\DynamicGrid.cs" />
+    <Compile Include="PathFinder\StaticGrid.cs" />
     <Compile Include="SearchGridForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,7 +72,6 @@
     </Compile>
     <Compile Include="GridBox.cs" />
     <Compile Include="GridLine.cs" />
-    <Compile Include="PathFinder\Grid.cs" />
     <Compile Include="PathFinder\GridPos.cs" />
     <Compile Include="PathFinder\Heuristic.cs" />
     <Compile Include="PathFinder\JumpPointFinder.cs" />

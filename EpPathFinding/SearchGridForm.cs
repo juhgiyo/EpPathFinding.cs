@@ -274,6 +274,7 @@ namespace EpPathFinding
             m_resultBox.Clear();
 
             bool [][] movableMatrix=new bool[width][];
+            List<GridPos> walkableGridList = new List<GridPos>();
             GridPos startPos = new GridPos();
             GridPos endPos = new GridPos();
              for (int widthTrav = 0; widthTrav < width; widthTrav++)
@@ -284,6 +285,7 @@ namespace EpPathFinding
                         if (m_rectangles[widthTrav][heightTrav].boxType!=BoxType.Wall)
                         {
                             movableMatrix[widthTrav][heightTrav]=true;
+                            walkableGridList.Add(new GridPos(widthTrav, heightTrav));
                         }
                         else
                             movableMatrix[widthTrav][heightTrav]=false;
@@ -302,7 +304,9 @@ namespace EpPathFinding
                 }
 
 
-            Grid searchGrid=new Grid(width,height,movableMatrix);
+            //Grid searchGrid=new Grid(width,height,movableMatrix);
+             //BaseGrid searchGrid = new StaticGrid(width, height, movableMatrix);
+             BaseGrid searchGrid = new DynamicGrid(walkableGridList);
 
             JumpPointParam jumpParam = new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
             
@@ -317,6 +321,8 @@ namespace EpPathFinding
             {
                 for (int heightTrav = 0; heightTrav < jumpParam.SearchGrid.height; heightTrav++)
                 {
+                    if(jumpParam.SearchGrid.GetNodeAt(widthTrav, heightTrav)==null)
+                        continue;
                     if (jumpParam.SearchGrid.GetNodeAt(widthTrav, heightTrav).isOpened)
                     {
                         ResultBox resultBox = new ResultBox(widthTrav * 20, heightTrav * 20 + 50, ResultBoxType.Opened);

@@ -36,7 +36,7 @@ using System.Threading.Tasks;
 
 namespace EpPathFinding
 {
-    class GridPos
+    public class GridPos
     {
         public GridPos()
         {
@@ -105,6 +105,13 @@ namespace EpPathFinding
         public static bool operator !=(GridPos a, GridPos b)
         {
             return !(a == b);
+        }
+
+        public GridPos Set(int iX, int iY)
+        {
+            this.x = iX;
+            this.y = iY;
+            return this;
         }
 
         public int x { get; set; }
