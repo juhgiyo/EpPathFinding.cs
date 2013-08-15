@@ -167,7 +167,8 @@ namespace EpPathFinding
         {
             Reset(null);
         }
-        public void Reset(Dictionary<GridPos, bool> iWalkableMatrix)
+
+        public void Reset(List<GridPos> iWalkableGridList)
         {
 
             foreach (KeyValuePair<GridPos, Node> keyValue in nodes)
@@ -175,11 +176,11 @@ namespace EpPathFinding
                 keyValue.Value.Reset();
             }
 
-            if (iWalkableMatrix == null)
+            if (iWalkableGridList == null)
                 return;
-            foreach (KeyValuePair<GridPos, bool> keyValue in iWalkableMatrix)
+            foreach (GridPos gridPos in iWalkableGridList)
             {
-                nodes[keyValue.Key].walkable = keyValue.Value;
+                SetWalkableAt(gridPos.x, gridPos.y, true);
             }
 
         }
@@ -190,7 +191,8 @@ namespace EpPathFinding
 
             foreach (KeyValuePair<GridPos, Node> keyValue in nodes)
             {
-                tNewGrid.SetWalkableAt(keyValue.Key.x, keyValue.Key.y, keyValue.Value.walkable);
+                if (keyValue.Value.walkable)
+                    tNewGrid.SetWalkableAt(keyValue.Key.x, keyValue.Key.y, keyValue.Value.walkable);
 
             }
 
