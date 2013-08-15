@@ -112,13 +112,15 @@ namespace EpPathFinding
 
         public abstract bool IsWalkableAt(int iX, int iY);
 
+        public abstract void SetWalkableAt(int iX, int iY, bool iWalkable);
+
         protected abstract bool IsInside(GridPos iPos);
 
         public abstract Node GetNodeAt(GridPos iPos);
 
         public abstract bool IsWalkableAt(GridPos iPos);
 
-        public abstract void SetWalkableAt(int iX, int iY, bool iWalkable);
+        public abstract void SetWalkableAt(GridPos iPos, bool iWalkable);
 
         public List<Node> GetNeighbors(Node iNode, bool iCrossCorners)
         {

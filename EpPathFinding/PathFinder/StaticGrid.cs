@@ -124,6 +124,10 @@ namespace EpPathFinding
             return IsWalkableAt(iPos.x, iPos.y);
         }
 
+        public override void SetWalkableAt(GridPos iPos, bool iWalkable)
+        {
+            SetWalkableAt(iPos.x, iPos.y, iWalkable);
+        }
 
         public override void Reset()
         {

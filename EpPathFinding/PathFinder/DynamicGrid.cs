@@ -111,6 +111,29 @@ namespace EpPathFinding
             return IsWalkableAt(pos);
         }
 
+        public override void SetWalkableAt(int iX, int iY, bool iWalkable)
+        {
+            GridPos pos = new GridPos(iX, iY);
+            if (nodes.ContainsKey(pos))
+            {
+                this.nodes[pos].walkable = iWalkable;
+            }
+            else
+            {
+
+                if (iX < minX || notSet)
+                    minX = iX;
+                if (iX > maxX || notSet)
+                    maxX = iX;
+                if (iY < minY || notSet)
+                    minY = iY;
+                if (iY > maxX || notSet)
+                    maxY = iY;
+                nodes.Add(new GridPos(pos.x, pos.y), new Node(pos.x, pos.y, iWalkable));
+                notSet = false;
+            }
+        }
+
         protected override bool IsInside(GridPos iPos)
         {
             if (nodes.ContainsKey(iPos))
@@ -134,30 +157,11 @@ namespace EpPathFinding
             return IsInside(iPos) && nodes[iPos].walkable;
         }
 
-
-
-        public override void SetWalkableAt(int iX, int iY, bool iWalkable)
+        public override void SetWalkableAt(GridPos iPos, bool iWalkable)
         {
-            GridPos pos = new GridPos(iX, iY);
-            if (nodes.ContainsKey(pos))
-            {
-                this.nodes[pos].walkable = iWalkable;
-            }
-            else
-            {
-
-                if (iX < minX || notSet)
-                    minX = iX;
-                if (iX > maxX || notSet)
-                    maxX = iX;
-                if (iY < minY || notSet)
-                    minY = iY;
-                if (iY > maxX || notSet)
-                    maxY = iY;
-                nodes.Add(new GridPos(pos.x, pos.y), new Node(pos.x, pos.y, iWalkable));
-                notSet = false;
-            }
+            SetWalkableAt(iPos.x, iPos.y, iWalkable);
         }
+
 
         public override void Reset()
         {
