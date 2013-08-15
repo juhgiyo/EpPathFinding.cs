@@ -93,7 +93,7 @@ namespace EpPathFinding
             }
         }
 
-        protected override bool IsInside(int iX, int iY)
+        protected bool IsInside(int iX, int iY)
         {
             GridPos pos = new GridPos(iX, iY);
             return IsInside(pos);
@@ -134,7 +134,7 @@ namespace EpPathFinding
             }
         }
 
-        protected override bool IsInside(GridPos iPos)
+        protected bool IsInside(GridPos iPos)
         {
             if (nodes.ContainsKey(iPos))
             {

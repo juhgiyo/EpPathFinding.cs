@@ -106,15 +106,11 @@ namespace EpPathFinding
 
         public abstract int height { get; protected set; }
 
-        protected abstract bool IsInside(int iX, int iY);
-
         public abstract Node GetNodeAt(int iX, int iY);
 
         public abstract bool IsWalkableAt(int iX, int iY);
 
         public abstract void SetWalkableAt(int iX, int iY, bool iWalkable);
-
-        protected abstract bool IsInside(GridPos iPos);
 
         public abstract Node GetNodeAt(GridPos iPos);
 

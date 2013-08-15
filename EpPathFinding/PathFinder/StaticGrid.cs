@@ -99,7 +99,7 @@ namespace EpPathFinding
             return IsInside(iX, iY) && this.nodes[iX][iY].walkable;
         }
 
-        protected override bool IsInside(int iX, int iY)
+        protected bool IsInside(int iX, int iY)
         {
             return (iX >= 0 && iX < width) && (iY >= 0 && iY < height);
         }
@@ -109,7 +109,7 @@ namespace EpPathFinding
             this.nodes[iX][iY].walkable = iWalkable;
         }
 
-        protected override bool IsInside(GridPos iPos)
+        protected bool IsInside(GridPos iPos)
         {
             return IsInside(iPos.x, iPos.y);
         }
