@@ -50,6 +50,8 @@ namespace EpPathFinding
         {
             get
             {
+                if (notSet)
+                    SetBoundingBox();
                 return maxX - minX;
             }
             protected set
@@ -57,10 +59,13 @@ namespace EpPathFinding
 
             }
         }
+
         public override int height
         {
             get
             {
+                if (notSet)
+                    SetBoundingBox();
                 return maxY - minY;
             }
             protected set
@@ -158,7 +163,7 @@ namespace EpPathFinding
                 {
                     nodes.Remove(pos);
                     if (iX == minX || iX == maxX || iY == minY || iY == maxX)
-                        SetBoundingBox();
+                        notSet = true;
                 }
             }
         }
