@@ -53,6 +53,9 @@ namespace EpPathFinding
 
         GridBox m_lastBoxSelect;
         BoxType m_lastBoxType;
+
+        BaseGrid searchGrid;
+        JumpPointParam jumpParam;
         public SearchGridForm()
         {
 
@@ -86,6 +89,12 @@ namespace EpPathFinding
             }
 
             m_resultLine = new List<GridLine>();
+
+            //Grid searchGrid=new Grid(width,height,movableMatrix);
+            //BaseGrid searchGrid = new StaticGrid(width, height, movableMatrix);
+            searchGrid = new DynamicGrid();
+            jumpParam = new JumpPointParam(searchGrid, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
+            
         }
 
 
@@ -273,22 +282,20 @@ namespace EpPathFinding
             }
             m_resultBox.Clear();
 
-            bool [][] movableMatrix=new bool[width][];
-            List<GridPos> walkableGridList = new List<GridPos>();
             GridPos startPos = new GridPos();
             GridPos endPos = new GridPos();
              for (int widthTrav = 0; widthTrav < width; widthTrav++)
                 {
-                    movableMatrix[widthTrav]=new bool[height];
                     for (int heightTrav = 0; heightTrav < height; heightTrav++)
                     {
-                        if (m_rectangles[widthTrav][heightTrav].boxType!=BoxType.Wall)
+                        if (m_rectangles[widthTrav][heightTrav].boxType != BoxType.Wall)
                         {
-                            movableMatrix[widthTrav][heightTrav]=true;
-                            walkableGridList.Add(new GridPos(widthTrav, heightTrav));
+                            searchGrid.SetWalkableAt(new GridPos(widthTrav, heightTrav), true);
                         }
                         else
-                            movableMatrix[widthTrav][heightTrav]=false;
+                        {
+                            searchGrid.SetWalkableAt(new GridPos(widthTrav, heightTrav), false);
+                        }
                         if(m_rectangles[widthTrav][heightTrav].boxType==BoxType.Start)
                         {
                             startPos.x=widthTrav;
@@ -303,13 +310,7 @@ namespace EpPathFinding
                     }
                 }
 
-
-            //Grid searchGrid=new Grid(width,height,movableMatrix);
-             //BaseGrid searchGrid = new StaticGrid(width, height, movableMatrix);
-             BaseGrid searchGrid = new DynamicGrid(walkableGridList);
-
-            JumpPointParam jumpParam = new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
-            
+            jumpParam.Reset(startPos, endPos);
             List<GridPos> resultList = JumpPointFinder.FindPath(jumpParam);
             
             

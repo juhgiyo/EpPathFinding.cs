@@ -117,7 +117,6 @@ namespace EpPathFinding
         public void Reset(GridPos iStartPos, GridPos iEndPos)
         {
             openList.Clear();
-            searchGrid = null;
             startNode = null;
             endNode = null;
 

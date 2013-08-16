@@ -111,26 +111,55 @@ namespace EpPathFinding
             return IsWalkableAt(pos);
         }
 
+        private void SetBoundingBox()
+        {
+            notSet = true;
+            foreach (KeyValuePair<GridPos, Node> pair in nodes)
+            {
+                if (pair.Key.x < minX || notSet)
+                    minX = pair.Key.x;
+                if (pair.Key.x > maxX || notSet)
+                    maxX = pair.Key.x;
+                if (pair.Key.y < minY || notSet)
+                    minY = pair.Key.y;
+                if (pair.Key.y > maxX || notSet)
+                    maxY = pair.Key.y;
+                notSet = false;
+            }
+        }
+
         public override void SetWalkableAt(int iX, int iY, bool iWalkable)
         {
             GridPos pos = new GridPos(iX, iY);
-            if (nodes.ContainsKey(pos))
+
+            if (iWalkable)
             {
-                this.nodes[pos].walkable = iWalkable;
+                if (nodes.ContainsKey(pos))
+                {
+                    this.nodes[pos].walkable = iWalkable;
+                }
+                else
+                {
+                    if (iX < minX || notSet)
+                        minX = iX;
+                    if (iX > maxX || notSet)
+                        maxX = iX;
+                    if (iY < minY || notSet)
+                        minY = iY;
+                    if (iY > maxX || notSet)
+                        maxY = iY;
+                    nodes.Add(new GridPos(pos.x, pos.y), new Node(pos.x, pos.y, iWalkable));
+                    notSet = false;
+                }
             }
             else
             {
-
-                if (iX < minX || notSet)
-                    minX = iX;
-                if (iX > maxX || notSet)
-                    maxX = iX;
-                if (iY < minY || notSet)
-                    minY = iY;
-                if (iY > maxX || notSet)
-                    maxY = iY;
-                nodes.Add(new GridPos(pos.x, pos.y), new Node(pos.x, pos.y, iWalkable));
-                notSet = false;
+                if (nodes.ContainsKey(pos))
+                {
+                    nodes.Remove(pos);
+                    if (iX == minX || iX == maxX || iY == minY || iY == maxX)
+                        SetBoundingBox();
+                }
             }
         }
 
