@@ -42,7 +42,7 @@ namespace EpPathFinding
     class JumpPointParam
     {
 
-        public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
+        public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
         {
             switch (iMode)
             {
@@ -56,7 +56,7 @@ namespace EpPathFinding
                     heuristic = new HeuristicDelegate(Heuristic.Chebyshev);
                     break;
                 default:
-                    heuristic = new HeuristicDelegate(Heuristic.EuclideanSqr);
+                    heuristic = new HeuristicDelegate(Heuristic.Euclidean);
                     break;
             }
             crossCorner = iCrossCorner;
@@ -68,7 +68,7 @@ namespace EpPathFinding
             endNode = searchGrid.GetNodeAt(iEndPos.x, iEndPos.y);
         }
 
-        public JumpPointParam(BaseGrid iGrid, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEANSQR)
+        public JumpPointParam(BaseGrid iGrid, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
         {
             switch (iMode)
             {
@@ -82,7 +82,7 @@ namespace EpPathFinding
                     heuristic = new HeuristicDelegate(Heuristic.Chebyshev);
                     break;
                 default:
-                    heuristic = new HeuristicDelegate(Heuristic.EuclideanSqr);
+                    heuristic = new HeuristicDelegate(Heuristic.Euclidean);
                     break;
             }
             crossCorner = iCrossCorner;
@@ -109,7 +109,7 @@ namespace EpPathFinding
                     heuristic = new HeuristicDelegate(Heuristic.Chebyshev);
                     break;
                 default:
-                    heuristic = new HeuristicDelegate(Heuristic.EuclideanSqr);
+                    heuristic = new HeuristicDelegate(Heuristic.Euclidean);
                     break;
             }
         }

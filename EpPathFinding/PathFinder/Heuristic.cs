@@ -39,7 +39,6 @@ namespace EpPathFinding
     {
         MANHATTAN,
         EUCLIDEAN,
-        EUCLIDEANSQR,
         CHEBYSHEV,
         
     };
@@ -56,13 +55,6 @@ namespace EpPathFinding
           float tFdx = (float)iDx;
           float tFdy = (float)iDy;
           return (float) Math.Sqrt((double)(tFdx * tFdx + tFdy * tFdy));
-      }
-
-      public static float EuclideanSqr(int iDx, int iDy)
-      {
-          float tFdx = (float)iDx;
-          float tFdy = (float)iDy;
-          return (float)(tFdx * tFdx + tFdy * tFdy);
       }
 
       public static float Chebyshev(int iDx, int iDy)
