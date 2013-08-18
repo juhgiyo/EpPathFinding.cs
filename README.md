@@ -103,7 +103,7 @@ JumpPointParam jpParam = new JumpPointParam(searchGrid,false);
 ```
 
 
-The predefined heuristics are `Heuristic.EUCLIDEANSQR` (default), `Heuristic.MANHATTAN`, `Heuristic.EUCLIDEAN`, and `Heuristic.CHEBYSHEV`.   
+The predefined heuristics are `Heuristic.EUCLIDEAN` (default), `Heuristic.MANHATTAN`, and `Heuristic.CHEBYSHEV`.   
 
 To use the `MANHATTAN` heuristic:
 
