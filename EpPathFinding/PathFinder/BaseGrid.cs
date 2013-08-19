@@ -78,7 +78,12 @@ namespace EpPathFinding
         public int CompareTo(object iObj)
         {
             Node tOtherNode = (Node)iObj;
-            return (int)(this.heuristicStartToEndLen - tOtherNode.heuristicStartToEndLen);
+            float result=this.heuristicStartToEndLen - tOtherNode.heuristicStartToEndLen;
+            if (result > 0.0f)
+                return 1;
+            else if (result == 0.0f)
+                return 0;
+            return -1;
         }
 
         public static List<GridPos> Backtrace(Node iNode)
