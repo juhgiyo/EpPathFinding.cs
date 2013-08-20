@@ -124,9 +124,9 @@ jpParam.SetHeuristic(Heuristic.MANHATTAN);
 License
 -------
 
-The MIT License (MIT)
+[The MIT License](http://opensource.org/licenses/mit-license.php)
 
-Copyright (c) 2013 Woong Gyu La <juhgiyo@gmail.com>
+Copyright (c) 2012-2013 Woong Gyu La <[juhgiyo@gmail.com](mailto:juhgiyo@gmail.com)>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
