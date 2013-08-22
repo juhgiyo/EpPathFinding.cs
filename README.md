@@ -137,7 +137,7 @@ BaseGrid seachGrid = new DynamicGrid();
 ```
 
 
-You may also use a List of walkable GridPos, while instantiating the DynamicGrid class. It will initiate only the nodes in the grid where the walkability is true:
+You may also use a `List` of walkable `GridPos`, while instantiating the `DynamicGrid` class. It will initiate only the nodes in the grid where the walkability is `true`:
 
 ```c#
 List<GridPos> walkableGridPosList= new List<GridPos>();
@@ -154,7 +154,7 @@ BaseGrid searchGrid = new DynamicGrid(walkableGridPosList);
 ```
 
 
-Rest of the functionality like `SetWalkableAt`, `Reset`, etc. are same as StaticGrid. 
+Rest of the functionality like `SetWalkableAt`, `Reset`, etc. are same as `StaticGrid`. 
 
 #### Extendability ####
 You can also create a sub-class of `BaseGrid` to create your own way of `Grid` class to best support your situation.
