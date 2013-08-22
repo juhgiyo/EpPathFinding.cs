@@ -15,7 +15,7 @@ You first need to build a grid-map. (For example: width 64 and height 32):
 
 
 ```c#
-Grid searchGrid = new Grid(64, 32);
+BaseGrid searchGrid = new StaticGrid(64, 32);
 ```
 
 
@@ -26,10 +26,14 @@ For example, in order to set the node at (10 , 20) to be un-walkable, where 10 i
 
 ```c#
 searchGrid.SetWalkableAt(10, 20, false);
+ 
+// OR
+ 
+searchGrid.SetWalkableAt(new GridPos(10,20),false);  
 ```
 
 
-You may also use in a 2-d array while instantiating the `Grid` class. It will initiate all the nodes in the grid with the walkability indicated by the array. (true for walkable otherwise not walkable): 
+You may also use in a 2-d array while instantiating the `StaticGrid` class. It will initiate all the nodes in the grid with the walkability indicated by the array. (`true` for walkable otherwise not walkable): 
 
 
 ```c#
@@ -43,7 +47,7 @@ for(int widthTrav=0; widthTrav< 64; widthTrav++)
    }  
 }
 
-Grid searchGrid = new Grid(64,32, movableMatrix);
+Grid searchGrid = new StaticGrid(64,32, movableMatrix);
 ```
 
 
@@ -85,6 +89,7 @@ resultPathList = JumpPointFinder.FindPath(jpParam);
 
 Advanced Usage
 ------------
+#### Cross Corners ####
 When instantiating the `JumpPointParam`, you may pass in additional parameters to indicate specific strategies to use.  
 
 In order to make search able to walk diagonally across corner of two diagonal unwalkable nodes:   
@@ -103,6 +108,7 @@ JumpPointParam jpParam = new JumpPointParam(searchGrid,false);
 ```
 
 
+#### Heuristic Functions ####
 The predefined heuristics are `Heuristic.EUCLIDEAN` (default), `Heuristic.MANHATTAN`, and `Heuristic.CHEBYSHEV`.   
 
 To use the `MANHATTAN` heuristic:
@@ -120,6 +126,38 @@ You can always change the heuristics later with `SetHeuristic` function:
 jpParam.SetHeuristic(Heuristic.MANHATTAN);
 ```
 
+
+#### Dynamic Grid ####
+
+For my grid-based game, I had much less walkable grid nodes than un-walkable grid nodes. So above `StaticGrid` was wasting too much memory to hold un-walkable grid nodes. To avoid the memory waste, I have created `DynamicGrid`, which allocates the memory for only walkable grid nodes.
+
+
+```c#
+BaseGrid seachGrid = new DynamicGrid();  
+```
+
+
+You may also use a List of walkable GridPos, while instantiating the DynamicGrid class. It will initiate only the nodes in the grid where the walkability is true:
+
+```c#
+List<GridPos> walkableGridPosList= new List<GridPos>();
+for(int widthTrav=0; widthTrav< 64; widthTrav++)
+{
+   movableMatrix[widthTrav]=new bool[height];
+   for(int heightTrav=0; heightTrav < 32;  heightTrav++)
+   {
+      walkableGridPosList.Add(new GridPos(widthTrav, heightTrav));
+   }
+}
+
+BaseGrid searchGrid = new DynamicGrid(walkableGridPosList);  
+```
+
+
+Rest of the functionality like `SetWalkableAt`, `Reset`, etc. are same as StaticGrid. 
+
+#### Extendability ####
+You can also create a sub-class of `BaseGrid` to create your own way of `Grid` class to best support your situation.
 
 License
 -------
