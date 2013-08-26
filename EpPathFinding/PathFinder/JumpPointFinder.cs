@@ -73,6 +73,10 @@ namespace EpPathFinding
             searchGrid = iGrid;
             startNode = searchGrid.GetNodeAt(iStartPos.x, iStartPos.y);
             endNode = searchGrid.GetNodeAt(iEndPos.x, iEndPos.y);
+            if (startNode == null)
+                startNode = new Node(iStartPos.x, iStartPos.y, true);
+            if (endNode == null)
+                endNode = new Node(iEndPos.x, iEndPos.y, true);
         }
 
         public JumpPointParam(BaseGrid iGrid, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
@@ -130,7 +134,10 @@ namespace EpPathFinding
             searchGrid.Reset();
             startNode = searchGrid.GetNodeAt(iStartPos.x, iStartPos.y);
             endNode = searchGrid.GetNodeAt(iEndPos.x, iEndPos.y);
-
+            if (startNode == null)
+                startNode = new Node(iStartPos.x, iStartPos.y, true);
+            if (endNode == null)
+                endNode = new Node(iEndPos.x, iEndPos.y, true);
 
         }
 
