@@ -125,12 +125,14 @@ namespace EpPathFinding
             }
         }
 
-        public void Reset(GridPos iStartPos, GridPos iEndPos)
+        public void Reset(GridPos iStartPos, GridPos iEndPos, BaseGrid iSearchGrid = null)
         {
             openList.Clear();
             startNode = null;
             endNode = null;
 
+            if (iSearchGrid != null)
+                searchGrid = iSearchGrid;
             searchGrid.Reset();
             startNode = searchGrid.GetNodeAt(iStartPos.x, iStartPos.y);
             endNode = searchGrid.GetNodeAt(iEndPos.x, iEndPos.y);
