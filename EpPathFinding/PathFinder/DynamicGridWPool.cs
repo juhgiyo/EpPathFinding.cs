@@ -1,9 +1,9 @@
 ﻿/*! 
-@file DynamicGrid.cs
+@file DynamicGridWPool.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 		<http://github.com/juhgiyo/eppathfinding.cs>
 @date July 16, 2013
-@brief DynamicGrid Interface
+@brief DynamicGrid with Pool Interface
 @version 2.0
 
 @section LICENSE
@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-An Interface for the DynamicGrid Class.
+An Interface for the DynamicGrid with Pool Class.
 
 */
 using System;
@@ -40,18 +40,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using General;
 
 namespace EpPathFinding
 {
-    public class DynamicGrid : BaseGrid
+    public class DynamicGridWPool : BaseGrid
     {
         protected Dictionary<GridPos, Node> nodes;
-
         private int minX;
         private int maxX;
         private int minY;
         private int maxY;
         private bool notSet;
+
+        private NodePool nodePool;
 
         public override int width
         {
@@ -81,7 +83,7 @@ namespace EpPathFinding
             }
         }
 
-        public DynamicGrid(List<GridPos> iWalkableGridList = null)
+        public DynamicGridWPool(NodePool iNodePool, List<GridPos> iWalkableGridList = null)
             : base()
         {
             minX = 0;
@@ -89,9 +91,9 @@ namespace EpPathFinding
             maxX = 0;
             maxY = 0;
             notSet = true;
+            nodePool = iNodePool;
             BuildNodes(iWalkableGridList);
         }
-
 
         protected void BuildNodes(List<GridPos> iWalkableGridList)
         {
@@ -125,7 +127,6 @@ namespace EpPathFinding
 
         private void SetBoundingBox()
         {
-            notSet = true;
             foreach (KeyValuePair<GridPos, Node> pair in nodes)
             {
                 if (pair.Key.x < minX || notSet)
@@ -148,7 +149,6 @@ namespace EpPathFinding
             {
                 if (nodes.ContainsKey(pos))
                 {
-                   // this.nodes[pos].walkable = iWalkable;
                     return;
                 }
                 else
@@ -161,7 +161,7 @@ namespace EpPathFinding
                         minY = iY;
                     if (iY > maxX || notSet)
                         maxY = iY;
-                    nodes.Add(new GridPos(pos.x, pos.y), new Node(pos.x, pos.y, iWalkable));
+                    nodes.Add(new GridPos(pos.x, pos.y), nodePool.GetNode(pos.x, pos.y, iWalkable));
                     notSet = false;
                 }
             }
@@ -170,6 +170,7 @@ namespace EpPathFinding
                 if (nodes.ContainsKey(pos))
                 {
                     nodes.Remove(pos);
+                    nodePool.RemoveNode(pos);
                     if (iX == minX || iX == maxX || iY == minY || iY == maxX)
                         notSet = true;
                 }
@@ -204,7 +205,6 @@ namespace EpPathFinding
             SetWalkableAt(iPos.x, iPos.y, iWalkable);
         }
 
-
         public override void Reset()
         {
             Reset(null);
@@ -227,12 +227,11 @@ namespace EpPathFinding
                 else
                     SetWalkableAt(keyValue.Key, false);
             }
-
         }
 
         public override BaseGrid Clone()
         {
-            DynamicGrid tNewGrid = new DynamicGrid(null);
+            DynamicGridWPool tNewGrid = new DynamicGridWPool(null);
 
             foreach (KeyValuePair<GridPos, Node> keyValue in nodes)
             {
@@ -244,6 +243,4 @@ namespace EpPathFinding
         }
     }
 
-
 }
-

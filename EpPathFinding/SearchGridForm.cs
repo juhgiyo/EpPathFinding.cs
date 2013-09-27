@@ -44,7 +44,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using General;
 
 namespace EpPathFinding
 {
@@ -99,7 +99,8 @@ namespace EpPathFinding
 
             //Grid searchGrid=new Grid(width,height,movableMatrix);
             //BaseGrid searchGrid = new StaticGrid(width, height, movableMatrix);
-            searchGrid = new DynamicGrid();
+            //searchGrid = new DynamicGrid();
+            searchGrid = new DynamicGridWPool(SingletonHolder<NodePool>.Instance);
             jumpParam = new JumpPointParam(searchGrid, cbCrossCorners.Checked, HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
             
         }

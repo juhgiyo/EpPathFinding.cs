@@ -61,8 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="General\Pair.cs" />
+    <Compile Include="General\PriorityQueue.cs" />
+    <Compile Include="General\SingletonHolder.cs" />
     <Compile Include="PathFinder\BaseGrid.cs" />
     <Compile Include="PathFinder\DynamicGrid.cs" />
+    <Compile Include="PathFinder\DynamicGridWPool.cs" />
+    <Compile Include="PathFinder\NodePool.cs" />
     <Compile Include="PathFinder\StaticGrid.cs" />
     <Compile Include="SearchGridForm.cs">
       <SubType>Form</SubType>
