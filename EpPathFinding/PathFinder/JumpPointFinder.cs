@@ -279,13 +279,13 @@ namespace EpPathFinding
 
         private static GridPos Jump(JumpPointParam iParam, int iX, int iY, int iPx, int iPy)
         {
-            if (!iParam.SearchGrid.IsWalkableAt(iX, iY))
-            {
-                return null;
-            }
-            else if (iParam.SearchGrid.GetNodeAt(iX, iY).Equals(iParam.EndNode))
+            if (iParam.EndNode.x == iX && iParam.EndNode.y == iY)
             {
                 return new GridPos(iX, iY);
+            }
+            else if (!iParam.SearchGrid.IsWalkableAt(iX, iY))
+            {
+                return null;
             }
             int tDx = iX - iPx;
             int tDy = iY - iPy;
