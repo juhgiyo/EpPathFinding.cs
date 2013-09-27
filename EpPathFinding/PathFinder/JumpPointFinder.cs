@@ -49,7 +49,7 @@ namespace EpPathFinding
     class JumpPointParam
     {
 
-        public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
+        public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
         {
             switch (iMode)
             {
@@ -66,6 +66,7 @@ namespace EpPathFinding
                     heuristic = new HeuristicDelegate(Heuristic.Euclidean);
                     break;
             }
+            allowEndNodeUnWalkable = iAllowEndNodeUnWalkable;
             crossCorner = iCrossCorner;
 
             openList = new List<Node>();
@@ -79,7 +80,7 @@ namespace EpPathFinding
                 endNode = new Node(iEndPos.x, iEndPos.y, true);
         }
 
-        public JumpPointParam(BaseGrid iGrid, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
+        public JumpPointParam(BaseGrid iGrid, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
         {
             switch (iMode)
             {
@@ -96,6 +97,7 @@ namespace EpPathFinding
                     heuristic = new HeuristicDelegate(Heuristic.Euclidean);
                     break;
             }
+            allowEndNodeUnWalkable = iAllowEndNodeUnWalkable;
             crossCorner = iCrossCorner;
 
             openList = new List<Node>();
@@ -141,6 +143,7 @@ namespace EpPathFinding
             if (endNode == null)
                 endNode = new Node(iEndPos.x, iEndPos.y, true);
 
+
         }
 
         public bool CrossCorner
@@ -152,6 +155,18 @@ namespace EpPathFinding
             set
             {
                 crossCorner = value;
+            }
+        }
+
+        public bool AllowEndNodeUnWalkable
+        {
+            get
+            {
+                return allowEndNodeUnWalkable;
+            }
+            set
+            {
+                allowEndNodeUnWalkable = value;
             }
         }
 
@@ -187,6 +202,7 @@ namespace EpPathFinding
         }
         protected HeuristicDelegate heuristic;
         protected bool crossCorner;
+        protected bool allowEndNodeUnWalkable;
 
         protected BaseGrid searchGrid;
         protected Node startNode;
@@ -279,14 +295,22 @@ namespace EpPathFinding
 
         private static GridPos Jump(JumpPointParam iParam, int iX, int iY, int iPx, int iPy)
         {
-            if (iParam.EndNode.x == iX && iParam.EndNode.y == iY)
+            if (iParam.AllowEndNodeUnWalkable)
             {
-                return new GridPos(iX, iY);
+                if (iParam.EndNode.x == iX && iParam.EndNode.y == iY)
+                {
+                    return new GridPos(iX, iY);
+                }
             }
             else if (!iParam.SearchGrid.IsWalkableAt(iX, iY))
             {
                 return null;
             }
+            else if (iParam.SearchGrid.GetNodeAt(iX, iY).Equals(iParam.EndNode))
+            {
+                return new GridPos(iX, iY);
+            }
+        
             int tDx = iX - iPx;
             int tDy = iY - iPy;
 
