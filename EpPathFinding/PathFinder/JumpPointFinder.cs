@@ -302,7 +302,7 @@ namespace EpPathFinding
                     return new GridPos(iX, iY);
                 }
             }
-            else if (!iParam.SearchGrid.IsWalkableAt(iX, iY))
+            if (!iParam.SearchGrid.IsWalkableAt(iX, iY))
             {
                 return null;
             }
