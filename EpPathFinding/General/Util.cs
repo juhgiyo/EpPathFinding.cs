@@ -1,9 +1,9 @@
 ﻿/*! 
-@file Pair.cs
+@file Util.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 		<http://github.com/juhgiyo/eppathfinding.cs>
-@date July 16, 2013
-@brief Generic Pair Interface
+@date September 27, 2013
+@brief Util Interface
 @version 2.0
 
 @section LICENSE
@@ -32,30 +32,24 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-An Interface for the Generic Pair Class.
+An Interface for the Util Class.
 
 */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace EpPathFinding
+namespace EpForceDirectedGraph
 {
-    class Pair<T,U>
+    public class Util
     {
-        public Pair()
+        private static Random random = new Random();
+        public static float Random()
         {
+            var result = random.NextDouble();
+            return (float)result;
         }
-
-        public Pair(T iFirst, U iSecond)
-        {
-            this.first = iFirst;
-            this.second = iSecond;
-        }
-
-        public T first { get; set; }
-        public U second { get; set; }
     }
+
 }

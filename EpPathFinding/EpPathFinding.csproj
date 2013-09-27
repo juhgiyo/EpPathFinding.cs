@@ -64,6 +64,8 @@
     <Compile Include="General\Pair.cs" />
     <Compile Include="General\PriorityQueue.cs" />
     <Compile Include="General\SingletonHolder.cs" />
+    <Compile Include="General\Triple.cs" />
+    <Compile Include="General\Util.cs" />
     <Compile Include="PathFinder\BaseGrid.cs" />
     <Compile Include="PathFinder\DynamicGrid.cs" />
     <Compile Include="PathFinder\DynamicGridWPool.cs" />
@@ -80,7 +82,6 @@
     <Compile Include="PathFinder\GridPos.cs" />
     <Compile Include="PathFinder\Heuristic.cs" />
     <Compile Include="PathFinder\JumpPointFinder.cs" />
-    <Compile Include="PathFinder\Pair.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultBox.cs" />
