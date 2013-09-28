@@ -267,7 +267,11 @@ namespace EpPathFinding
                 if (tJumpPoint != null)
                 {
                     tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint.x, tJumpPoint.y);
-
+                    if (tJumpNode == null)
+                    {
+                        if (iParam.EndNode.x == tJumpPoint.x && iParam.EndNode.y == tJumpPoint.y)
+                            tJumpNode = iParam.EndNode;
+                    }
                     if (tJumpNode.isClosed)
                     {
                         continue;
