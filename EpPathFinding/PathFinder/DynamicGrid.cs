@@ -134,7 +134,7 @@ namespace EpPathFinding
                     maxX = pair.Key.x;
                 if (pair.Key.y < minY || notSet)
                     minY = pair.Key.y;
-                if (pair.Key.y > maxX || notSet)
+                if (pair.Key.y > maxY || notSet)
                     maxY = pair.Key.y;
                 notSet = false;
             }
@@ -159,7 +159,7 @@ namespace EpPathFinding
                         maxX = iX;
                     if (iY < minY || notSet)
                         minY = iY;
-                    if (iY > maxX || notSet)
+                    if (iY > maxY || notSet)
                         maxY = iY;
                     nodes.Add(new GridPos(pos.x, pos.y), new Node(pos.x, pos.y, iWalkable));
                     notSet = false;
@@ -170,7 +170,7 @@ namespace EpPathFinding
                 if (nodes.ContainsKey(pos))
                 {
                     nodes.Remove(pos);
-                    if (iX == minX || iX == maxX || iY == minY || iY == maxX)
+                    if (iX == minX || iX == maxX || iY == minY || iY == maxY)
                         notSet = true;
                 }
             }

@@ -219,7 +219,7 @@ namespace EpPathFinding
             Node tStartNode = iParam.StartNode;
             Node tEndNode = iParam.EndNode;
             Node tNode;
-
+            bool revertEndNodeWalkable = false;
 
             // set the `g` and `f` value of the start node to be 0
             tStartNode.startToCurNodeLen = 0;
@@ -228,6 +228,12 @@ namespace EpPathFinding
             // push the start node into the open list
             tOpenList.Add(tStartNode);
             tStartNode.isOpened = true;
+
+            if (iParam.AllowEndNodeUnWalkable && !iParam.SearchGrid.IsWalkableAt(tEndNode.x, tEndNode.y))
+            {
+                iParam.SearchGrid.SetWalkableAt(tEndNode.x, tEndNode.y, true);
+                revertEndNodeWalkable = true;
+            }
 
             // while the open list is not empty
             while (tOpenList.Count > 0)
@@ -240,10 +246,19 @@ namespace EpPathFinding
 
                 if (tNode.Equals(tEndNode))
                 {
-                    return Node.Backtrace(tEndNode); // rebuilding path
+                    if (revertEndNodeWalkable)
+                    {
+                        iParam.SearchGrid.SetWalkableAt(tEndNode.x, tEndNode.y, false);
+                    }
+                    return Node.Backtrace(tNode); // rebuilding path
                 }
 
                 IdentifySuccessors(iParam, tNode);
+            }
+
+            if (revertEndNodeWalkable)
+            {
+                iParam.SearchGrid.SetWalkableAt(tEndNode.x, tEndNode.y, false);
             }
 
             // fail to find the path
@@ -270,7 +285,7 @@ namespace EpPathFinding
                     if (tJumpNode == null)
                     {
                         if (iParam.EndNode.x == tJumpPoint.x && iParam.EndNode.y == tJumpPoint.y)
-                            tJumpNode = iParam.EndNode;
+                            tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint);
                     }
                     if (tJumpNode.isClosed)
                     {
@@ -299,13 +314,6 @@ namespace EpPathFinding
 
         private static GridPos Jump(JumpPointParam iParam, int iX, int iY, int iPx, int iPy)
         {
-            if (iParam.AllowEndNodeUnWalkable)
-            {
-                if (iParam.EndNode.x == iX && iParam.EndNode.y == iY)
-                {
-                    return new GridPos(iX, iY);
-                }
-            }
             if (!iParam.SearchGrid.IsWalkableAt(iX, iY))
             {
                 return null;
