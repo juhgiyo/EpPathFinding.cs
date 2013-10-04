@@ -106,6 +106,12 @@ namespace EpPathFinding
             return path;
         }
 
+
+        public override int GetHashCode()
+        {
+            return x ^ y;
+        }
+
         public override bool Equals(System.Object obj)
         {
             // If parameter is null return false.
