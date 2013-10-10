@@ -271,7 +271,8 @@ namespace EpPathFinding
             List<Node> tOpenList = iParam.openList;
             int tEndX = iParam.EndNode.x;
             int tEndY = iParam.EndNode.y;
-            GridPos tNeighbor, tJumpPoint;
+            GridPos tNeighbor;
+            GridPos? tJumpPoint;
             Node tJumpNode;
 
             List<GridPos> tNeighbors = FindNeighbors(iParam, iNode);
@@ -281,24 +282,24 @@ namespace EpPathFinding
                 tJumpPoint = Jump(iParam, tNeighbor.x, tNeighbor.y, iNode.x, iNode.y);
                 if (tJumpPoint != null)
                 {
-                    tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint.x, tJumpPoint.y);
+                    tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint.Value.x, tJumpPoint.Value.y);
                     if (tJumpNode == null)
                     {
-                        if (iParam.EndNode.x == tJumpPoint.x && iParam.EndNode.y == tJumpPoint.y)
-                            tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint);
+                        if (iParam.EndNode.x == tJumpPoint.Value.x && iParam.EndNode.y == tJumpPoint.Value.y)
+                            tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint.Value);
                     }
                     if (tJumpNode.isClosed)
                     {
                         continue;
                     }
                     // include distance, as parent may not be immediately adjacent:
-                    float tCurNodeToJumpNodeLen = tHeuristic(Math.Abs(tJumpPoint.x - iNode.x), Math.Abs(tJumpPoint.y - iNode.y));
+                    float tCurNodeToJumpNodeLen = tHeuristic(Math.Abs(tJumpPoint.Value.x - iNode.x), Math.Abs(tJumpPoint.Value.y - iNode.y));
                     float tStartToJumpNodeLen = iNode.startToCurNodeLen + tCurNodeToJumpNodeLen; // next `startToCurNodeLen` value
 
                     if (!tJumpNode.isOpened || tStartToJumpNodeLen < tJumpNode.startToCurNodeLen)
                     {
                         tJumpNode.startToCurNodeLen = tStartToJumpNodeLen;
-                        tJumpNode.heuristicCurNodeToEndLen = (tJumpNode.heuristicCurNodeToEndLen == null ? tHeuristic(Math.Abs(tJumpPoint.x - tEndX), Math.Abs(tJumpPoint.y - tEndY)) : tJumpNode.heuristicCurNodeToEndLen);
+                        tJumpNode.heuristicCurNodeToEndLen = (tJumpNode.heuristicCurNodeToEndLen == null ? tHeuristic(Math.Abs(tJumpPoint.Value.x - tEndX), Math.Abs(tJumpPoint.Value.y - tEndY)) : tJumpNode.heuristicCurNodeToEndLen);
                         tJumpNode.heuristicStartToEndLen = tJumpNode.startToCurNodeLen + tJumpNode.heuristicCurNodeToEndLen.Value;
                         tJumpNode.parent = iNode;
 
@@ -312,7 +313,7 @@ namespace EpPathFinding
             }
         }
 
-        private static GridPos Jump(JumpPointParam iParam, int iX, int iY, int iPx, int iPy)
+        private static GridPos? Jump(JumpPointParam iParam, int iX, int iY, int iPx, int iPy)
         {
             if (!iParam.SearchGrid.IsWalkableAt(iX, iY))
             {
@@ -357,8 +358,8 @@ namespace EpPathFinding
                 }
             }
 
-            GridPos jx;
-            GridPos jy;
+            GridPos? jx;
+            GridPos? jy;
             // when moving diagonally, must check for vertical/horizontal jump points
             if (tDx != 0 && tDy != 0)
             {
