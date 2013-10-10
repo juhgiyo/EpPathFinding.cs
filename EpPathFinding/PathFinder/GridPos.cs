@@ -43,10 +43,12 @@ using System.Threading.Tasks;
 
 namespace EpPathFinding
 {
-    public struct GridPos
+    public class GridPos
     {
-        public int x;
-        public int y;
+        public GridPos()
+        {
+        }
+
         public GridPos(int iX, int iY)
         {
             this.x = iX;
@@ -60,15 +62,31 @@ namespace EpPathFinding
 
         public override bool Equals(System.Object obj)
         {
-            if (!(obj is GridPos))
+            // If parameter is null return false.
+            if (obj == null)
+            {
                 return false;
-            GridPos p = (GridPos)obj;
+            }
+
+            // If parameter cannot be cast to Point return false.
+            GridPos p = obj as GridPos;
+            if ((System.Object)p == null)
+            {
+                return false;
+            }
+
             // Return true if the fields match:
             return (x == p.x) && (y == p.y);
         }
 
-        public bool Equals(ref GridPos p)
+        public bool Equals(GridPos p)
         {
+            // If parameter is null return false:
+            if ((object)p == null)
+            {
+                return false;
+            }
+
             // Return true if the fields match:
             return (x == p.x) && (y == p.y);
         }
@@ -79,6 +97,12 @@ namespace EpPathFinding
             if (System.Object.ReferenceEquals(a, b))
             {
                 return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)a == null) || ((object)b == null))
+            {
+                return false;
             }
 
             // Return true if the fields match:
@@ -96,5 +120,8 @@ namespace EpPathFinding
             this.y = iY;
             return this;
         }
+
+        public int x { get; set; }
+        public int y { get; set; }
     }
 }
