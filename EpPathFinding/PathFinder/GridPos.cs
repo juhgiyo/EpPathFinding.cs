@@ -67,7 +67,7 @@ namespace EpPathFinding
             return (x == p.x) && (y == p.y);
         }
 
-        public bool Equals(GridPos p)
+        public bool Equals(ref GridPos p)
         {
             // Return true if the fields match:
             return (x == p.x) && (y == p.y);
