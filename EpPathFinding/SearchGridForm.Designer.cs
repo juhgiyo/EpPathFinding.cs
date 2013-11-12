@@ -32,6 +32,7 @@
             this.btnClearPath = new System.Windows.Forms.Button();
             this.btnClearWall = new System.Windows.Forms.Button();
             this.cbCrossCorners = new System.Windows.Forms.CheckBox();
+            this.cbCrossAdjacentPoint = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnSearch
@@ -75,6 +76,19 @@
             this.cbCrossCorners.TabIndex = 4;
             this.cbCrossCorners.Text = "Cross Corners";
             this.cbCrossCorners.UseVisualStyleBackColor = true;
+            this.cbCrossCorners.CheckedChanged += new System.EventHandler(this.cbCrossCorners_CheckedChanged);
+            // 
+            // cbCrossAdjacentPoint
+            // 
+            this.cbCrossAdjacentPoint.AutoSize = true;
+            this.cbCrossAdjacentPoint.Checked = true;
+            this.cbCrossAdjacentPoint.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbCrossAdjacentPoint.Location = new System.Drawing.Point(400, 15);
+            this.cbCrossAdjacentPoint.Name = "cbCrossAdjacentPoint";
+            this.cbCrossAdjacentPoint.Size = new System.Drawing.Size(143, 16);
+            this.cbCrossAdjacentPoint.TabIndex = 5;
+            this.cbCrossAdjacentPoint.Text = "Cross Adjacent Point";
+            this.cbCrossAdjacentPoint.UseVisualStyleBackColor = true;
             // 
             // SearchGridForm
             // 
@@ -82,6 +96,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(613, 262);
+            this.Controls.Add(this.cbCrossAdjacentPoint);
             this.Controls.Add(this.cbCrossCorners);
             this.Controls.Add(this.btnClearWall);
             this.Controls.Add(this.btnClearPath);
@@ -104,6 +119,7 @@
         private System.Windows.Forms.Button btnClearPath;
         private System.Windows.Forms.Button btnClearWall;
         private System.Windows.Forms.CheckBox cbCrossCorners;
+        private System.Windows.Forms.CheckBox cbCrossAdjacentPoint;
     }
 }
 

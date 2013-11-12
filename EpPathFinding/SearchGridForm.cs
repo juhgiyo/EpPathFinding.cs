@@ -101,7 +101,7 @@ namespace EpPathFinding
             //BaseGrid searchGrid = new StaticGrid(width, height, movableMatrix);
             //searchGrid = new DynamicGrid();
             searchGrid = new DynamicGridWPool(SingletonHolder<NodePool>.Instance);
-            jumpParam = new JumpPointParam(searchGrid,true, cbCrossCorners.Checked, HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
+            jumpParam = new JumpPointParam(searchGrid, true, cbCrossCorners.Checked, cbCrossAdjacentPoint.Checked, HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
             
         }
 
@@ -317,7 +317,8 @@ namespace EpPathFinding
 
                     }
                 }
-
+             jumpParam.CrossCorner = cbCrossCorners.Checked;
+             jumpParam.CrossAdjacentPoint = cbCrossAdjacentPoint.Checked;
             jumpParam.Reset(startPos, endPos);
             List<GridPos> resultList = JumpPointFinder.FindPath(jumpParam);
             
@@ -401,6 +402,18 @@ namespace EpPathFinding
                 }
             }
             this.Invalidate();
+        }
+
+        private void cbCrossCorners_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbCrossCorners.Checked)
+            {
+                cbCrossAdjacentPoint.Enabled = true;
+            }
+            else
+            {
+                cbCrossAdjacentPoint.Enabled = false;
+            }
         }
     }
 }

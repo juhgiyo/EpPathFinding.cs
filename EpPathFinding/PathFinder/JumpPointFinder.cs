@@ -49,7 +49,7 @@ namespace EpPathFinding
     class JumpPointParam
     {
 
-        public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
+        public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, bool iCorssAdjacentPoint = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
         {
             switch (iMode)
             {
@@ -67,8 +67,8 @@ namespace EpPathFinding
                     break;
             }
             allowEndNodeUnWalkable = iAllowEndNodeUnWalkable;
+            crossAdjacentPoint = iCorssAdjacentPoint;
             crossCorner = iCrossCorner;
-
             openList = new List<Node>();
 
             searchGrid = iGrid;
@@ -80,7 +80,7 @@ namespace EpPathFinding
                 endNode = new Node(iEndPos.x, iEndPos.y, true);
         }
 
-        public JumpPointParam(BaseGrid iGrid, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
+        public JumpPointParam(BaseGrid iGrid, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, bool iCorssAdjacentPoint=true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
         {
             switch (iMode)
             {
@@ -98,6 +98,7 @@ namespace EpPathFinding
                     break;
             }
             allowEndNodeUnWalkable = iAllowEndNodeUnWalkable;
+            crossAdjacentPoint = iCorssAdjacentPoint;
             crossCorner = iCrossCorner;
 
             openList = new List<Node>();
@@ -144,6 +145,18 @@ namespace EpPathFinding
                 endNode = new Node(iEndPos.x, iEndPos.y, true);
 
 
+        }
+
+        public bool CrossAdjacentPoint
+        {
+            get
+            {
+                return crossCorner && crossAdjacentPoint;
+            }
+            set
+            {
+                crossAdjacentPoint = value;
+            }
         }
 
         public bool CrossCorner
@@ -201,6 +214,7 @@ namespace EpPathFinding
             }
         }
         protected HeuristicDelegate heuristic;
+        protected bool crossAdjacentPoint;
         protected bool crossCorner;
         protected bool allowEndNodeUnWalkable;
 
@@ -326,65 +340,128 @@ namespace EpPathFinding
         
             int tDx = iX - iPx;
             int tDy = iY - iPy;
-
-            // check for forced neighbors
-            // along the diagonal
-            if (tDx != 0 && tDy != 0)
+            if (iParam.CrossCorner)
             {
-                if ((iParam.SearchGrid.IsWalkableAt(iX - tDx, iY + tDy) && !iParam.SearchGrid.IsWalkableAt(iX - tDx, iY)) ||
-                    (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY - tDy) && !iParam.SearchGrid.IsWalkableAt(iX, iY - tDy)))
+                // check for forced neighbors
+                // along the diagonal
+                if (tDx != 0 && tDy != 0)
                 {
-                    return new GridPos(iX, iY);
-                }
-            }
-            // horizontally/vertically
-            else
-            {
-                if (tDx != 0)
-                { // moving along x
-                    if ((iParam.SearchGrid.IsWalkableAt(iX + tDx, iY + 1) && !iParam.SearchGrid.IsWalkableAt(iX, iY + 1)) ||
-                        (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY - 1) && !iParam.SearchGrid.IsWalkableAt(iX, iY - 1)))
+                    if ((iParam.SearchGrid.IsWalkableAt(iX - tDx, iY + tDy) && !iParam.SearchGrid.IsWalkableAt(iX - tDx, iY)) ||
+                        (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY - tDy) && !iParam.SearchGrid.IsWalkableAt(iX, iY - tDy)))
                     {
                         return new GridPos(iX, iY);
                     }
+                }
+                // horizontally/vertically
+                else
+                {
+                    if (tDx != 0)
+                    { 
+                        // moving along x
+                        if ((iParam.SearchGrid.IsWalkableAt(iX + tDx, iY + 1) && !iParam.SearchGrid.IsWalkableAt(iX, iY + 1)) ||
+                            (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY - 1) && !iParam.SearchGrid.IsWalkableAt(iX, iY - 1)))
+                        {
+                            return new GridPos(iX, iY);
+                        }
+                    }
+                    else
+                    {
+                        if ((iParam.SearchGrid.IsWalkableAt(iX + 1, iY + tDy) && !iParam.SearchGrid.IsWalkableAt(iX + 1, iY)) ||
+                            (iParam.SearchGrid.IsWalkableAt(iX - 1, iY + tDy) && !iParam.SearchGrid.IsWalkableAt(iX - 1, iY)))
+                        {
+                            return new GridPos(iX, iY);
+                        }
+                    }
+                }
+
+                GridPos? jx;
+                GridPos? jy;
+                // when moving diagonally, must check for vertical/horizontal jump points
+                if (tDx != 0 && tDy != 0)
+                {
+                    jx = Jump(iParam, iX + tDx, iY, iX, iY);
+                    jy = Jump(iParam, iX, iY + tDy, iX, iY);
+                    if (jx != null || jy != null)
+                    {
+                        return new GridPos(iX, iY);
+                    }
+                }
+
+                // moving diagonally, must make sure one of the vertical/horizontal
+                // neighbors is open to allow the path
+                if (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY) || iParam.SearchGrid.IsWalkableAt(iX, iY + tDy))
+                {
+                    return Jump(iParam, iX + tDx, iY + tDy, iX, iY);
+                }
+                else if (iParam.CrossAdjacentPoint)
+                {
+                    return Jump(iParam, iX + tDx, iY + tDy, iX, iY);
                 }
                 else
                 {
-                    if ((iParam.SearchGrid.IsWalkableAt(iX + 1, iY + tDy) && !iParam.SearchGrid.IsWalkableAt(iX + 1, iY)) ||
-                        (iParam.SearchGrid.IsWalkableAt(iX - 1, iY + tDy) && !iParam.SearchGrid.IsWalkableAt(iX - 1, iY)))
+                    return null;
+                }
+            }
+            else //if (!iParam.CrossCorner)
+            {
+                // check for forced neighbors
+                // along the diagonal
+                if (tDx != 0 && tDy != 0)
+                {
+                    if ((iParam.SearchGrid.IsWalkableAt(iX + tDx, iY + tDy) && iParam.SearchGrid.IsWalkableAt(iX, iY + tDy) && !iParam.SearchGrid.IsWalkableAt(iX + tDx, iY)) ||
+                        (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY + tDy) && iParam.SearchGrid.IsWalkableAt(iX + tDx, iY) && !iParam.SearchGrid.IsWalkableAt(iX, iY + tDy)))
                     {
                         return new GridPos(iX, iY);
                     }
                 }
-            }
-
-            GridPos? jx;
-            GridPos? jy;
-            // when moving diagonally, must check for vertical/horizontal jump points
-            if (tDx != 0 && tDy != 0)
-            {
-                jx = Jump(iParam, iX + tDx, iY, iX, iY);
-                jy = Jump(iParam, iX, iY + tDy, iX, iY);
-                if (jx != null || jy != null)
+                // horizontally/vertically
+                else
                 {
-                    return new GridPos(iX, iY);
+                    if (tDx != 0)
+                    { 
+                        // moving along x
+                        if ((iParam.SearchGrid.IsWalkableAt(iX, iY + 1) && !iParam.SearchGrid.IsWalkableAt(iX - tDx, iY + 1)) ||
+                            (iParam.SearchGrid.IsWalkableAt(iX, iY - 1) && !iParam.SearchGrid.IsWalkableAt(iX - tDx, iY - 1)))
+                        {
+                            return new GridPos(iX, iY);
+                        }
+                    }
+                    else
+                    {
+                        if ((iParam.SearchGrid.IsWalkableAt(iX + 1, iY) && !iParam.SearchGrid.IsWalkableAt(iX + 1, iY - tDy)) ||
+                            (iParam.SearchGrid.IsWalkableAt(iX - 1, iY) && !iParam.SearchGrid.IsWalkableAt(iX - 1, iY - tDy)))
+                        {
+                            return new GridPos(iX, iY);
+                        }
+                    }
+                }
+             
+
+                GridPos? jx;
+                GridPos? jy;
+                // when moving diagonally, must check for vertical/horizontal jump points
+                if (tDx != 0 && tDy != 0)
+                {
+                    jx = Jump(iParam, iX + tDx, iY, iX, iY);
+                    jy = Jump(iParam, iX, iY + tDy, iX, iY);
+                    if (jx != null || jy != null)
+                    {
+                        return new GridPos(iX, iY);
+                    }
+                }
+
+                // moving diagonally, must make sure both of the vertical/horizontal
+                // neighbors is open to allow the path
+                if (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY) && iParam.SearchGrid.IsWalkableAt(iX, iY + tDy))
+                {
+                    return Jump(iParam, iX + tDx, iY + tDy, iX, iY);
+                }
+                else
+                {
+                    return null;
                 }
             }
-
-            // moving diagonally, must make sure one of the vertical/horizontal
-            // neighbors is open to allow the path
-            if (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY) || iParam.SearchGrid.IsWalkableAt(iX, iY + tDy))
-            {
-                return Jump(iParam, iX + tDx, iY + tDy, iX, iY);
-            }
-            else if (iParam.CrossCorner)
-            {
-                return Jump(iParam, iX + tDx, iY + tDy, iX, iY);
-            }
-            else
-            {
-                return null;
-            }
+           
         }
 
         private static List<GridPos> FindNeighbors(JumpPointParam iParam, Node iNode)
@@ -406,120 +483,196 @@ namespace EpPathFinding
                 tDx = (tX - tPx) / Math.Max(Math.Abs(tX - tPx), 1);
                 tDy = (tY - tPy) / Math.Max(Math.Abs(tY - tPy), 1);
 
-                // search diagonally
-                if (tDx != 0 && tDy != 0)
+                if (iParam.CrossCorner)
                 {
-                    if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy))
-                    {
-                        tNeighbors.Add(new GridPos(tX, tY + tDy));
-                    }
-                    if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
-                    {
-                        tNeighbors.Add(new GridPos(tX + tDx, tY));
-                    }
-
-                    if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY + tDy))
-                    {
-                        if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy) || iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
-                        {
-                            tNeighbors.Add(new GridPos(tX + tDx, tY + tDy));
-                        }
-                        else if (iParam.CrossCorner)
-                        {
-                            tNeighbors.Add(new GridPos(tX + tDx, tY + tDy));
-                        }
-                    }
-
-                    if (!iParam.SearchGrid.IsWalkableAt(tX - tDx, tY) && iParam.SearchGrid.IsWalkableAt(tX - tDx, tY + tDy))
-                    {
-                        if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy))
-                        {
-                            tNeighbors.Add(new GridPos(tX - tDx, tY + tDy));
-                        }
-                        else if (iParam.CrossCorner)
-                        {
-                            tNeighbors.Add(new GridPos(tX - tDx, tY + tDy));
-                        }
-                    }
-
-                    if (!iParam.SearchGrid.IsWalkableAt(tX, tY - tDy) && iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - tDy))
-                    {
-                        if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
-                        {
-                            tNeighbors.Add(new GridPos(tX + tDx, tY - tDy));
-                        }
-                        else if (iParam.CrossCorner)
-                        {
-                            tNeighbors.Add(new GridPos(tX + tDx, tY - tDy));
-                        }
-                    }
-
-
-                }
-                // search horizontally/vertically
-                else
-                {
-                    if (tDx == 0)
+                    // search diagonally
+                    if (tDx != 0 && tDy != 0)
                     {
                         if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy))
                         {
                             tNeighbors.Add(new GridPos(tX, tY + tDy));
-
-                            if (!iParam.SearchGrid.IsWalkableAt(tX + 1, tY) && iParam.SearchGrid.IsWalkableAt(tX + 1, tY + tDy))
-                            {
-                                tNeighbors.Add(new GridPos(tX + 1, tY + tDy));
-                            }
-                            if (!iParam.SearchGrid.IsWalkableAt(tX - 1, tY) && iParam.SearchGrid.IsWalkableAt(tX - 1, tY + tDy))
-                            {
-                                tNeighbors.Add(new GridPos(tX - 1, tY + tDy));
-                            }
                         }
-                        else if (iParam.CrossCorner)
-                        {
-                            if (!iParam.SearchGrid.IsWalkableAt(tX + 1, tY) && iParam.SearchGrid.IsWalkableAt(tX + 1, tY + tDy))
-                            {
-                                tNeighbors.Add(new GridPos(tX + 1, tY + tDy));
-                            }
-                            if (!iParam.SearchGrid.IsWalkableAt(tX - 1, tY) && iParam.SearchGrid.IsWalkableAt(tX - 1, tY + tDy))
-                            {
-                                tNeighbors.Add(new GridPos(tX - 1, tY + tDy));
-                            }
-                        }
-                    }
-                    else
-                    {
                         if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
                         {
-
                             tNeighbors.Add(new GridPos(tX + tDx, tY));
+                        }
 
-                            if (!iParam.SearchGrid.IsWalkableAt(tX, tY + 1) && iParam.SearchGrid.IsWalkableAt(tX + tDx, tY + 1))
+                        if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY + tDy))
+                        {
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy) || iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
                             {
-                                tNeighbors.Add(new GridPos(tX + tDx, tY + 1));
+                                tNeighbors.Add(new GridPos(tX + tDx, tY + tDy));
                             }
-                            if (!iParam.SearchGrid.IsWalkableAt(tX, tY - 1) && iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - 1))
+                            else if (iParam.CrossAdjacentPoint)
                             {
-                                tNeighbors.Add(new GridPos(tX + tDx, tY - 1));
+                                tNeighbors.Add(new GridPos(tX + tDx, tY + tDy));
                             }
                         }
-                        else if (iParam.CrossCorner)
+
+                        if (iParam.SearchGrid.IsWalkableAt(tX - tDx, tY + tDy))
                         {
-                            if (!iParam.SearchGrid.IsWalkableAt(tX, tY + 1) && iParam.SearchGrid.IsWalkableAt(tX + tDx, tY + 1))
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy) && !iParam.SearchGrid.IsWalkableAt(tX - tDx, tY))
                             {
-                                tNeighbors.Add(new GridPos(tX + tDx, tY + 1));
+                                tNeighbors.Add(new GridPos(tX - tDx, tY + tDy));
                             }
-                            if (!iParam.SearchGrid.IsWalkableAt(tX, tY - 1) && iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - 1))
+                        }
+
+                        if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - tDy))
+                        {
+                            if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY) && !iParam.SearchGrid.IsWalkableAt(tX, tY - tDy))
                             {
-                                tNeighbors.Add(new GridPos(tX + tDx, tY - 1));
+                                tNeighbors.Add(new GridPos(tX + tDx, tY - tDy));
+                            }
+                        }
+
+
+                    }
+                    // search horizontally/vertically
+                    else
+                    {
+                        if (tDx == 0)
+                        {
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy))
+                            {
+                                tNeighbors.Add(new GridPos(tX, tY + tDy));
+
+                                if (iParam.SearchGrid.IsWalkableAt(tX + 1, tY + tDy) && !iParam.SearchGrid.IsWalkableAt(tX + 1, tY))
+                                {
+                                    tNeighbors.Add(new GridPos(tX + 1, tY + tDy));
+                                }
+                                if (iParam.SearchGrid.IsWalkableAt(tX - 1, tY + tDy) && !iParam.SearchGrid.IsWalkableAt(tX - 1, tY))
+                                {
+                                    tNeighbors.Add(new GridPos(tX - 1, tY + tDy));
+                                }
+                            }
+                            else if (iParam.CrossAdjacentPoint)
+                            {
+                                if (iParam.SearchGrid.IsWalkableAt(tX + 1, tY + tDy) && !iParam.SearchGrid.IsWalkableAt(tX + 1, tY))
+                                {
+                                    tNeighbors.Add(new GridPos(tX + 1, tY + tDy));
+                                }
+                                if (iParam.SearchGrid.IsWalkableAt(tX - 1, tY + tDy) && !iParam.SearchGrid.IsWalkableAt(tX - 1, tY))
+                                {
+                                    tNeighbors.Add(new GridPos(tX - 1, tY + tDy));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
+                            {
+
+                                tNeighbors.Add(new GridPos(tX + tDx, tY));
+
+                                if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY + 1) && !iParam.SearchGrid.IsWalkableAt(tX, tY + 1))
+                                {
+                                    tNeighbors.Add(new GridPos(tX + tDx, tY + 1));
+                                }
+                                if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - 1) && !iParam.SearchGrid.IsWalkableAt(tX, tY - 1))
+                                {
+                                    tNeighbors.Add(new GridPos(tX + tDx, tY - 1));
+                                }
+                            }
+                            else if (iParam.CrossAdjacentPoint)
+                            {
+                                if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY + 1) && !iParam.SearchGrid.IsWalkableAt(tX, tY + 1))
+                                {
+                                    tNeighbors.Add(new GridPos(tX + tDx, tY + 1));
+                                }
+                                if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - 1) && !iParam.SearchGrid.IsWalkableAt(tX, tY - 1))
+                                {
+                                    tNeighbors.Add(new GridPos(tX + tDx, tY - 1));
+                                }
                             }
                         }
                     }
                 }
+                else // if(!iParam.CrossCorner)
+                {
+                    // search diagonally
+                    if (tDx != 0 && tDy != 0)
+                    {
+                        if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy))
+                        {
+                            tNeighbors.Add(new GridPos(tX, tY + tDy));
+                        }
+                        if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
+                        {
+                            tNeighbors.Add(new GridPos(tX + tDx, tY));
+                        }
+
+                        if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY + tDy))
+                        {
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy) && iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
+                                tNeighbors.Add(new GridPos(tX + tDx, tY + tDy));
+                        }
+
+                        if (iParam.SearchGrid.IsWalkableAt(tX - tDx, tY + tDy))
+                        {
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy) && iParam.SearchGrid.IsWalkableAt(tX - tDx, tY))
+                                tNeighbors.Add(new GridPos(tX - tDx, tY + tDy));
+                        }
+
+                        if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - tDy))
+                        {
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY - tDy) && iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
+                                tNeighbors.Add(new GridPos(tX + tDx, tY - tDy));
+                        }
+
+
+                    }
+                    // search horizontally/vertically
+                    else
+                    {
+                        if (tDx == 0)
+                        {
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy))
+                            {
+                                tNeighbors.Add(new GridPos(tX, tY + tDy));
+
+                                if (iParam.SearchGrid.IsWalkableAt(tX + 1, tY + tDy) && iParam.SearchGrid.IsWalkableAt(tX + 1, tY))
+                                {
+                                    tNeighbors.Add(new GridPos(tX + 1, tY + tDy));
+                                }
+                                if (iParam.SearchGrid.IsWalkableAt(tX - 1, tY + tDy) && iParam.SearchGrid.IsWalkableAt(tX - 1, tY))
+                                {
+                                    tNeighbors.Add(new GridPos(tX - 1, tY + tDy));
+                                }
+                            }
+                            if (iParam.SearchGrid.IsWalkableAt(tX + 1, tY))
+                                tNeighbors.Add(new GridPos(tX + 1, tY));
+                            if (iParam.SearchGrid.IsWalkableAt(tX - 1, tY))
+                                tNeighbors.Add(new GridPos(tX - 1, tY));
+                        }
+                        else
+                        {
+                            if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
+                            {
+
+                                tNeighbors.Add(new GridPos(tX + tDx, tY));
+
+                                if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY + 1) && iParam.SearchGrid.IsWalkableAt(tX, tY + 1))
+                                {
+                                    tNeighbors.Add(new GridPos(tX + tDx, tY + 1));
+                                }
+                                if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - 1) && iParam.SearchGrid.IsWalkableAt(tX, tY - 1))
+                                {
+                                    tNeighbors.Add(new GridPos(tX + tDx, tY - 1));
+                                }
+                            }
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY + 1))
+                                tNeighbors.Add(new GridPos(tX, tY + 1));
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY - 1))
+                                tNeighbors.Add(new GridPos(tX, tY - 1));
+                        }
+                    }
+                }
+             
             }
             // return all neighbors
             else
             {
-                tNeighborNodes = iParam.SearchGrid.GetNeighbors(iNode, iParam.CrossCorner);
+                tNeighborNodes = iParam.SearchGrid.GetNeighbors(iNode, iParam.CrossCorner, iParam.CrossAdjacentPoint);
                 for (int i = 0; i < tNeighborNodes.Count; i++)
                 {
                     tNeighborNode = tNeighborNodes[i];
