@@ -33,6 +33,7 @@
             this.btnClearWall = new System.Windows.Forms.Button();
             this.cbCrossCorners = new System.Windows.Forms.CheckBox();
             this.cbCrossAdjacentPoint = new System.Windows.Forms.CheckBox();
+            this.cbUseRecursive = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnSearch
@@ -90,12 +91,23 @@
             this.cbCrossAdjacentPoint.Text = "Cross Adjacent Point";
             this.cbCrossAdjacentPoint.UseVisualStyleBackColor = true;
             // 
+            // cbUseRecursive
+            // 
+            this.cbUseRecursive.AutoSize = true;
+            this.cbUseRecursive.Location = new System.Drawing.Point(549, 15);
+            this.cbUseRecursive.Name = "cbUseRecursive";
+            this.cbUseRecursive.Size = new System.Drawing.Size(106, 16);
+            this.cbUseRecursive.TabIndex = 6;
+            this.cbUseRecursive.Text = "Use Recursive";
+            this.cbUseRecursive.UseVisualStyleBackColor = true;
+            // 
             // SearchGridForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(613, 262);
+            this.ClientSize = new System.Drawing.Size(809, 262);
+            this.Controls.Add(this.cbUseRecursive);
             this.Controls.Add(this.cbCrossAdjacentPoint);
             this.Controls.Add(this.cbCrossCorners);
             this.Controls.Add(this.btnClearWall);
@@ -120,6 +132,7 @@
         private System.Windows.Forms.Button btnClearWall;
         private System.Windows.Forms.CheckBox cbCrossCorners;
         private System.Windows.Forms.CheckBox cbCrossAdjacentPoint;
+        private System.Windows.Forms.CheckBox cbUseRecursive;
     }
 }
 

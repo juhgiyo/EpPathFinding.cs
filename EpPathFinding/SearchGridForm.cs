@@ -102,6 +102,7 @@ namespace EpPathFinding
             //searchGrid = new DynamicGrid();
             searchGrid = new DynamicGridWPool(SingletonHolder<NodePool>.Instance);
             jumpParam = new JumpPointParam(searchGrid, true, cbCrossCorners.Checked, cbCrossAdjacentPoint.Checked, HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
+            jumpParam.UseRecursive = cbUseRecursive.Checked;
             
         }
 
@@ -319,6 +320,7 @@ namespace EpPathFinding
                 }
              jumpParam.CrossCorner = cbCrossCorners.Checked;
              jumpParam.CrossAdjacentPoint = cbCrossAdjacentPoint.Checked;
+             jumpParam.UseRecursive = cbUseRecursive.Checked;
             jumpParam.Reset(startPos, endPos);
             List<GridPos> resultList = JumpPointFinder.FindPath(jumpParam);
             
