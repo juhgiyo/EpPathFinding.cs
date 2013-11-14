@@ -49,7 +49,7 @@ namespace EpPathFinding
     class JumpPointParam
     {
 
-        public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, bool iCorssAdjacentPoint = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
+        public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, bool iCrossAdjacentPoint = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
         {
             switch (iMode)
             {
@@ -67,7 +67,7 @@ namespace EpPathFinding
                     break;
             }
             allowEndNodeUnWalkable = iAllowEndNodeUnWalkable;
-            crossAdjacentPoint = iCorssAdjacentPoint;
+            crossAdjacentPoint = iCrossAdjacentPoint;
             crossCorner = iCrossCorner;
             openList = new List<Node>();
 
@@ -81,7 +81,7 @@ namespace EpPathFinding
             useRecursive = false;
         }
 
-        public JumpPointParam(BaseGrid iGrid, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, bool iCorssAdjacentPoint=true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
+        public JumpPointParam(BaseGrid iGrid, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, bool iCrossAdjacentPoint=true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
         {
             switch (iMode)
             {
@@ -99,7 +99,7 @@ namespace EpPathFinding
                     break;
             }
             allowEndNodeUnWalkable = iAllowEndNodeUnWalkable;
-            crossAdjacentPoint = iCorssAdjacentPoint;
+            crossAdjacentPoint = iCrossAdjacentPoint;
             crossCorner = iCrossCorner;
 
             openList = new List<Node>();

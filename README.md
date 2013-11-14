@@ -19,17 +19,17 @@ BaseGrid searchGrid = new StaticGrid(64, 32);
 ```
 
 
-By default, every nodes in the grid will allow to be walked through. To set whether a node at a given coordinate is walkable or not, use the `SetWalkableAt` function.
+By default, every nodes in the grid will NOT allow to be walked through. To set whether a node at a given coordinate is walkable or not, use the `SetWalkableAt` function.
 
-For example, in order to set the node at (10 , 20) to be un-walkable, where 10 is the x coordinate (from left to right), and 20 is the y coordinate (from top to bottom): 
+For example, in order to set the node at (10 , 20) to be walkable, where 10 is the x coordinate (from left to right), and 20 is the y coordinate (from top to bottom): 
 
 
 ```c#
-searchGrid.SetWalkableAt(10, 20, false);
+searchGrid.SetWalkableAt(10, 20, true);
  
 // OR
  
-searchGrid.SetWalkableAt(new GridPos(10,20),false);  
+searchGrid.SetWalkableAt(new GridPos(10,20),true);  
 ```
 
 
@@ -89,14 +89,54 @@ resultPathList = JumpPointFinder.FindPath(jpParam);
 
 Advanced Usage
 ------------
-#### Cross Corners ####
-When instantiating the `JumpPointParam`, you may pass in additional parameters to indicate specific strategies to use.  
 
+#### Find the path even the end node is unwalkable  ####
+When instantiating the `JumpPointParam`, you may pass in additional parameter to make the search able to find path even the end node is unwalkable grid:   
+```
+Note that it automatically sets to true as a default when the parameter is not specified.
+```
+
+```c#
+JumpPointParam jpParam = new JumpPointParam(searchGrid,`true`);
+```
+
+
+If `iAllowEndNodeUnWalkable` is false the FindPath will return the empty path if the end node is unwalkable: 
+
+
+```c#
+JumpPointParam jpParam = new JumpPointParam(searchGrid,`false`);   
+```
+
+#### Cross Corner ####
+When instantiating the `JumpPointParam`, you may pass in additional parameter to make the search able to walk diagonally when one of the side is unwalkable grid:  
+```
+Note that it automatically sets to true as a default when the parameter is not specified.
+```
+
+```c#
+JumpPointParam jpParam = new JumpPointParam(searchGrid,true,`true`);   
+```
+
+
+To make it unable to walk diagonally when one of the side is unwalkable and rather go around the corner: 
+
+
+```c#
+JumpPointParam jpParam = new JumpPointParam(searchGrid,true,`false`);   
+```
+
+
+#### Cross Adjacent Point ####
+When instantiating the `JumpPointParam`, you may pass in additional parameters to indicate specific strategies to use.  
+```
+Note that this option will be ignored if the `Cross Corner` option is false.
+```
 In order to make search able to walk diagonally across corner of two diagonal unwalkable nodes:   
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,true,true,`true`);   
 ```
 
 
@@ -104,7 +144,7 @@ To make it unable to walk diagonally across two diagonal unwalkable corners:
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,false);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,true,true,`false`);   
 ```
 
 

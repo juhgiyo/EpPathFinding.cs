@@ -91,6 +91,10 @@ namespace EpPathFinding
                     {
                         tNodes[widthTrav][heightTrav].walkable = true;
                     }
+                    else
+                    {
+                        tNodes[widthTrav][heightTrav].walkable = false;
+                    }
                 }
             }
             return tNodes;
@@ -164,7 +168,11 @@ namespace EpPathFinding
             {
                 for (int heightTrav = 0; heightTrav < height; heightTrav++)
                 {
-                    if (!iMatrix[widthTrav][heightTrav])
+                    if (iMatrix[widthTrav][heightTrav])
+                    {
+                        nodes[widthTrav][heightTrav].walkable = true;
+                    }
+                    else
                     {
                         nodes[widthTrav][heightTrav].walkable = false;
                     }
