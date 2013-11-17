@@ -46,7 +46,7 @@ namespace EpPathFinding
 
     public delegate float HeuristicDelegate(int iDx, int iDy);
 
-    class JumpPointParam
+    public class JumpPointParam
     {
 
         public JumpPointParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, bool iAllowEndNodeUnWalkable = true, bool iCrossCorner = true, bool iCrossAdjacentPoint = true, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)

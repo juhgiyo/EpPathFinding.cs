@@ -42,7 +42,7 @@ using System.Text;
 
 namespace EpPathFinding
 {
-    enum HeuristicMode
+    public enum HeuristicMode
     {
         MANHATTAN,
         EUCLIDEAN,
@@ -50,7 +50,7 @@ namespace EpPathFinding
         
     };
 
-    class Heuristic
+    public class Heuristic
     {
       public static float Manhattan(int iDx, int iDy)
       {
