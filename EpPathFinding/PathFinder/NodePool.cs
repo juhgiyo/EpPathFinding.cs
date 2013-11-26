@@ -45,24 +45,24 @@ namespace EpPathFinding
 {
     public class NodePool
     {
-        protected Dictionary<GridPos, Node> nodes;
+        protected Dictionary<GridPos, Node> m_nodes;
 
         public NodePool()
         {
-            nodes = new Dictionary<GridPos, Node>();
+            m_nodes = new Dictionary<GridPos, Node>();
         }
 
         public Node GetNode(int iX, int iY, bool? iWalkable = null)
         {
             GridPos pos = new GridPos(iX, iY);
-            if (nodes.ContainsKey(pos))
-                return nodes[pos];
+            if (m_nodes.ContainsKey(pos))
+                return m_nodes[pos];
             else
             {
                 if (iWalkable.HasValue && iWalkable.Value == true)
                 {
                     Node newNode = new Node(pos.x, pos.y, iWalkable);
-                    nodes.Add(pos, newNode);
+                    m_nodes.Add(pos, newNode);
                     return newNode;
                 }
                 return null;
@@ -70,14 +70,14 @@ namespace EpPathFinding
         }
         public Node GetNode(GridPos iPos, bool? iWalkable = null)
         {
-            if (nodes.ContainsKey(iPos))
-                return nodes[iPos];
+            if (m_nodes.ContainsKey(iPos))
+                return m_nodes[iPos];
             else
             {
                 if (iWalkable.HasValue && iWalkable.Value == true)
                 {
                     Node newNode = new Node(iPos.x, iPos.y, iWalkable);
-                    nodes.Add(iPos, newNode);
+                    m_nodes.Add(iPos, newNode);
                     return newNode;
                 }
                 return null;
@@ -86,8 +86,8 @@ namespace EpPathFinding
 
         public void RemoveNode(GridPos iPos)
         {
-            if (nodes.ContainsKey(iPos))
-                nodes.Remove(iPos);
+            if (m_nodes.ContainsKey(iPos))
+                m_nodes.Remove(iPos);
         }
     }
 }

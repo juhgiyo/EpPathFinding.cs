@@ -45,7 +45,7 @@ namespace General
 {
     public class SingletonHolder<T> where T : new()
     {
-        private static T instance;
+        private static T m_instance;
 
         private SingletonHolder()
         {
@@ -55,11 +55,11 @@ namespace General
         {
             get
             {
-                if (instance == null)
+                if (m_instance == null)
                 {
-                    instance = new T();
+                    m_instance = new T();
                 }
-                return instance;
+                return m_instance;
             }
         }
     }

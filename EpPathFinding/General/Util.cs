@@ -44,10 +44,10 @@ namespace EpForceDirectedGraph
 {
     public class Util
     {
-        private static Random random = new Random();
+        private static Random m_random = new Random();
         public static float Random()
         {
-            var result = random.NextDouble();
+            var result = m_random.NextDouble();
             return (float)result;
         }
     }

@@ -46,15 +46,15 @@ namespace EpPathFinding
 {
     public class PartialGridWPool : BaseGrid
     {
-        protected Dictionary<GridPos, Node> nodes;
-        private GridRect gridRect;
-        private NodePool nodePool;
+        protected Dictionary<GridPos, Node> m_nodes;
+        private GridRect m_gridRect;
+        private NodePool m_nodePool;
 
         public override int width
         {
             get
             {
-                return gridRect.maxX - gridRect.minX;
+                return m_gridRect.maxX - m_gridRect.minX;
             }
             protected set
             {
@@ -66,7 +66,7 @@ namespace EpPathFinding
         {
             get
             {
-                return gridRect.maxY - gridRect.minY;
+                return m_gridRect.maxY - m_gridRect.minY;
             }
             protected set
             {
@@ -78,61 +78,61 @@ namespace EpPathFinding
             : base()
         {
             if (iGridRect == null)
-                gridRect = new GridRect();
+                m_gridRect = new GridRect();
             else
-                gridRect = iGridRect.Value;
-            nodePool = iNodePool;
-            BuildNodes();
+                m_gridRect = iGridRect.Value;
+            m_nodePool = iNodePool;
+            buildNodes();
         }
 
-        protected void BuildNodes()
+        protected void buildNodes()
         {
-            nodes = new Dictionary<GridPos, Node>();
-            for (int travX = gridRect.minX; travX <= gridRect.maxX; travX++)
+            m_nodes = new Dictionary<GridPos, Node>();
+            for (int travX = m_gridRect.minX; travX <= m_gridRect.maxX; travX++)
             {
-                for (int travY = gridRect.minY; travY <= gridRect.maxY; travY++)
+                for (int travY = m_gridRect.minY; travY <= m_gridRect.maxY; travY++)
                 {
-                    Node curNode=nodePool.GetNode(travX,travY);
+                    Node curNode=m_nodePool.GetNode(travX,travY);
                     if(curNode!=null)
-                        nodes.Add(new GridPos(travX, travY), curNode);
+                        m_nodes.Add(new GridPos(travX, travY), curNode);
                 }
             }
         }
-        protected void UpdateNodes()
+        protected void updateNodes()
         {
             GridPos curPos = new GridPos(0, 0);
             Node curNode = null;
             bool containsKey = false;
-            for (int travX = gridRect.minX; travX <= gridRect.maxX; travX++)
+            for (int travX = m_gridRect.minX; travX <= m_gridRect.maxX; travX++)
             {
                 curPos.x = travX;
-                for (int travY = gridRect.minY; travY <= gridRect.maxY; travY++)
+                for (int travY = m_gridRect.minY; travY <= m_gridRect.maxY; travY++)
                 {
                     curPos.y = travY;
-                    curNode = nodePool.GetNode(travX, travY);
-                    containsKey = nodes.ContainsKey(curPos);
+                    curNode = m_nodePool.GetNode(travX, travY);
+                    containsKey = m_nodes.ContainsKey(curPos);
                     if (curNode != null && !containsKey)
-                        nodes.Add(new GridPos(travX, travY), curNode);
+                        m_nodes.Add(new GridPos(travX, travY), curNode);
                     else if (curNode == null && containsKey)
-                        nodes.Remove(curPos);
+                        m_nodes.Remove(curPos);
                 }
             }
         }
         public void SetGridRect(GridRect iGridRect)
         {
-            gridRect = iGridRect;
-            UpdateNodes();
+            m_gridRect = iGridRect;
+            updateNodes();
         }
 
 
         public void UpdateFromPool()
         {
-            UpdateNodes();
+            updateNodes();
         }
 
         public bool IsInside(int iX, int iY)
         {
-            if (iX < gridRect.minX || iX > gridRect.maxX || iY < gridRect.minY || iY > gridRect.maxY)
+            if (iX < m_gridRect.minX || iX > m_gridRect.maxX || iY < m_gridRect.minY || iY > m_gridRect.maxY)
                 return false;
             return true;
         }
@@ -157,21 +157,21 @@ namespace EpPathFinding
 
             if (iWalkable)
             {
-                if (nodes.ContainsKey(pos))
+                if (m_nodes.ContainsKey(pos))
                 {
                     return true;
                 }
                 else
                 {
-                    nodes.Add(new GridPos(pos.x, pos.y), nodePool.GetNode(pos.x, pos.y, iWalkable));
+                    m_nodes.Add(new GridPos(pos.x, pos.y), m_nodePool.GetNode(pos.x, pos.y, iWalkable));
                 }
             }
             else
             {
-                if (nodes.ContainsKey(pos))
+                if (m_nodes.ContainsKey(pos))
                 {
-                    nodes.Remove(pos);
-                    nodePool.RemoveNode(pos);
+                    m_nodes.Remove(pos);
+                    m_nodePool.RemoveNode(pos);
                 }
             }
             return true;
@@ -184,16 +184,16 @@ namespace EpPathFinding
 
         public override Node GetNodeAt(GridPos iPos)
         {
-            if (nodes.ContainsKey(iPos))
+            if (m_nodes.ContainsKey(iPos))
             {
-                return nodes[iPos];
+                return m_nodes[iPos];
             }
             return null;
         }
 
         public override bool IsWalkableAt(GridPos iPos)
         {
-            return nodes.ContainsKey(iPos);
+            return m_nodes.ContainsKey(iPos);
         }
 
         public override bool SetWalkableAt(GridPos iPos, bool iWalkable)
@@ -203,8 +203,8 @@ namespace EpPathFinding
 
         public override void Reset()
         {
-            UpdateNodes();
-            foreach (KeyValuePair<GridPos, Node> keyValue in nodes)
+            updateNodes();
+            foreach (KeyValuePair<GridPos, Node> keyValue in m_nodes)
             {
                 keyValue.Value.Reset();
             }
@@ -213,7 +213,7 @@ namespace EpPathFinding
 
         public override BaseGrid Clone()
         {
-            PartialGridWPool tNewGrid = new PartialGridWPool(nodePool,gridRect);
+            PartialGridWPool tNewGrid = new PartialGridWPool(m_nodePool,m_gridRect);
             return tNewGrid;
         }
     }

@@ -45,47 +45,47 @@ namespace General
 {
     public class PriorityQueue<T> where T : IComparable
     {
-        private List<T> data;
+        private List<T> m_data;
 
         public PriorityQueue()
         {
-            this.data = new List<T>();
+            this.m_data = new List<T>();
         }
 
         public void Enqueue(T queueItem)
         {
-            data.Add(queueItem);
-            data.Sort();
+            m_data.Add(queueItem);
+            m_data.Sort();
         }
 
         public void Clear()
         {
-            data.Clear();
+            m_data.Clear();
         }
 
 
         public T Dequeue()
         {
-            T frontItem = data[0];
-            data.RemoveAt(0);
+            T frontItem = m_data[0];
+            m_data.RemoveAt(0);
             return frontItem;
         }
 
         public T Peek()
         {
-            T frontItem = data[0];
+            T frontItem = m_data[0];
             return frontItem;
         }
 
         public bool Contains(T queueItem)
         {
-            return data.Contains(queueItem);
+            return m_data.Contains(queueItem);
         }
         public int Count
         {
             get
             {
-                return data.Count;
+                return m_data.Count;
             }
         }
     }
