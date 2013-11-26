@@ -130,6 +130,13 @@ namespace EpPathFinding
             UpdateNodes();
         }
 
+        public bool IsInside(int iX, int iY)
+        {
+            if (iX < gridRect.minX || iX > gridRect.maxX || iY < gridRect.minY || iY > gridRect.maxY)
+                return false;
+            return true;
+        }
+
         public override Node GetNodeAt(int iX, int iY)
         {
             GridPos pos = new GridPos(iX, iY);
@@ -144,7 +151,7 @@ namespace EpPathFinding
 
         public override bool SetWalkableAt(int iX, int iY, bool iWalkable)
         {
-            if(iX<gridRect.minX  || iX>gridRect.maxX || iY<gridRect.minY || iY>gridRect.maxY)
+            if (IsInside(iX,iY))
                 return false;
             GridPos pos = new GridPos(iX, iY);
 
@@ -168,6 +175,11 @@ namespace EpPathFinding
                 }
             }
             return true;
+        }
+
+        public bool IsInside(GridPos iPos)
+        {
+            return IsInside(iPos.x, iPos.y);
         }
 
         public override Node GetNodeAt(GridPos iPos)
