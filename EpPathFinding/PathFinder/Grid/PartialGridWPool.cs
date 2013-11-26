@@ -203,6 +203,7 @@ namespace EpPathFinding
 
         public override void Reset()
         {
+            UpdateNodes();
             foreach (KeyValuePair<GridPos, Node> keyValue in nodes)
             {
                 keyValue.Value.Reset();
@@ -212,14 +213,7 @@ namespace EpPathFinding
 
         public override BaseGrid Clone()
         {
-            DynamicGridWPool tNewGrid = new DynamicGridWPool(null);
-
-            foreach (KeyValuePair<GridPos, Node> keyValue in nodes)
-            {
-                tNewGrid.SetWalkableAt(keyValue.Key.x, keyValue.Key.y, true);
-
-            }
-
+            PartialGridWPool tNewGrid = new PartialGridWPool(nodePool,gridRect);
             return tNewGrid;
         }
     }
