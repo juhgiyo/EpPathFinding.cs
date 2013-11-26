@@ -1,9 +1,9 @@
-﻿/*! 
-@file GridPos.cs
+/*! 
+@file GridRect.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 		<http://github.com/juhgiyo/eppathfinding.cs>
 @date July 16, 2013
-@brief Grid Position Interface
+@brief GridRect Interface
 @version 2.0
 
 @section LICENSE
@@ -32,48 +32,54 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-An Interface for the Grid Position Struct.
+An Interface for the GridRect Struct.
 
 */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Collections;
+using General;
 
 namespace EpPathFinding
 {
-    public struct GridPos
+    public struct GridRect
     {
-        public int x;
-        public int y;
-        public GridPos(int iX, int iY)
+        public int minX;
+        public int minY;
+        public int maxX;
+        public int maxY;
+
+        public GridRect(int iMinX, int iMinY, int iMaxX, int iMaxY)
         {
-            this.x = iX;
-            this.y = iY;
+            minX = iMinX;
+            minY = iMinY;
+            maxX = iMaxX;
+            maxY = iMaxY;
         }
 
         public override int GetHashCode()
         {
-            return x ^ y;
+            return minX ^ minY ^ maxX ^ maxY;
         }
 
         public override bool Equals(System.Object obj)
         {
-            if (!(obj is GridPos))
+            if (!(obj is GridRect))
                 return false;
-            GridPos p = (GridPos)obj;
+            GridRect p = (GridRect)obj;
             // Return true if the fields match:
-            return (x == p.x) && (y == p.y);
+            return (minX == p.minX) && (minY == p.minY) && (maxX == p.maxX) && (maxY == p.maxY);
         }
 
-        public bool Equals(GridPos p)
+        public bool Equals(GridRect p)
         {
             // Return true if the fields match:
-            return (x == p.x) && (y == p.y);
+            return (minX == p.minX) && (minY == p.minY) && (maxX == p.maxX) && (maxY == p.maxY);
         }
 
-        public static bool operator ==(GridPos a, GridPos b)
+        public static bool operator ==(GridRect a, GridRect b)
         {
             // If both are null, or both are same instance, return true.
             if (System.Object.ReferenceEquals(a, b))
@@ -82,18 +88,20 @@ namespace EpPathFinding
             }
 
             // Return true if the fields match:
-            return a.x == b.x && a.y == b.y;
+            return (a.minX == b.minX) && (a.minY == b.minY) && (a.maxX == b.maxX) && (a.maxY == b.maxY);
         }
 
-        public static bool operator !=(GridPos a, GridPos b)
+        public static bool operator !=(GridRect a, GridRect b)
         {
             return !(a == b);
         }
 
-        public GridPos Set(int iX, int iY)
+        public GridRect Set(int iMinX, int iMinY, int iMaxX, int iMaxY)
         {
-            this.x = iX;
-            this.y = iY;
+            this.minX = iMinX;
+            this.minY = iMinY;
+            this.maxX = iMaxX;
+            this.maxY = iMaxY;
             return this;
         }
     }

@@ -115,9 +115,10 @@ namespace EpPathFinding
             return (iX >= 0 && iX < width) && (iY >= 0 && iY < height);
         }
 
-        public override void SetWalkableAt(int iX, int iY, bool iWalkable)
+        public override bool SetWalkableAt(int iX, int iY, bool iWalkable)
         {
             this.nodes[iX][iY].walkable = iWalkable;
+            return true;
         }
 
         protected bool IsInside(GridPos iPos)
@@ -135,9 +136,9 @@ namespace EpPathFinding
             return IsWalkableAt(iPos.x, iPos.y);
         }
 
-        public override void SetWalkableAt(GridPos iPos, bool iWalkable)
+        public override bool SetWalkableAt(GridPos iPos, bool iWalkable)
         {
-            SetWalkableAt(iPos.x, iPos.y, iWalkable);
+            return SetWalkableAt(iPos.x, iPos.y, iWalkable);
         }
 
         public override void Reset()

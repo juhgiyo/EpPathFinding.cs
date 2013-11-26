@@ -66,11 +66,13 @@
     <Compile Include="General\SingletonHolder.cs" />
     <Compile Include="General\Triple.cs" />
     <Compile Include="General\Util.cs" />
-    <Compile Include="PathFinder\BaseGrid.cs" />
-    <Compile Include="PathFinder\DynamicGrid.cs" />
-    <Compile Include="PathFinder\DynamicGridWPool.cs" />
+    <Compile Include="PathFinder\Grid\BaseGrid.cs" />
+    <Compile Include="PathFinder\Grid\DynamicGrid.cs" />
+    <Compile Include="PathFinder\Grid\DynamicGridWPool.cs" />
+    <Compile Include="PathFinder\GridRect.cs" />
     <Compile Include="PathFinder\NodePool.cs" />
-    <Compile Include="PathFinder\StaticGrid.cs" />
+    <Compile Include="PathFinder\Grid\PartialGridWPool.cs" />
+    <Compile Include="PathFinder\Grid\StaticGrid.cs" />
     <Compile Include="SearchGridForm.cs">
       <SubType>Form</SubType>
     </Compile>
