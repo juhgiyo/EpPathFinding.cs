@@ -55,6 +55,10 @@ namespace EpPathFinding
         {
             width = iWidth;
             height = iHeight;
+            m_gridRect.minX = 0;
+            m_gridRect.minY = 0;
+            m_gridRect.maxX = iWidth-1;
+            m_gridRect.maxY = iHeight - 1;
             this.m_nodes = buildNodes(iWidth, iHeight, iMatrix);
         }
 

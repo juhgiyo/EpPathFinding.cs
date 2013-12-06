@@ -175,6 +175,12 @@ namespace EpPathFinding
         {
         }
 
+        protected GridRect m_gridRect;
+        public GridRect gridRect
+        {
+            get { return m_gridRect; }
+        }
+
         public abstract int width { get; protected set; }
 
         public abstract int height { get; protected set; }

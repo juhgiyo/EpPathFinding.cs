@@ -46,8 +46,6 @@ namespace EpPathFinding
 {
     public class PartialGridWPool : BaseGrid
     {
-        protected Dictionary<GridPos, Node> m_nodes;
-        private GridRect m_gridRect;
         private NodePool m_nodePool;
 
         public override int width
@@ -74,6 +72,7 @@ namespace EpPathFinding
             }
         }
 
+
         public PartialGridWPool(NodePool iNodePool, GridRect? iGridRect = null)
             : base()
         {
@@ -82,53 +81,14 @@ namespace EpPathFinding
             else
                 m_gridRect = iGridRect.Value;
             m_nodePool = iNodePool;
-            buildNodes();
         }
 
-        protected void buildNodes()
-        {
-            m_nodes = new Dictionary<GridPos, Node>();
-            for (int travX = m_gridRect.minX; travX <= m_gridRect.maxX; travX++)
-            {
-                for (int travY = m_gridRect.minY; travY <= m_gridRect.maxY; travY++)
-                {
-                    Node curNode=m_nodePool.GetNode(travX,travY);
-                    if(curNode!=null)
-                        m_nodes.Add(new GridPos(travX, travY), curNode);
-                }
-            }
-        }
-        protected void updateNodes()
-        {
-            GridPos curPos = new GridPos(0, 0);
-            Node curNode = null;
-            bool containsKey = false;
-            for (int travX = m_gridRect.minX; travX <= m_gridRect.maxX; travX++)
-            {
-                curPos.x = travX;
-                for (int travY = m_gridRect.minY; travY <= m_gridRect.maxY; travY++)
-                {
-                    curPos.y = travY;
-                    curNode = m_nodePool.GetNode(travX, travY);
-                    containsKey = m_nodes.ContainsKey(curPos);
-                    if (curNode != null && !containsKey)
-                        m_nodes.Add(new GridPos(travX, travY), curNode);
-                    else if (curNode == null && containsKey)
-                        m_nodes.Remove(curPos);
-                }
-            }
-        }
+       
         public void SetGridRect(GridRect iGridRect)
         {
             m_gridRect = iGridRect;
-            updateNodes();
         }
 
-
-        public void UpdateFromPool()
-        {
-            updateNodes();
-        }
 
         public bool IsInside(int iX, int iY)
         {
@@ -151,29 +111,10 @@ namespace EpPathFinding
 
         public override bool SetWalkableAt(int iX, int iY, bool iWalkable)
         {
-            if (IsInside(iX,iY))
+            if (!IsInside(iX,iY))
                 return false;
             GridPos pos = new GridPos(iX, iY);
-
-            if (iWalkable)
-            {
-                if (m_nodes.ContainsKey(pos))
-                {
-                    return true;
-                }
-                else
-                {
-                    m_nodes.Add(new GridPos(pos.x, pos.y), m_nodePool.GetNode(pos.x, pos.y, iWalkable));
-                }
-            }
-            else
-            {
-                if (m_nodes.ContainsKey(pos))
-                {
-                    m_nodes.Remove(pos);
-                    m_nodePool.RemoveNode(pos);
-                }
-            }
+            m_nodePool.SetNode(pos, iWalkable);
             return true;
         }
 
@@ -184,16 +125,16 @@ namespace EpPathFinding
 
         public override Node GetNodeAt(GridPos iPos)
         {
-            if (m_nodes.ContainsKey(iPos))
-            {
-                return m_nodes[iPos];
-            }
-            return null;
+            if (!IsInside(iPos))
+                return null;
+            return m_nodePool.GetNode(iPos);
         }
 
         public override bool IsWalkableAt(GridPos iPos)
         {
-            return m_nodes.ContainsKey(iPos);
+            if (!IsInside(iPos))
+                return false;
+            return m_nodePool.Nodes.ContainsKey(iPos);
         }
 
         public override bool SetWalkableAt(GridPos iPos, bool iWalkable)
@@ -203,10 +144,28 @@ namespace EpPathFinding
 
         public override void Reset()
         {
-            updateNodes();
-            foreach (KeyValuePair<GridPos, Node> keyValue in m_nodes)
+            int rectCount=(m_gridRect.maxX-m_gridRect.minX) * (m_gridRect.maxY-m_gridRect.minY);
+            if (m_nodePool.Nodes.Count > rectCount)
             {
-                keyValue.Value.Reset();
+                GridPos travPos = new GridPos(0, 0);
+                for (int xTrav = m_gridRect.minX; xTrav <= m_gridRect.maxX; xTrav++)
+                {
+                    travPos.x = xTrav;
+                    for (int yTrav = m_gridRect.minY; yTrav <= m_gridRect.maxY; yTrav++)
+                    {
+                        travPos.y = yTrav;
+                        Node curNode=m_nodePool.GetNode(travPos);
+                        if (curNode!=null)
+                            curNode.Reset();
+                    }
+                }
+            }
+            else
+            {
+                foreach (KeyValuePair<GridPos, Node> keyValue in m_nodePool.Nodes)
+                {
+                    keyValue.Value.Reset();
+                }
             }
         }
 

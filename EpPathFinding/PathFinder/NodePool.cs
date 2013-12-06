@@ -52,39 +52,61 @@ namespace EpPathFinding
             m_nodes = new Dictionary<GridPos, Node>();
         }
 
-        public Node GetNode(int iX, int iY, bool? iWalkable = null)
+        public Dictionary<GridPos, Node> Nodes
+        {
+            get { return m_nodes; }
+        }
+        public Node GetNode(int iX, int iY)
         {
             GridPos pos = new GridPos(iX, iY);
-            if (m_nodes.ContainsKey(pos))
-                return m_nodes[pos];
-            else
-            {
-                if (iWalkable.HasValue && iWalkable.Value == true)
-                {
-                    Node newNode = new Node(pos.x, pos.y, iWalkable);
-                    m_nodes.Add(pos, newNode);
-                    return newNode;
-                }
-                return null;
-            }
+            return GetNode(pos);
         }
-        public Node GetNode(GridPos iPos, bool? iWalkable = null)
+
+        public Node GetNode(GridPos iPos)
         {
             if (m_nodes.ContainsKey(iPos))
                 return m_nodes[iPos];
-            else
+           return null;
+        }
+
+        public Node SetNode(int iX, int iY, bool? iWalkable = null)
+        {
+            GridPos pos = new GridPos(iX, iY);
+            return SetNode(pos,iWalkable);
+        }
+
+        public Node SetNode(GridPos iPos, bool? iWalkable = null)
+        {
+            if (iWalkable.HasValue)
             {
-                if (iWalkable.HasValue && iWalkable.Value == true)
+                if (iWalkable.Value == true)
                 {
+                    if (m_nodes.ContainsKey(iPos))
+                        return m_nodes[iPos];
                     Node newNode = new Node(iPos.x, iPos.y, iWalkable);
                     m_nodes.Add(iPos, newNode);
                     return newNode;
                 }
-                return null;
+                else
+                {
+                    removeNode(iPos);
+                }
+                
             }
+            else
+            {
+                Node newNode = new Node(iPos.x, iPos.y, true);
+                m_nodes.Add(iPos, newNode);
+                return newNode;
+            }
+            return null;
         }
-
-        public void RemoveNode(GridPos iPos)
+        protected void removeNode(int iX, int iY)
+        {
+            GridPos pos = new GridPos(iX, iY);
+            removeNode(pos);
+        }
+        protected void removeNode(GridPos iPos)
         {
             if (m_nodes.ContainsKey(iPos))
                 m_nodes.Remove(iPos);
