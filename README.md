@@ -155,7 +155,7 @@ To use the `MANHATTAN` heuristic:
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true, Heuristic.MANHATTAN); 
+JumpPointParam jpParam = new JumpPointParam(searchGrid,true,true,true, Heuristic.MANHATTAN); 
 ```
 
 
@@ -195,6 +195,28 @@ BaseGrid searchGrid = new DynamicGrid(walkableGridPosList);
 
 
 Rest of the functionality like `SetWalkableAt`, `Reset`, etc. are same as `StaticGrid`. 
+
+
+#### UseRecursive ####
+You may use recursive function or loop function to find the path. This can be simply done by setting UseRecursive flag in JumpPointParam:
+```
+Note that the default is false, which uses loop function.
+```
+
+```c#
+// To use recursive function
+JumpPointParam jpParam = new JumpPointParam(...);
+jpParam.UseRecursive = true;  
+```
+
+
+To change back to loop function
+
+
+```c#
+// To change back to loop function 
+jpParam.UseRecursive = false; 
+```
 
 #### Extendability ####
 You can also create a sub-class of `BaseGrid` to create your own way of `Grid` class to best support your situation.
