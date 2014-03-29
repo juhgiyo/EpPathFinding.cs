@@ -1,4 +1,4 @@
-﻿namespace EpPathFinding
+﻿namespace EpPathFinding.cs
 {
     partial class SearchGridForm
     {

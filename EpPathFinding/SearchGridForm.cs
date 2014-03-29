@@ -44,9 +44,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using General;
 
-namespace EpPathFinding
+
+namespace EpPathFinding.cs
 {
     public partial class SearchGridForm : Form
     {

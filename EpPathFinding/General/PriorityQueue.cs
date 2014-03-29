@@ -41,7 +41,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace General
+namespace EpPathFinding.cs
 {
     public class PriorityQueue<T> where T : IComparable
     {

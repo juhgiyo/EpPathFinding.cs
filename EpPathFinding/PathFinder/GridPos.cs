@@ -41,7 +41,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EpPathFinding
+namespace EpPathFinding.cs
 {
     public struct GridPos
     {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpPathFinding", "EpPathFinding.csproj", "{82FE700A-0BA3-49D0-ACE0-C1F87FBE5021}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpPathFinding.cs", "EpPathFinding.cs.csproj", "{82FE700A-0BA3-49D0-ACE0-C1F87FBE5021}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

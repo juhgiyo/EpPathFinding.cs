@@ -40,7 +40,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace General
+namespace EpPathFinding.cs
 {
     public class Triple<T,U,V>
     {

@@ -41,7 +41,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace General
+namespace EpPathFinding.cs
 {
 
     public class Pair<T, U>

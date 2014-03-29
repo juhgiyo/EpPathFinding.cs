@@ -41,7 +41,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace EpPathFinding
+namespace EpPathFinding.cs
 {
 
     public delegate float HeuristicDelegate(int iDx, int iDy);

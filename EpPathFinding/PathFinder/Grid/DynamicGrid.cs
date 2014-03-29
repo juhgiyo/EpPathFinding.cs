@@ -42,7 +42,7 @@ using System.Text;
 using System.Collections;
 
 
-namespace EpPathFinding
+namespace EpPathFinding.cs
 {
     public class DynamicGrid : BaseGrid
     {

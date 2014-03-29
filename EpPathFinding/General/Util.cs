@@ -40,7 +40,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EpForceDirectedGraph
+namespace EpPathFinding.cs
 {
     public class Util
     {
