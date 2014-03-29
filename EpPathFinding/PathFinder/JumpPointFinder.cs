@@ -257,6 +257,48 @@ namespace EpPathFinding
     }
     class JumpPointFinder
     {
+        public static List<GridPos> GetFullPath(List<GridPos> routeFound)
+        {
+            if (routeFound == null)
+                return null;
+            List<GridPos> consecutiveGridList = new List<GridPos>();
+            if (routeFound.Count > 1)
+                consecutiveGridList.Add(routeFound[0]);
+            for (int routeTrav = 0; routeTrav < routeFound.Count - 1; routeTrav++)
+            {
+                GridPos fromGrid = routeFound[routeTrav];
+                GridPos toGrid = routeFound[routeTrav + 1];
+                int dX = toGrid.x - fromGrid.x;
+                int dY = toGrid.y - fromGrid.y;
+                if (dX != 0 && dY != 0) // diagonal move
+                {
+                    while (fromGrid != toGrid)
+                    {
+                        fromGrid.x += (dX / Math.Abs(dX));
+                        fromGrid.y += (dY / Math.Abs(dY));
+                        consecutiveGridList.Add(new GridPos(fromGrid.x, fromGrid.y));
+                    }
+                }
+                else if (dX == 0)  // horizontal move
+                {
+                    while (fromGrid != toGrid)
+                    {
+                        fromGrid.y += (dY / Math.Abs(dY));
+                        consecutiveGridList.Add(new GridPos(fromGrid.x, fromGrid.y));
+                    }
+                }
+                else // vertical move
+                {
+                    while (fromGrid != toGrid)
+                    {
+                        fromGrid.x += (dX / Math.Abs(dX));
+                        consecutiveGridList.Add(new GridPos(fromGrid.x, fromGrid.y));
+                    }
+                }
+                consecutiveGridList.Add(new GridPos(toGrid));
+            }
+            return consecutiveGridList;
+        }
         public static List<GridPos> FindPath(JumpPointParam iParam)
         {
 
