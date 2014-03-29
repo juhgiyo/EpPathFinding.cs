@@ -53,6 +53,12 @@ namespace EpPathFinding
             this.y = iY;
         }
 
+        public GridPos(GridPos b)
+        {
+            x = b.x;
+            y = b.y;
+        }
+
         public override int GetHashCode()
         {
             return x ^ y;

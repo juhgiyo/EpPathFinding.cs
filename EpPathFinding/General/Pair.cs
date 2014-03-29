@@ -50,6 +50,12 @@ namespace General
         {
         }
 
+        public Pair(Pair<T, U> b)
+        {
+            first = b.first;
+            second = b.second;
+        }
+
         public Pair(T iFirst, U iSecond)
         {
             this.first = iFirst;

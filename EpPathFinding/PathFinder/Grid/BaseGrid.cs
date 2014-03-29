@@ -69,6 +69,19 @@ namespace EpPathFinding
 
         }
 
+        public Node(Node b)
+        {
+            this.x = b.x;
+            this.y = b.y;
+            this.walkable = b.walkable;
+            this.heuristicStartToEndLen = b.heuristicStartToEndLen;
+            this.startToCurNodeLen = b.startToCurNodeLen;
+            this.heuristicCurNodeToEndLen = b.heuristicCurNodeToEndLen;
+            this.isOpened = b.isOpened;
+            this.isClosed = b.isClosed;
+            this.parent = b.parent;
+        }
+
         public void Reset(bool? iWalkable = null)
         {
             if (iWalkable.HasValue)
@@ -173,6 +186,13 @@ namespace EpPathFinding
 
         public BaseGrid()
         {
+        }
+
+        public BaseGrid(BaseGrid b)
+        {
+            m_gridRect = new GridRect(b.m_gridRect);
+            width = b.width;
+            height = b.height;
         }
 
         protected GridRect m_gridRect;

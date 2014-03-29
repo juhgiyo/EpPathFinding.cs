@@ -59,6 +59,14 @@ namespace EpPathFinding
             maxY = iMaxY;
         }
 
+        public GridRect(GridRect b)
+        {
+            minX = b.minX;
+            minY = b.minY;
+            maxX = b.maxX;
+            maxY = b.maxY;
+        }
+
         public override int GetHashCode()
         {
             return minX ^ minY ^ maxX ^ maxY;

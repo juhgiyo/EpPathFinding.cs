@@ -89,6 +89,12 @@ namespace EpPathFinding
             m_nodePool = iNodePool;
         }
 
+        public DynamicGridWPool(DynamicGridWPool b)
+            : base(b)
+        {
+            m_notSet = b.m_notSet;
+            m_nodePool = b.m_nodePool;
+        }
 
         public override Node GetNodeAt(int iX, int iY)
         {

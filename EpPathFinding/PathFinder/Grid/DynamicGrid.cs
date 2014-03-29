@@ -90,6 +90,13 @@ namespace EpPathFinding
             buildNodes(iWalkableGridList);
         }
 
+        public DynamicGrid(DynamicGrid b)
+            : base(b)
+        {
+            m_notSet = b.m_notSet;
+            m_nodes = new Dictionary<GridPos, Node>(b.m_nodes);
+        }
+
         protected void buildNodes(List<GridPos> iWalkableGridList)
         {
 
@@ -215,7 +222,7 @@ namespace EpPathFinding
 
         public override BaseGrid Clone()
         {
-            DynamicGrid tNewGrid = new DynamicGrid(null);
+            DynamicGrid tNewGrid = new DynamicGrid();
 
             foreach (KeyValuePair<GridPos, Node> keyValue in m_nodes)
             {

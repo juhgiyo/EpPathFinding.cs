@@ -48,6 +48,12 @@ namespace General
         {
         }
 
+        public Triple(Triple<T,U,V> b)
+        {
+            first = b.first;
+            second = b.second;
+            third = b.third;
+        }
         public Triple(T iFirst, U iSecond,V iThird)
         {
             this.first = iFirst;

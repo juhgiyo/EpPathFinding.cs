@@ -52,6 +52,11 @@ namespace General
             this.m_data = new List<T>();
         }
 
+        public PriorityQueue(PriorityQueue<T> b)
+        {
+            m_data = new List<T>(b.m_data);
+        }
+
         public void Enqueue(T queueItem)
         {
             m_data.Add(queueItem);

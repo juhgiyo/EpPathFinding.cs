@@ -83,6 +83,11 @@ namespace EpPathFinding
             m_nodePool = iNodePool;
         }
 
+        public PartialGridWPool(PartialGridWPool b)
+            : base(b)
+        {
+            m_nodePool = b.m_nodePool;
+        }
        
         public void SetGridRect(GridRect iGridRect)
         {

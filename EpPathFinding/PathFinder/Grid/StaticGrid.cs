@@ -62,7 +62,24 @@ namespace EpPathFinding
             this.m_nodes = buildNodes(iWidth, iHeight, iMatrix);
         }
 
-
+        public StaticGrid(StaticGrid b)
+            : base(b)
+        {
+            bool[][] tMatrix = new bool[b.width][];
+            for (int widthTrav = 0; widthTrav < b.width; widthTrav++)
+            {
+                tMatrix[widthTrav] = new bool[b.height];
+                for (int heightTrav = 0; heightTrav < b.height; heightTrav++)
+                {
+                    if(b.IsWalkableAt(widthTrav,heightTrav))
+                        tMatrix[widthTrav][heightTrav] = true;
+                    else
+                        tMatrix[widthTrav][heightTrav] = false;
+                }
+            }
+            this.m_nodes = buildNodes(b.width, b.height, tMatrix);
+        }
+       
         private Node[][] buildNodes(int iWidth, int iHeight, bool[][] iMatrix)
         {
 

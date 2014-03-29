@@ -110,6 +110,21 @@ namespace EpPathFinding
             m_useRecursive = false;
         }
 
+        public JumpPointParam(JumpPointParam b)
+        {
+            m_heuristic = b.m_heuristic;
+            m_allowEndNodeUnWalkable = b.m_allowEndNodeUnWalkable;
+            m_crossAdjacentPoint = b.m_crossAdjacentPoint;
+            m_crossCorner = b.m_crossCorner;
+
+            openList = new List<Node>(b.openList);
+
+            m_searchGrid = b.m_searchGrid;
+            m_startNode = b.m_startNode;
+            m_endNode = b.m_endNode;
+            m_useRecursive = b.m_useRecursive;
+        }
+
         public void SetHeuristic(HeuristicMode iMode)
         {
             m_heuristic = null;
