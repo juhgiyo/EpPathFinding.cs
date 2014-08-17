@@ -890,11 +890,19 @@ namespace EpPathFinding.cs
                             {
                                 tNeighbors.Add(new GridPos(tX - tDx, tY + tDy));
                             }
+                            else if (iParam.CrossAdjacentPoint)
+                            {
+                                tNeighbors.Add(new GridPos(tX - tDx, tY + tDy));
+                            }
                         }
 
                         if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - tDy))
                         {
                             if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY) && !iParam.SearchGrid.IsWalkableAt(tX, tY - tDy))
+                            {
+                                tNeighbors.Add(new GridPos(tX + tDx, tY - tDy));
+                            }
+                            else if (iParam.CrossAdjacentPoint)
                             {
                                 tNeighbors.Add(new GridPos(tX + tDx, tY - tDy));
                             }
