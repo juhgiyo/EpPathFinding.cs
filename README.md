@@ -1,3 +1,4 @@
+<a href='https://pledgie.com/campaigns/27762'><img alt='Click here to lend your support to: EpPathFinding.cs and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/27762.png?skin_name=chrome' border='0' ></a>
 EpPathFinding.cs
 ================
 #### A jump point search algorithm for grid based games in C# ####
@@ -220,6 +221,11 @@ jpParam.UseRecursive = false;
 
 #### Extendability ####
 You can also create a sub-class of `BaseGrid` to create your own way of `Grid` class to best support your situation.
+
+Donation
+-------
+
+<a href='https://pledgie.com/campaigns/27762'><img alt='Click here to lend your support to: EpPathFinding.cs and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/27762.png?skin_name=chrome' border='0' ></a>
 
 License
 -------
