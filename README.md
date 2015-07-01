@@ -170,7 +170,7 @@ jpParam.SetHeuristic(Heuristic.MANHATTAN);
 
 #### Dynamic Grid ####
 
-For my grid-based game, I had much less walkable grid nodes than un-walkable grid nodes. So above `StaticGrid` was wasting too much memory to hold un-walkable grid nodes. To avoid the memory waste, I have created `DynamicGrid`, which allocates the memory for only walkable grid nodes.
+For my grid-based game, I had much less walkable grid nodes than un-walkable grid nodes. So above `StaticGrid` was wasting too much memory to hold un-walkable grid nodes. To avoid the memory waste, I have created `DynamicGrid`, which allocates the memory for only walkable grid nodes. (Please note that there is trade off of memory and performance. This degrades the performance to improve memory usage.)
 
 
 ```c#
