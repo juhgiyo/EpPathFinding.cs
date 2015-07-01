@@ -64,15 +64,15 @@ namespace EpPathFinding.cs
 
         public Node GetNode(GridPos iPos)
         {
-            if (m_nodes.ContainsKey(iPos))
-                return m_nodes[iPos];
-           return null;
+            Node retVal = null;
+            m_nodes.TryGetValue(iPos, out retVal);
+            return retVal;
         }
 
         public Node SetNode(int iX, int iY, bool? iWalkable = null)
         {
             GridPos pos = new GridPos(iX, iY);
-            return SetNode(pos,iWalkable);
+            return SetNode(pos, iWalkable);
         }
 
         public Node SetNode(GridPos iPos, bool? iWalkable = null)
@@ -81,8 +81,11 @@ namespace EpPathFinding.cs
             {
                 if (iWalkable.Value == true)
                 {
-                    if (m_nodes.ContainsKey(iPos))
-                        return m_nodes[iPos];
+                    Node retVal = null;
+                    if (m_nodes.TryGetValue(iPos, out retVal))
+                    {
+                        return retVal;
+                    }
                     Node newNode = new Node(iPos.x, iPos.y, iWalkable);
                     m_nodes.Add(iPos, newNode);
                     return newNode;
@@ -91,7 +94,7 @@ namespace EpPathFinding.cs
                 {
                     removeNode(iPos);
                 }
-                
+
             }
             else
             {

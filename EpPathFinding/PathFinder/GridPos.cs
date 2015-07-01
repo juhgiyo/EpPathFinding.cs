@@ -66,8 +66,9 @@ namespace EpPathFinding.cs
 
         public override bool Equals(System.Object obj)
         {
-            if (!(obj is GridPos))
-                return false;
+            // Unlikely to compare incorrect type so removed for performance
+            // if (!(obj.GetType() == typeof(GridPos)))
+            //     return false;
             GridPos p = (GridPos)obj;
             // Return true if the fields match:
             return (x == p.x) && (y == p.y);
