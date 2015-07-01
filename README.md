@@ -214,7 +214,7 @@ Rest of the functionality like `SetWalkableAt`, `Reset`, etc. are same as `Dynam
 
 #### Partial Grid With Pool ####
 
-As mentioned above, if you want to search only partial of the grid for performance reason, you can use `PartialGridWPool`
+As mentioned above, if you want to search only partial of the grid for performance reason, you can use `PartialGridWPool`. Just give the `GridRect` which shows the portion of the grid you want to search within.
 
 
 ```c#
