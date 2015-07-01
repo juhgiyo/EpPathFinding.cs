@@ -198,6 +198,35 @@ BaseGrid searchGrid = new DynamicGrid(walkableGridPosList);
 Rest of the functionality like `SetWalkableAt`, `Reset`, etc. are same as `StaticGrid`. 
 
 
+#### Dynamic Grid With Pool ####
+
+In many cases, you might want to reuse the same grid for next search. And this can be extremely useful when used with `PartialGridWPool`, since you don't have to allocate the grid again.
+
+
+```c#
+NodePool nodePool = new NodePool();
+BaseGrid seachGrid = new DynamicGridWPool(nodePool);  
+```
+
+
+Rest of the functionality like `SetWalkableAt`, `Reset`, etc. are same as `DynamicGrid`. 
+
+
+#### Partial Grid With Pool ####
+
+As mentioned above, if you want to search only partial of the grid for performance reason, you can use `PartialGridWPool`
+
+
+```c#
+NodePool nodePool = new NodePool();
+...
+BaseGrid seachGrid = new PartialGridWPool(nodePool, new GridRect(1,3,15,30);  
+```
+
+
+Rest of the functionality like `SetWalkableAt`, `Reset`, etc. are same as `DynamicGridWPool`. 
+
+
 #### UseRecursive ####
 You may use recursive function or loop function to find the path. This can be simply done by setting UseRecursive flag in JumpPointParam:
 ```
