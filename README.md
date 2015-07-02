@@ -8,6 +8,14 @@ Introduction
 This project was started after I was inspired by [PathFinding.js by Xueqiao Xu](https://github.com/qiao/PathFinding.js) and [the article by D. Harabor](http://harablog.wordpress.com/2011/09/07/jump-point-search/).
 It comes along with a demo to show how the agorithm execute as similar to Xueqiao Xu's [Online Demo](http://qiao.github.com/PathFinding.js/visual).
 
+Unity Integration Guide
+------------
+
+Add EpPathFinding.cs\PathFinder folder to your Unity Project's Assets folder. Then within the script file, you want to use the EpPathFinding.js, just add `using EpPathFinding.cs;` namespace at the top of the file, and use it as the guide below.
+
+
+(If you have problem when compiling, please refer to [Unity Forum](http://forum.unity3d.com/threads/monodevelop-problems-with-default-parameters.67867/#post-898994) 
+
 Basic Usage
 ------------
 The usage and the demo has been made very similar to [PathFinding.js](https://github.com/qiao/PathFinding.js) for ease of usage.  
