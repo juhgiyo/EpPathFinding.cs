@@ -11,7 +11,7 @@ It comes along with a demo to show how the agorithm execute as similar to Xueqia
 Unity Integration Guide
 ------------
 
-Add EpPathFinding.cs\PathFinder folder to your Unity Project's Assets folder. Then within the script file, you want to use the EpPathFinding.js, just add `using EpPathFinding.cs;` namespace at the top of the file, and use it as the guide below.
+Add `EpPathFinding.cs\PathFinder` folder to your `Unity Project's Assets` folder. Then within the script file, you want to use the `EpPathFinding.cs`, just add `using EpPathFinding.cs;` namespace at the top of the file, and use it as the guide below.
 
 
 (If you have problem when compiling, please refer to [Unity Forum](http://forum.unity3d.com/threads/monodevelop-problems-with-default-parameters.67867/#post-898994) 
