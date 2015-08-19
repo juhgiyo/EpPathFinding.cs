@@ -327,8 +327,8 @@ namespace EpPathFinding.cs
             {
                 // pop the position of node which has the minimum `f` value.
                 tOpenList.Sort();
-                tNode = (Node)tOpenList[0];
-                tOpenList.RemoveAt(0);
+                tNode = (Node)tOpenList[tOpenList.Count-1];
+                tOpenList.RemoveAt(tOpenList.Count - 1);
                 tNode.isClosed = true;
 
                 if (tNode.Equals(tEndNode))

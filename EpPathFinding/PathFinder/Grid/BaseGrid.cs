@@ -100,10 +100,10 @@ namespace EpPathFinding.cs
             Node tOtherNode = (Node)iObj;
             float result=this.heuristicStartToEndLen - tOtherNode.heuristicStartToEndLen;
             if (result > 0.0f)
-                return 1;
+                return -1;
             else if (result == 0.0f)
                 return 0;
-            return -1;
+            return 1;
         }
 
         public static List<GridPos> Backtrace(Node iNode)
