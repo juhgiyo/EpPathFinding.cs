@@ -295,7 +295,6 @@ namespace EpPathFinding.cs
                         consecutiveGridList.Add(new GridPos(fromGrid.x, fromGrid.y));
                     }
                 }
-                consecutiveGridList.Add(new GridPos(toGrid));
             }
             return consecutiveGridList;
         }
