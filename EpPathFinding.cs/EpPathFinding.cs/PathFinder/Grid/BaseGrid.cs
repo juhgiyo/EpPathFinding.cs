@@ -186,6 +186,7 @@ namespace EpPathFinding.cs
 
         public BaseGrid()
         {
+            m_gridRect = new GridRect();
         }
 
         public BaseGrid(BaseGrid b)

@@ -72,13 +72,13 @@ namespace EpPathFinding.cs
         }
 
 
-        public PartialGridWPool(NodePool iNodePool, GridRect? iGridRect = null)
+        public PartialGridWPool(NodePool iNodePool, GridRect iGridRect = null)
             : base()
         {
             if (iGridRect == null)
                 m_gridRect = new GridRect();
             else
-                m_gridRect = iGridRect.Value;
+                m_gridRect = iGridRect;
             m_nodePool = iNodePool;
         }
 

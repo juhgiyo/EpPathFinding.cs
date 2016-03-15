@@ -42,10 +42,16 @@ using System.Text;
 
 namespace EpPathFinding.cs
 {
-    public struct GridPos : IEquatable<GridPos>
+    public class GridPos : IEquatable<GridPos>
     {
         public int x;
         public int y;
+
+        public GridPos()
+        {
+            x = 0;
+            y = 0;
+        }
         public GridPos(int iX, int iY)
         {
             this.x = iX;
@@ -69,12 +75,22 @@ namespace EpPathFinding.cs
             // if (!(obj.GetType() == typeof(GridPos)))
             //     return false;
             GridPos p = (GridPos)obj;
+
+            if (ReferenceEquals(null, p))
+            {
+                return false;
+            }
+
             // Return true if the fields match:
             return (x == p.x) && (y == p.y);
         }
 
         public bool Equals(GridPos p)
         {
+            if (ReferenceEquals(null, p))
+            {
+                return false;
+            }
             // Return true if the fields match:
             return (x == p.x) && (y == p.y);
         }
@@ -86,7 +102,14 @@ namespace EpPathFinding.cs
             {
                 return true;
             }
-
+            if (ReferenceEquals(null, a))
+            {
+                return false;
+            }
+            if (ReferenceEquals(null, b))
+            {
+                return false;
+            }
             // Return true if the fields match:
             return a.x == b.x && a.y == b.y;
         }

@@ -43,13 +43,19 @@ using System.Collections;
 
 namespace EpPathFinding.cs
 {
-    public struct GridRect
+    public class GridRect
     {
         public int minX;
         public int minY;
         public int maxX;
         public int maxY;
-
+        public GridRect()
+        {
+            minX = 0;
+            minY = 0;
+            maxX = 0;
+            maxY = 0;
+        }
         public GridRect(int iMinX, int iMinY, int iMaxX, int iMaxY)
         {
             minX = iMinX;
@@ -77,12 +83,20 @@ namespace EpPathFinding.cs
             //if (!(obj.GetType() == typeof(GridRect)))
             //    return false;
             GridRect p = (GridRect)obj;
+            if (ReferenceEquals(null, p))
+            {
+                return false;
+            }
             // Return true if the fields match:
             return (minX == p.minX) && (minY == p.minY) && (maxX == p.maxX) && (maxY == p.maxY);
         }
 
         public bool Equals(GridRect p)
         {
+            if (ReferenceEquals(null, p))
+            {
+                return false;
+            }
             // Return true if the fields match:
             return (minX == p.minX) && (minY == p.minY) && (maxX == p.maxX) && (maxY == p.maxY);
         }
@@ -94,7 +108,14 @@ namespace EpPathFinding.cs
             {
                 return true;
             }
-
+            if (ReferenceEquals(null, a))
+            {
+                return false;
+            }
+            if (ReferenceEquals(null, b))
+            {
+                return false;
+            }
             // Return true if the fields match:
             return (a.minX == b.minX) && (a.minY == b.minY) && (a.maxX == b.maxX) && (a.maxY == b.maxY);
         }

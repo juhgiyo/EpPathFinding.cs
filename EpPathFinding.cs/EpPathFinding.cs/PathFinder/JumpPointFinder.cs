@@ -358,7 +358,7 @@ namespace EpPathFinding.cs
             int tEndX = iParam.EndNode.x;
             int tEndY = iParam.EndNode.y;
             GridPos tNeighbor;
-            GridPos? tJumpPoint;
+            GridPos tJumpPoint;
             Node tJumpNode;
 
             List<GridPos> tNeighbors = findNeighbors(iParam, iNode);
@@ -371,24 +371,24 @@ namespace EpPathFinding.cs
                     tJumpPoint = jumpLoop(iParam, tNeighbor.x, tNeighbor.y, iNode.x, iNode.y);
                 if (tJumpPoint != null)
                 {
-                    tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint.Value.x, tJumpPoint.Value.y);
+                    tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint.x, tJumpPoint.y);
                     if (tJumpNode == null)
                     {
-                        if (iParam.EndNode.x == tJumpPoint.Value.x && iParam.EndNode.y == tJumpPoint.Value.y)
-                            tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint.Value);
+                        if (iParam.EndNode.x == tJumpPoint.x && iParam.EndNode.y == tJumpPoint.y)
+                            tJumpNode = iParam.SearchGrid.GetNodeAt(tJumpPoint);
                     }
                     if (tJumpNode.isClosed)
                     {
                         continue;
                     }
                     // include distance, as parent may not be immediately adjacent:
-                    float tCurNodeToJumpNodeLen = tHeuristic(Math.Abs(tJumpPoint.Value.x - iNode.x), Math.Abs(tJumpPoint.Value.y - iNode.y));
+                    float tCurNodeToJumpNodeLen = tHeuristic(Math.Abs(tJumpPoint.x - iNode.x), Math.Abs(tJumpPoint.y - iNode.y));
                     float tStartToJumpNodeLen = iNode.startToCurNodeLen + tCurNodeToJumpNodeLen; // next `startToCurNodeLen` value
 
                     if (!tJumpNode.isOpened || tStartToJumpNodeLen < tJumpNode.startToCurNodeLen)
                     {
                         tJumpNode.startToCurNodeLen = tStartToJumpNodeLen;
-                        tJumpNode.heuristicCurNodeToEndLen = (tJumpNode.heuristicCurNodeToEndLen == null ? tHeuristic(Math.Abs(tJumpPoint.Value.x - tEndX), Math.Abs(tJumpPoint.Value.y - tEndY)) : tJumpNode.heuristicCurNodeToEndLen);
+                        tJumpNode.heuristicCurNodeToEndLen = (tJumpNode.heuristicCurNodeToEndLen == null ? tHeuristic(Math.Abs(tJumpPoint.x - tEndX), Math.Abs(tJumpPoint.y - tEndY)) : tJumpNode.heuristicCurNodeToEndLen);
                         tJumpNode.heuristicStartToEndLen = tJumpNode.startToCurNodeLen + tJumpNode.heuristicCurNodeToEndLen.Value;
                         tJumpNode.parent = iNode;
 
@@ -410,8 +410,8 @@ namespace EpPathFinding.cs
             public int iPy;
             public int tDx;
             public int tDy;
-            public GridPos? jx;
-            public GridPos? jy;
+            public GridPos jx;
+            public GridPos jy;
             public int stage;
             public JumpSnapshot()
             {
@@ -428,9 +428,9 @@ namespace EpPathFinding.cs
             }
         }
 
-        private static GridPos? jumpLoop(JumpPointParam iParam, int iX, int iY, int iPx, int iPy)
+        private static GridPos jumpLoop(JumpPointParam iParam, int iX, int iY, int iPx, int iPy)
         {
-            GridPos? retVal = null;
+            GridPos retVal = null;
             Stack<JumpSnapshot> stack = new Stack<JumpSnapshot>();
 
             JumpSnapshot currentSnapshot = new JumpSnapshot();
@@ -704,7 +704,7 @@ namespace EpPathFinding.cs
             return retVal;
 
         }
-        private static GridPos? jump(JumpPointParam iParam, int iX, int iY, int iPx, int iPy)
+        private static GridPos jump(JumpPointParam iParam, int iX, int iY, int iPx, int iPy)
         {
             if (!iParam.SearchGrid.IsWalkableAt(iX, iY))
             {
@@ -717,8 +717,8 @@ namespace EpPathFinding.cs
         
             int tDx = iX - iPx;
             int tDy = iY - iPy;
-            GridPos? jx=null;
-            GridPos? jy=null;
+            GridPos jx=null;
+            GridPos jy=null;
             if (iParam.CrossCorner)
             {
                 // check for forced neighbors
