@@ -62,13 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="General\SingletonHolder.cs" />
-    <Compile Include="PathFinder\Grid\BaseGrid.cs" />
-    <Compile Include="PathFinder\Grid\DynamicGrid.cs" />
-    <Compile Include="PathFinder\Grid\DynamicGridWPool.cs" />
-    <Compile Include="PathFinder\GridRect.cs" />
-    <Compile Include="PathFinder\NodePool.cs" />
-    <Compile Include="PathFinder\Grid\PartialGridWPool.cs" />
-    <Compile Include="PathFinder\Grid\StaticGrid.cs" />
     <Compile Include="SearchGridForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,9 +70,6 @@
     </Compile>
     <Compile Include="GridBox.cs" />
     <Compile Include="GridLine.cs" />
-    <Compile Include="PathFinder\GridPos.cs" />
-    <Compile Include="PathFinder\Heuristic.cs" />
-    <Compile Include="PathFinder\JumpPointFinder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultBox.cs" />
@@ -128,6 +118,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EpPathFinding.cs\EpPathFinding.cs\EpPathFinding.cs.csproj">
+      <Project>{4BC2B4B0-2A38-4274-98A2-37CEF5F03B42}</Project>
+      <Name>EpPathFinding.cs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
