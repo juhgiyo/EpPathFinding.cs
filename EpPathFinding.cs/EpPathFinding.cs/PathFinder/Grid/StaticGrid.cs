@@ -100,7 +100,7 @@ namespace EpPathFinding.cs
 
             if (iMatrix.Length != iWidth || iMatrix[0].Length != iHeight)
             {
-                throw new System.ApplicationException("Matrix size does not fit");
+                throw new System.Exception("Matrix size does not fit");
             }
 
 
@@ -183,7 +183,7 @@ namespace EpPathFinding.cs
             }
             if (iMatrix.Length != width || iMatrix[0].Length != height)
             {
-                throw new System.ApplicationException("Matrix size does not fit");
+                throw new System.Exception("Matrix size does not fit");
             }
 
             for (int widthTrav = 0; widthTrav < width; widthTrav++)
