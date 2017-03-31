@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C5, Version=2.4.5947.17248, Culture=neutral, PublicKeyToken=282361b99ded7e8e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\C5.2.4.5947.17249\lib\net40\C5.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PathFinder\AStarFinder.cs" />
+    <Compile Include="PathFinder\DiagonalMovement.cs" />
     <Compile Include="PathFinder\GridPos.cs" />
     <Compile Include="PathFinder\GridRect.cs" />
     <Compile Include="PathFinder\Grid\BaseGrid.cs" />
@@ -50,7 +55,12 @@
     <Compile Include="PathFinder\Heuristic.cs" />
     <Compile Include="PathFinder\JumpPointFinder.cs" />
     <Compile Include="PathFinder\NodePool.cs" />
+    <Compile Include="PathFinder\ParamBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

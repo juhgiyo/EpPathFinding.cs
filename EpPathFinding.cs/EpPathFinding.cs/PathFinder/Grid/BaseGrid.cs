@@ -62,7 +62,7 @@ namespace EpPathFinding.cs
             this.walkable = (iWalkable.HasValue ? iWalkable.Value : false);
             this.heuristicStartToEndLen = 0;
             this.startToCurNodeLen = 0;
-            this.heuristicCurNodeToEndLen = null;
+            this.heuristicCurNodeToEndLen =0;
             this.isOpened = false;
             this.isClosed = false;
             this.parent = null;
@@ -88,7 +88,7 @@ namespace EpPathFinding.cs
                 walkable = iWalkable.Value;
             this.heuristicStartToEndLen = 0;
             this.startToCurNodeLen = 0;
-            this.heuristicCurNodeToEndLen = null;
+            this.heuristicCurNodeToEndLen = 0 ;
             this.isOpened = false;
             this.isClosed = false;
             this.parent = null;
@@ -218,7 +218,7 @@ namespace EpPathFinding.cs
 
         public abstract bool SetWalkableAt(GridPos iPos, bool iWalkable);
 
-        public List<Node> GetNeighbors(Node iNode, bool iCrossCorners, bool iCrossAdjacentPoint)
+        public List<Node> GetNeighbors(Node iNode, DiagonalMovement diagonalMovement)
         {
             int tX = iNode.x;
             int tY = iNode.y;
@@ -249,26 +249,31 @@ namespace EpPathFinding.cs
                 neighbors.Add(GetNodeAt(pos));
                 tS3 = true;
             }
-            if (iCrossCorners && iCrossAdjacentPoint)
+
+            switch (diagonalMovement)
             {
-                tD0 = true;
-                tD1 = true;
-                tD2 = true;
-                tD3 = true;
-            }
-            else if (iCrossCorners)
-            {
-                tD0 = tS3 || tS0;
-                tD1 = tS0 || tS1;
-                tD2 = tS1 || tS2;
-                tD3 = tS2 || tS3;
-            }
-            else
-            {
-                tD0 = tS3 && tS0;
-                tD1 = tS0 && tS1;
-                tD2 = tS1 && tS2;
-                tD3 = tS2 && tS3;
+                case DiagonalMovement.Always:
+                    tD0 = true;
+                    tD1 = true;
+                    tD2 = true;
+                    tD3 = true;
+                    break;
+                case DiagonalMovement.Never:
+                    break;
+                case DiagonalMovement.IfAtMostOneObstacle:
+                    tD0 = tS3 || tS0;
+                    tD1 = tS0 || tS1;
+                    tD2 = tS1 || tS2;
+                    tD3 = tS2 || tS3;
+                    break;
+                case DiagonalMovement.OnlyWhenNoObstacles:
+                    tD0 = tS3 && tS0;
+                    tD1 = tS0 && tS1;
+                    tD2 = tS1 && tS2;
+                    tD3 = tS2 && tS3;
+                    break;
+                default:
+                    break;
             }
 
             if (tD0 && this.IsWalkableAt(pos.Set(tX - 1, tY - 1)))
@@ -289,6 +294,7 @@ namespace EpPathFinding.cs
             }
             return neighbors;
         }
+
 
         public abstract void Reset();
 
