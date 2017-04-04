@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PathFinder\Containers\IQueue.cs" />
+    <Compile Include="PathFinder\Containers\PQueue.cs" />
     <Compile Include="PathFinder\GridPos.cs" />
     <Compile Include="PathFinder\GridRect.cs" />
     <Compile Include="PathFinder\Grid\BaseGrid.cs" />
@@ -52,6 +54,7 @@
     <Compile Include="PathFinder\NodePool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

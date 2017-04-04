@@ -37,13 +37,11 @@ An Interface for the BaseGrid Class.
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections;
 
 namespace EpPathFinding.cs
 {
-    public class Node : IComparable
+    public class Node : IComparable<Node>
     {
         public int x;
         public int y;
@@ -94,17 +92,16 @@ namespace EpPathFinding.cs
             this.parent = null;
         }
 
-
-        public int CompareTo(object iObj)
+        public int CompareTo(Node iObj)
         {
-            Node tOtherNode = (Node)iObj;
-            float result=this.heuristicStartToEndLen - tOtherNode.heuristicStartToEndLen;
+            float result = this.heuristicStartToEndLen - iObj.heuristicStartToEndLen;
             if (result > 0.0f)
-                return -1;
+                return 1;
             else if (result == 0.0f)
                 return 0;
-            return 1;
+            return -1;
         }
+ 
 
         public static List<GridPos> Backtrace(Node iNode)
         {

@@ -37,8 +37,7 @@ An Interface for the Grid Position Struct.
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections;
 
 namespace EpPathFinding.cs
 {
