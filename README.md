@@ -17,6 +17,12 @@ Add `EpPathFinding.cs\PathFinder` folder to your `Unity Project's Assets` folder
 (If you have a problem when compiling, please refer to [Unity Forum](http://forum.unity3d.com/threads/monodevelop-problems-with-default-parameters.67867/#post-898994)) 
 
 
+Also `EpPathFinding.cs` depends on [C5](https://github.com/sestoft/C5).
+
+
+(Please refer to [C5 on Unity3D](https://github.com/sestoft/C5#c5-on-unity3d), if you have any dependency issue with C5.)
+
+
 Nuget Package
 ------------
 [Nuget Package](https://www.nuget.org/packages/EpPathFinding.cs/)
