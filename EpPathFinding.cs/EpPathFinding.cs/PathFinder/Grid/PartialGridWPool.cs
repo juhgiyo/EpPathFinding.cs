@@ -37,8 +37,6 @@ An Interface for the PartialGrid with Pool Class.
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections;
 
 namespace EpPathFinding.cs

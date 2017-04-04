@@ -39,6 +39,7 @@ namespace EpPathFinding.cs
 
         public void Reset(GridPos iStartPos, GridPos iEndPos, BaseGrid iSearchGrid = null)
         {
+            _reset(iStartPos, iEndPos, iSearchGrid);
             m_startNode = null;
             m_endNode = null;
 

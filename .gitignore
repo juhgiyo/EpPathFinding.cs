@@ -2,3 +2,4 @@
 Debug/
 Release/
 *.suo
+packages/

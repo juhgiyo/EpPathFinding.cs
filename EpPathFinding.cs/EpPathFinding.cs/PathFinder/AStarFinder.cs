@@ -2,8 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EpPathFinding.cs.PathFinder
@@ -28,6 +26,7 @@ namespace EpPathFinding.cs.PathFinder
     }
     public static class AStarFinder
     {
+        /*
         private class NodeComparer : IComparer<Node>
         {
             public int Compare(Node x, Node y)
@@ -42,10 +41,12 @@ namespace EpPathFinding.cs.PathFinder
                 }
             }
         }
+        */
         public static List<GridPos> FindPath(AStarParam iParam)
         {
             object lo = new object();
-            var openList = new IntervalHeap<Node>(new NodeComparer());
+            //var openList = new IntervalHeap<Node>(new NodeComparer());
+            var openList = new IntervalHeap<Node>();
             var startNode = iParam.StartNode;
             var endNode = iParam.EndNode;
             var heuristic = iParam.HeuristicFunc;
