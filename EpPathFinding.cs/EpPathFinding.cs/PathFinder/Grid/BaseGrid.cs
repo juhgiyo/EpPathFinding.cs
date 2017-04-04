@@ -60,7 +60,9 @@ namespace EpPathFinding.cs
             this.walkable = (iWalkable.HasValue ? iWalkable.Value : false);
             this.heuristicStartToEndLen = 0;
             this.startToCurNodeLen = 0;
-            this.heuristicCurNodeToEndLen =0;
+            // this must be initialized as null to verify that its value never initialized
+            // 0 is not good candidate!!
+            this.heuristicCurNodeToEndLen = null;
             this.isOpened = false;
             this.isClosed = false;
             this.parent = null;
@@ -86,7 +88,9 @@ namespace EpPathFinding.cs
                 walkable = iWalkable.Value;
             this.heuristicStartToEndLen = 0;
             this.startToCurNodeLen = 0;
-            this.heuristicCurNodeToEndLen = 0 ;
+            // this must be initialized as null to verify that its value never initialized
+            // 0 is not good candidate!!
+            this.heuristicCurNodeToEndLen = null ;
             this.isOpened = false;
             this.isClosed = false;
             this.parent = null;

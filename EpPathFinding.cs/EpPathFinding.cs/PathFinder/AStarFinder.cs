@@ -85,7 +85,7 @@ namespace EpPathFinding.cs.PathFinder
                     if (!neighbor.isOpened || ng < neighbor.startToCurNodeLen)
                     {
                         neighbor.startToCurNodeLen = ng;
-                        if (neighbor.heuristicCurNodeToEndLen == 0) neighbor.heuristicCurNodeToEndLen = weight * heuristic(Math.Abs(x - endNode.x), Math.Abs(y - endNode.y));
+                        if (neighbor.heuristicCurNodeToEndLen == null) neighbor.heuristicCurNodeToEndLen = weight * heuristic(Math.Abs(x - endNode.x), Math.Abs(y - endNode.y));
                         neighbor.heuristicStartToEndLen = neighbor.startToCurNodeLen + neighbor.heuristicCurNodeToEndLen.Value;
                         neighbor.parent = node;
                         if (!neighbor.isOpened)
