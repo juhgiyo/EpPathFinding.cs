@@ -35,7 +35,6 @@ THE SOFTWARE.
 An Interface for the Jump Point Search Algorithm Class.
 
 */
-using C5;
 using System;
 using System.Collections.Generic;
 using System.Collections;
@@ -56,7 +55,7 @@ namespace EpPathFinding.cs
             m_allowEndNodeUnWalkable = iAllowEndNodeUnWalkable;
             m_crossAdjacentPoint = iCrossAdjacentPoint;
             m_crossCorner = iCrossCorner;
-            openList = new IntervalHeap<Node>();
+            openList = new PQueue<Node>();
 
             m_useRecursive = false;
         }
@@ -68,7 +67,7 @@ namespace EpPathFinding.cs
             m_crossAdjacentPoint = iCrossAdjacentPoint;
             m_crossCorner = iCrossCorner;
             
-            openList = new IntervalHeap<Node>();
+            openList = new PQueue<Node>();
             m_useRecursive = false;
         }
 
@@ -79,8 +78,7 @@ namespace EpPathFinding.cs
             m_crossAdjacentPoint = b.m_crossAdjacentPoint;
             m_crossCorner = b.m_crossCorner;
 
-            openList = new IntervalHeap<Node>();
-            openList.AddAll(b.openList);
+            openList = new PQueue<Node>(b.openList);
 
             m_useRecursive = b.m_useRecursive;
         }
@@ -89,7 +87,7 @@ namespace EpPathFinding.cs
 
         internal override void _reset(GridPos iStartPos, GridPos iEndPos, BaseGrid iSearchGrid = null)
         {
-            openList = new IntervalHeap<Node>();
+            openList = new PQueue<Node>();
             //openList.Clear();
         }
 
@@ -149,7 +147,7 @@ namespace EpPathFinding.cs
 
 
         //public List<Node> openList;
-        public IntervalHeap<Node> openList;
+        public PQueue<Node> openList;
 
     }
     public class JumpPointFinder
@@ -198,7 +196,7 @@ namespace EpPathFinding.cs
         public static List<GridPos> FindPath(JumpPointParam iParam)
         {
 
-            IntervalHeap<Node> tOpenList = iParam.openList;
+            PQueue<Node> tOpenList = iParam.openList;
             Node tStartNode = iParam.StartNode;
             Node tEndNode = iParam.EndNode;
             Node tNode;
@@ -209,7 +207,7 @@ namespace EpPathFinding.cs
             tStartNode.heuristicStartToEndLen = 0;
 
             // push the start node into the open list
-            tOpenList.Add(tStartNode);
+            tOpenList.Enqueue(tStartNode);
             tStartNode.isOpened = true;
 
             if (iParam.AllowEndNodeUnWalkable && !iParam.SearchGrid.IsWalkableAt(tEndNode.x, tEndNode.y))
@@ -222,7 +220,7 @@ namespace EpPathFinding.cs
             while (tOpenList.Count > 0)
             {
                 // pop the position of node which has the minimum `f` value.
-                tNode = tOpenList.DeleteMin();
+                tNode = tOpenList.Dequeue();
                 tNode.isClosed = true;
 
                 if (tNode.Equals(tEndNode))
@@ -249,7 +247,7 @@ namespace EpPathFinding.cs
         private static void identifySuccessors(JumpPointParam iParam, Node iNode)
         {
             HeuristicDelegate tHeuristic = iParam.HeuristicFunc;
-            IntervalHeap<Node> tOpenList = iParam.openList;
+            PQueue<Node> tOpenList = iParam.openList;
             int tEndX = iParam.EndNode.x;
             int tEndY = iParam.EndNode.y;
             GridPos tNeighbor;
@@ -289,7 +287,7 @@ namespace EpPathFinding.cs
 
                         if (!tJumpNode.isOpened)
                         {
-                            tOpenList.Add(tJumpNode);
+                            tOpenList.Enqueue(tJumpNode);
                             tJumpNode.isOpened = true;
                         }
                     }

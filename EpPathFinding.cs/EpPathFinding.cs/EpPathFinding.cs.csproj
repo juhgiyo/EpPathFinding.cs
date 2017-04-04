@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PathFinder\AStarFinder.cs" />
+    <Compile Include="PathFinder\Containers\IQueue.cs" />
+    <Compile Include="PathFinder\Containers\PQueue.cs" />
     <Compile Include="PathFinder\DiagonalMovement.cs" />
     <Compile Include="PathFinder\GridPos.cs" />
     <Compile Include="PathFinder\GridRect.cs" />
