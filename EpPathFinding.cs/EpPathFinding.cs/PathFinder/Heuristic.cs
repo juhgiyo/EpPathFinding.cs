@@ -65,7 +65,7 @@ namespace EpPathFinding.cs
 
         public static float Chebyshev(int iDx, int iDy)
         {
-            return (float)Math.Min(iDx, iDy);
+            return (float)Math.Max(iDx, iDy);
         }
     }
 }

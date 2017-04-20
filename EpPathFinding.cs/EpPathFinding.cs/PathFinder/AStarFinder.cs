@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EpPathFinding.cs.PathFinder
+namespace EpPathFinding.cs
 {
     public class AStarParam : ParamBase
     {

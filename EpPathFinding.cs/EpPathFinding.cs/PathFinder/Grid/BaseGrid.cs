@@ -261,7 +261,7 @@ namespace EpPathFinding.cs
                     break;
                 case DiagonalMovement.Never:
                     break;
-                case DiagonalMovement.IfAtMostOneObstacle:
+                case DiagonalMovement.IfAtLeastOneWalkable:
                     tD0 = tS3 || tS0;
                     tD1 = tS0 || tS1;
                     tD2 = tS1 || tS2;

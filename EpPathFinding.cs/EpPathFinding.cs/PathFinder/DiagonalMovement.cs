@@ -10,7 +10,7 @@ namespace EpPathFinding.cs
     {
         Always,
         Never,
-        IfAtMostOneObstacle,
+        IfAtLeastOneWalkable,
         OnlyWhenNoObstacles
     }
 }

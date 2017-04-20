@@ -16,7 +16,7 @@ namespace EpPathFinding.cs
             }
             else if (iCrossCorners)
             {
-                return DiagonalMovement.IfAtMostOneObstacle;
+                return DiagonalMovement.IfAtLeastOneWalkable;
             }
             else
             {
