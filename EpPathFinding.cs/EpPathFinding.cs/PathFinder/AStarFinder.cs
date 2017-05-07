@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace EpPathFinding.cs
 {
@@ -74,10 +74,11 @@ namespace EpPathFinding.cs
                 var neighbors = grid.GetNeighbors(node, diagonalMovement);
 
 
-
-                Parallel.ForEach(neighbors, neighbor =>
+                foreach(var neighbor in neighbors)
+                //Parallel.ForEach(neighbors, neighbor =>
                 {
-                    if (neighbor.isClosed) return;
+                    if (neighbor.isClosed) break;
+                    //if (neighbor.isClosed) return;
                     var x = neighbor.x;
                     var y = neighbor.y;
                     float ng = node.startToCurNodeLen + (float)((x - node.x == 0 || y - node.y == 0) ? 1 : Math.Sqrt(2));
@@ -101,7 +102,8 @@ namespace EpPathFinding.cs
 
                         }
                     }
-                });
+                }
+                //);
                 if (openList.Count == 0) return Node.Backtrace(node);
             }
             return new List<GridPos>();
