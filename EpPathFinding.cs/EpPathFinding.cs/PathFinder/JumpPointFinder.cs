@@ -511,6 +511,12 @@ namespace EpPathFinding.cs
                     case 1:
                         currentSnapshot.jx = retVal;
 
+                        if (currentSnapshot.jx != null)
+                        {
+                            retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
+                            continue;
+                        }
+
                         currentSnapshot.stage = 2;
                         stack.Push(currentSnapshot);
 
@@ -524,7 +530,7 @@ namespace EpPathFinding.cs
                         break;
                     case 2:
                         currentSnapshot.jy = retVal;
-                        if (currentSnapshot.jx != null || currentSnapshot.jy != null)
+                        if (currentSnapshot.jy != null)
                         {
                             retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
                             continue;
@@ -558,6 +564,12 @@ namespace EpPathFinding.cs
                         break;
                     case 3:
                         currentSnapshot.jx = retVal;
+                        
+                        if (currentSnapshot.jx != null)
+                        {
+                            retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
+                            continue;
+                        }
 
                         currentSnapshot.stage = 4;
                         stack.Push(currentSnapshot);
@@ -572,7 +584,7 @@ namespace EpPathFinding.cs
                         break;
                     case 4:
                         currentSnapshot.jy = retVal;
-                        if (currentSnapshot.jx != null || currentSnapshot.jy != null)
+                        if (currentSnapshot.jy != null)
                         {
                             retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
                             continue;
@@ -612,8 +624,6 @@ namespace EpPathFinding.cs
 
             int tDx = iX - iPx;
             int tDy = iY - iPy;
-            GridPos jx = null;
-            GridPos jy = null;
             if (iParam.CrossCorner)
             {
                 // check for forced neighbors
@@ -650,9 +660,11 @@ namespace EpPathFinding.cs
                 // when moving diagonally, must check for vertical/horizontal jump points
                 if (tDx != 0 && tDy != 0)
                 {
-                    jx = jump(iParam, iX + tDx, iY, iX, iY);
-                    jy = jump(iParam, iX, iY + tDy, iX, iY);
-                    if (jx != null || jy != null)
+                    if (jump(iParam, iX + tDx, iY, iX, iY) != null)
+                    {
+                        return new GridPos(iX, iY);
+                    }
+                    if (jump(iParam, iX, iY + tDy, iX, iY) != null)
                     {
                         return new GridPos(iX, iY);
                     }
@@ -711,12 +723,8 @@ namespace EpPathFinding.cs
                 // when moving diagonally, must check for vertical/horizontal jump points
                 if (tDx != 0 && tDy != 0)
                 {
-                    jx = jump(iParam, iX + tDx, iY, iX, iY);
-                    jy = jump(iParam, iX, iY + tDy, iX, iY);
-                    if (jx != null || jy != null)
-                    {
-                        return new GridPos(iX, iY);
-                    }
+                    if (jump(iParam, iX + tDx, iY, iX, iY) != null) return new GridPos(iX, iY);
+                    if (jump(iParam, iX, iY + tDy, iX, iY) != null) return new GridPos(iX, iY);
                 }
 
                 // moving diagonally, must make sure both of the vertical/horizontal
