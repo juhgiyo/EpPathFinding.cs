@@ -292,37 +292,36 @@ namespace EpPathFindingDemo
 
             GridPos startPos = new GridPos();
             GridPos endPos = new GridPos();
-             for (int widthTrav = 0; widthTrav < width; widthTrav++)
+            for (int widthTrav = 0; widthTrav < width; widthTrav++)
+            {
+                for (int heightTrav = 0; heightTrav < height; heightTrav++)
                 {
-                    for (int heightTrav = 0; heightTrav < height; heightTrav++)
+                    if (m_rectangles[widthTrav][heightTrav].boxType != BoxType.Wall)
                     {
-                        if (m_rectangles[widthTrav][heightTrav].boxType != BoxType.Wall)
-                        {
-                            searchGrid.SetWalkableAt(new GridPos(widthTrav, heightTrav), true);
-                        }
-                        else
-                        {
-                            searchGrid.SetWalkableAt(new GridPos(widthTrav, heightTrav), false);
-                        }
-                        if(m_rectangles[widthTrav][heightTrav].boxType==BoxType.Start)
-                        {
-                            startPos.x=widthTrav;
-                            startPos.y=heightTrav;
-                        }
-                        if(m_rectangles[widthTrav][heightTrav].boxType==BoxType.End)
-                        {
-                            endPos.x=widthTrav;
-                            endPos.y=heightTrav;
-                        }
-
+                        searchGrid.SetWalkableAt(new GridPos(widthTrav, heightTrav), true);
                     }
+                    else
+                    {
+                        searchGrid.SetWalkableAt(new GridPos(widthTrav, heightTrav), false);
+                    }
+                    if(m_rectangles[widthTrav][heightTrav].boxType==BoxType.Start)
+                    {
+                        startPos.x=widthTrav;
+                        startPos.y=heightTrav;
+                    }
+                    if(m_rectangles[widthTrav][heightTrav].boxType==BoxType.End)
+                    {
+                        endPos.x=widthTrav;
+                        endPos.y=heightTrav;
+                    }
+
                 }
-             jumpParam.CrossCorner = cbCrossCorners.Checked;
-             jumpParam.CrossAdjacentPoint = cbCrossAdjacentPoint.Checked;
-             jumpParam.UseRecursive = cbUseRecursive.Checked;
+            }
+            jumpParam.CrossCorner = cbCrossCorners.Checked;
+            jumpParam.CrossAdjacentPoint = cbCrossAdjacentPoint.Checked;
+            jumpParam.UseRecursive = cbUseRecursive.Checked;
             jumpParam.Reset(startPos, endPos);
             List<GridPos> resultList = JumpPointFinder.FindPath(jumpParam);
-            
             
             for (int resultTrav = 0; resultTrav < resultList.Count-1; resultTrav++)
             {

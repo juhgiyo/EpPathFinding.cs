@@ -167,31 +167,25 @@ namespace EpPathFinding.cs
                 GridPos toGrid = routeFound[routeTrav + 1];
                 int dX = toGrid.x - fromGrid.x;
                 int dY = toGrid.y - fromGrid.y;
-                if (dX != 0 && dY != 0) // diagonal move
+
+                int nDX = 0;
+                int nDY = 0;
+                if (dX != 0)
                 {
-                    while (fromGrid != toGrid)
-                    {
-                        fromGrid.x += (dX / Math.Abs(dX));
-                        fromGrid.y += (dY / Math.Abs(dY));
-                        consecutiveGridList.Add(new GridPos(fromGrid));
-                    }
+                    nDX = (dX / Math.Abs(dX));
                 }
-                else if (dX == 0)  // horizontal move
+                if (dY != 0)
                 {
-                    while (fromGrid != toGrid)
-                    {
-                        fromGrid.y += (dY / Math.Abs(dY));
-                        consecutiveGridList.Add(new GridPos(fromGrid));
-                    }
+                    nDY = (dY / Math.Abs(dY));
                 }
-                else // vertical move
+
+                while (fromGrid != toGrid)
                 {
-                    while (fromGrid != toGrid)
-                    {
-                        fromGrid.x += (dX / Math.Abs(dX));
-                        consecutiveGridList.Add(new GridPos(fromGrid));
-                    }
+                    fromGrid.x += nDX;
+                    fromGrid.y += nDY;
+                    consecutiveGridList.Add(new GridPos(fromGrid));
                 }
+
             }
             return consecutiveGridList;
         }
@@ -787,9 +781,9 @@ namespace EpPathFinding.cs
                             }
                         }
 
-                        if (iParam.SearchGrid.IsWalkableAt(tX - tDx, tY + tDy))
+                        if (iParam.SearchGrid.IsWalkableAt(tX - tDx, tY + tDy) && !iParam.SearchGrid.IsWalkableAt(tX - tDx, tY))
                         {
-                            if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy) && !iParam.SearchGrid.IsWalkableAt(tX - tDx, tY))
+                            if (iParam.SearchGrid.IsWalkableAt(tX, tY + tDy))
                             {
                                 tNeighbors.Add(new GridPos(tX - tDx, tY + tDy));
                             }
@@ -799,9 +793,9 @@ namespace EpPathFinding.cs
                             }
                         }
 
-                        if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - tDy))
+                        if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY - tDy) && !iParam.SearchGrid.IsWalkableAt(tX, tY - tDy))
                         {
-                            if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY) && !iParam.SearchGrid.IsWalkableAt(tX, tY - tDy))
+                            if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
                             {
                                 tNeighbors.Add(new GridPos(tX + tDx, tY - tDy));
                             }
