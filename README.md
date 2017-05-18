@@ -3,6 +3,10 @@ EpPathFinding.cs
 ================
 #### A jump point search algorithm for grid based games in C# ####
 
+For 3D Environment
+-----------------
+You may take a look at [EpPathFinding3D.cs](https://github.com/juhgiyo/EpPathFinding3D.cs)
+
 Introduction
 ------------
 This project was started after I was inspired by [PathFinding.js by Xueqiao Xu](https://github.com/qiao/PathFinding.js) and [the article by D. Harabor](http://harablog.wordpress.com/2011/09/07/jump-point-search/).
