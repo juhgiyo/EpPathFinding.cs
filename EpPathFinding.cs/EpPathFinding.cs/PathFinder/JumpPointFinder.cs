@@ -685,8 +685,7 @@ namespace EpPathFinding.cs
                 // along the diagonal
                 if (tDx != 0 && tDy != 0)
                 {
-                    if ((iParam.SearchGrid.IsWalkableAt(iX + tDx, iY + tDy) && iParam.SearchGrid.IsWalkableAt(iX, iY + tDy) && !iParam.SearchGrid.IsWalkableAt(iX + tDx, iY)) ||
-                        (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY + tDy) && iParam.SearchGrid.IsWalkableAt(iX + tDx, iY) && !iParam.SearchGrid.IsWalkableAt(iX, iY + tDy)))
+                    if (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY + tDy) && ( !iParam.SearchGrid.IsWalkableAt(iX, iY + tDy) || !iParam.SearchGrid.IsWalkableAt(iX + tDx, iY)))
                     {
                         return new GridPos(iX, iY);
                     }
