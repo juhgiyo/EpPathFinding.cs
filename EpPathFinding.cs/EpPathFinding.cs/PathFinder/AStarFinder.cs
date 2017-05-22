@@ -31,7 +31,6 @@ namespace EpPathFinding.cs
             : base(iGrid, iDiagonalMovement, iMode)
         {
             Weight = iweight;
-            DiagonalMovement = iDiagonalMovement;
         }
 
         internal override void _reset(GridPos iStartPos, GridPos iEndPos, BaseGrid iSearchGrid = null)
