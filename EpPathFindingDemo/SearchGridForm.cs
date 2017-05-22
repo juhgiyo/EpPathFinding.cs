@@ -94,6 +94,11 @@ namespace EpPathFindingDemo
 
                 }
             }
+            cbbJumpType.Items.Add("Always");
+            cbbJumpType.Items.Add("Never");
+            cbbJumpType.Items.Add("IfAtLeastOneWalkable");
+            cbbJumpType.Items.Add("OnlyWhenNoObstacles");
+            cbbJumpType.SelectedIndex = 0;
 
             m_resultLine = new List<GridLine>();
 
@@ -101,7 +106,7 @@ namespace EpPathFindingDemo
             // searchGrid = new DynamicGrid();
             //searchGrid = new DynamicGridWPool(SingletonHolder<NodePool>.Instance);
 
-             jumpParam = new JumpPointParam(searchGrid, true, Util.GetDiagonalMovement(cbCrossCorners.Checked, cbCrossAdjacentPoint.Checked), HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
+             jumpParam = new JumpPointParam(searchGrid, true,(DiagonalMovement)cbbJumpType.SelectedIndex, HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
             jumpParam.UseRecursive = cbUseRecursive.Checked;
             
         }
@@ -318,7 +323,7 @@ namespace EpPathFindingDemo
 
                 }
             }
-            jumpParam.DiagonalMovement = Util.GetDiagonalMovement(cbCrossCorners.Checked, cbCrossAdjacentPoint.Checked);
+            jumpParam.DiagonalMovement = (DiagonalMovement)cbbJumpType.SelectedIndex;
             jumpParam.UseRecursive = cbUseRecursive.Checked;
             jumpParam.Reset(startPos, endPos);
             List<GridPos> resultList = JumpPointFinder.FindPath(jumpParam);
@@ -404,16 +409,5 @@ namespace EpPathFindingDemo
             this.Invalidate();
         }
 
-        private void cbCrossCorners_CheckedChanged(object sender, EventArgs e)
-        {
-            if (cbCrossCorners.Checked)
-            {
-                cbCrossAdjacentPoint.Enabled = true;
-            }
-            else
-            {
-                cbCrossAdjacentPoint.Enabled = false;
-            }
-        }
     }
 }

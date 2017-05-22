@@ -490,7 +490,72 @@ namespace EpPathFinding.cs
                         }
                         else // if(iParam.DiagonalMovement == DiagonalMovement.Never)
                         {
+                            if (currentSnapshot.tDx != 0)
+                            {
+                                // moving along x
+                                if (!iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX + currentSnapshot.tDx, currentSnapshot.iY))
+                                {
+                                    retVal= new GridPos(iX, iY);
+                                    continue;
+                                }
+                            }
+                            else
+                            {
+                                if (!iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX, currentSnapshot.iY + currentSnapshot.tDy))
+                                {
+                                    retVal = new GridPos(iX, iY);
+                                    continue;
+                                }
+                            }
 
+                            //  must check for perpendicular jump points
+                            if (currentSnapshot.tDx != 0)
+                            {
+                                currentSnapshot.stage = 5;
+                                stack.Push(currentSnapshot);
+
+                                newSnapshot = new JumpSnapshot();
+                                newSnapshot.iX = currentSnapshot.iX;
+                                newSnapshot.iY = currentSnapshot.iY + 1;
+                                newSnapshot.iPx = currentSnapshot.iX;
+                                newSnapshot.iPy = currentSnapshot.iY;
+                                newSnapshot.stage = 0;
+                                stack.Push(newSnapshot);
+                                continue;
+
+                                if (jump(iParam, iX, iY + 1, iX, iY) != null) return new GridPos(iX, iY);
+                                if (jump(iParam, iX, iY - 1, iX, iY) != null) return new GridPos(iX, iY);
+                            }
+                            else // tDy != 0
+                            {
+                                currentSnapshot.stage = 6;
+                                stack.Push(currentSnapshot);
+
+                                newSnapshot = new JumpSnapshot();
+                                newSnapshot.iX = currentSnapshot.iX + 1;
+                                newSnapshot.iY = currentSnapshot.iY;
+                                newSnapshot.iPx = currentSnapshot.iX;
+                                newSnapshot.iPy = currentSnapshot.iY;
+                                newSnapshot.stage = 0;
+                                stack.Push(newSnapshot);
+                                continue;
+
+                                if (jump(iParam, iX + 1, iY, iX, iY) != null) return new GridPos(iX, iY);
+                                if (jump(iParam, iX - 1, iY, iX, iY) != null) return new GridPos(iX, iY);
+                            }
+
+                            // keep going
+                            if (iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX + currentSnapshot.tDx, currentSnapshot.iY) || iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX, currentSnapshot.iY + currentSnapshot.tDy))
+                            {
+                                newSnapshot = new JumpSnapshot();
+                                newSnapshot.iX = currentSnapshot.iX + currentSnapshot.tDx;
+                                newSnapshot.iY = currentSnapshot.iY + currentSnapshot.tDy;
+                                newSnapshot.iPx = currentSnapshot.iX;
+                                newSnapshot.iPy = currentSnapshot.iY;
+                                newSnapshot.stage = 0;
+                                stack.Push(newSnapshot);
+                                continue;
+                            }
                         }
                         retVal = null;
                         break;
@@ -591,7 +656,62 @@ namespace EpPathFinding.cs
                         }
                         retVal = null;
                         break;
+                    case 5:
+                        if (retVal != null)
+                        {
+                            retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
+                            continue;
+                        }
+                        currentSnapshot.stage = 7;
+                        stack.Push(currentSnapshot);
+
+                        newSnapshot = new JumpSnapshot();
+                        newSnapshot.iX = currentSnapshot.iX;
+                        newSnapshot.iY = currentSnapshot.iY - 1;
+                        newSnapshot.iPx = currentSnapshot.iX;
+                        newSnapshot.iPy = currentSnapshot.iY;
+                        newSnapshot.stage = 0;
+                        stack.Push(newSnapshot);
+                        break;
+                    case 6:
+                        if (retVal != null)
+                        {
+                            retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
+                            continue;
+                        }
+                        currentSnapshot.stage = 7;
+                        stack.Push(currentSnapshot);
+
+                        newSnapshot = new JumpSnapshot();
+                        newSnapshot.iX = currentSnapshot.iX - 1;
+                        newSnapshot.iY = currentSnapshot.iY;
+                        newSnapshot.iPx = currentSnapshot.iX;
+                        newSnapshot.iPy = currentSnapshot.iY;
+                        newSnapshot.stage = 0;
+                        stack.Push(newSnapshot);
+                        break;
+                    case 7:
+                        if (retVal != null)
+                        {
+                            retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
+                            continue;
+                        }
+                        // keep going
+                        if (iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX + currentSnapshot.tDx, currentSnapshot.iY) || iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX, currentSnapshot.iY + currentSnapshot.tDy))
+                        {
+                            newSnapshot = new JumpSnapshot();
+                            newSnapshot.iX = currentSnapshot.iX + currentSnapshot.tDx;
+                            newSnapshot.iY = currentSnapshot.iY + currentSnapshot.tDy;
+                            newSnapshot.iPx = currentSnapshot.iX;
+                            newSnapshot.iPy = currentSnapshot.iY;
+                            newSnapshot.stage = 0;
+                            stack.Push(newSnapshot);
+                            continue;
+                        }
+                        retVal = null;
+                        break;
                 }
+
             }
 
             return retVal;
@@ -725,7 +845,43 @@ namespace EpPathFinding.cs
             }
             else // if(iParam.DiagonalMovement == DiagonalMovement.Never)
             {
-                return null;
+                if (tDx != 0)
+                {
+                    // moving along x
+                    if (!iParam.SearchGrid.IsWalkableAt(iX + tDx, iY))
+                    {
+                        return new GridPos(iX, iY);
+                    }
+                }
+                else
+                {
+                    if (!iParam.SearchGrid.IsWalkableAt(iX, iY + tDy))
+                    {
+                        return new GridPos(iX, iY);
+                    }
+                }
+
+                //  must check for perpendicular jump points
+                if (tDx != 0 )
+                {
+                    if (jump(iParam, iX, iY + 1, iX, iY) != null) return new GridPos(iX, iY);
+                    if (jump(iParam, iX, iY - 1, iX, iY) != null) return new GridPos(iX, iY);
+                }
+                else // tDy != 0
+                {
+                    if (jump(iParam, iX + 1, iY, iX, iY) != null) return new GridPos(iX, iY);
+                    if (jump(iParam, iX - 1, iY, iX, iY) != null) return new GridPos(iX, iY);
+                }
+
+                // keep going
+                if (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY) || iParam.SearchGrid.IsWalkableAt(iX, iY + tDy))
+                {
+                    return jump(iParam, iX + tDx, iY + tDy, iX, iY);
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -943,7 +1099,36 @@ namespace EpPathFinding.cs
                 }
                 else // if(iParam.DiagonalMovement == DiagonalMovement.Never)
                 {
-
+                    if (tDx != 0)
+                    {
+                        if (iParam.SearchGrid.IsWalkableAt(tX + tDx, tY))
+                        {
+                            tNeighbors.Add(new GridPos(tX + tDx, tY));
+                        }
+                        if (iParam.SearchGrid.IsWalkableAt(tX, tY + 1))
+                        {
+                            tNeighbors.Add(new GridPos(tX, tY +1));
+                        }
+                        if (iParam.SearchGrid.IsWalkableAt(tX, tY - 1))
+                        {
+                            tNeighbors.Add(new GridPos(tX, tY - 1));
+                        }
+                    }
+                    else // if (tDy != 0)
+                    {
+                        if (iParam.SearchGrid.IsWalkableAt(tX, tY +tDy))
+                        {
+                            tNeighbors.Add(new GridPos(tX, tY + tDy));
+                        }
+                        if (iParam.SearchGrid.IsWalkableAt(tX + 1, tY))
+                        {
+                            tNeighbors.Add(new GridPos(tX + 1, tY));
+                        }
+                        if (iParam.SearchGrid.IsWalkableAt(tX - 1, tY))
+                        {
+                            tNeighbors.Add(new GridPos(tX - 1, tY));
+                        }
+                    }
                 }
 
             }
