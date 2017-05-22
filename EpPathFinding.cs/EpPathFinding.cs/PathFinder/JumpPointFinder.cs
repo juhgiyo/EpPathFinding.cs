@@ -667,7 +667,7 @@ namespace EpPathFinding.cs
                             continue;
                         }
                         // keep going
-                        if (iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX + currentSnapshot.tDx, currentSnapshot.iY) || iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX, currentSnapshot.iY + currentSnapshot.tDy))
+                        if (iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX + currentSnapshot.tDx, currentSnapshot.iY) && iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX, currentSnapshot.iY + currentSnapshot.tDy))
                         {
                             newSnapshot = new JumpSnapshot();
                             newSnapshot.iX = currentSnapshot.iX + currentSnapshot.tDx;
@@ -844,7 +844,7 @@ namespace EpPathFinding.cs
                 }
 
                 // keep going
-                if (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY) || iParam.SearchGrid.IsWalkableAt(iX, iY + tDy))
+                if (iParam.SearchGrid.IsWalkableAt(iX + tDx, iY) && iParam.SearchGrid.IsWalkableAt(iX, iY + tDy))
                 {
                     return jump(iParam, iX + tDx, iY + tDy, iX, iY);
                 }
