@@ -287,8 +287,6 @@ namespace EpPathFinding.cs
             public int iPy;
             public int tDx;
             public int tDy;
-            public GridPos jx;
-            public GridPos jy;
             public int stage;
             public JumpSnapshot()
             {
@@ -299,8 +297,6 @@ namespace EpPathFinding.cs
                 iPy = 0;
                 tDx = 0;
                 tDy = 0;
-                jx = null;
-                jy = null;
                 stage = 0;
             }
         }
@@ -338,8 +334,6 @@ namespace EpPathFinding.cs
 
                         currentSnapshot.tDx = currentSnapshot.iX - currentSnapshot.iPx;
                         currentSnapshot.tDy = currentSnapshot.iY - currentSnapshot.iPy;
-                        currentSnapshot.jx = null;
-                        currentSnapshot.jy = null;
                         if (iParam.DiagonalMovement == DiagonalMovement.Always || iParam.DiagonalMovement == DiagonalMovement.IfAtLeastOneWalkable)
                         {
                             // check for forced neighbors
@@ -522,9 +516,6 @@ namespace EpPathFinding.cs
                                 newSnapshot.stage = 0;
                                 stack.Push(newSnapshot);
                                 continue;
-
-                                if (jump(iParam, iX, iY + 1, iX, iY) != null) return new GridPos(iX, iY);
-                                if (jump(iParam, iX, iY - 1, iX, iY) != null) return new GridPos(iX, iY);
                             }
                             else // tDy != 0
                             {
@@ -540,29 +531,12 @@ namespace EpPathFinding.cs
                                 stack.Push(newSnapshot);
                                 continue;
 
-                                if (jump(iParam, iX + 1, iY, iX, iY) != null) return new GridPos(iX, iY);
-                                if (jump(iParam, iX - 1, iY, iX, iY) != null) return new GridPos(iX, iY);
-                            }
-
-                            // keep going
-                            if (iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX + currentSnapshot.tDx, currentSnapshot.iY) || iParam.SearchGrid.IsWalkableAt(currentSnapshot.iX, currentSnapshot.iY + currentSnapshot.tDy))
-                            {
-                                newSnapshot = new JumpSnapshot();
-                                newSnapshot.iX = currentSnapshot.iX + currentSnapshot.tDx;
-                                newSnapshot.iY = currentSnapshot.iY + currentSnapshot.tDy;
-                                newSnapshot.iPx = currentSnapshot.iX;
-                                newSnapshot.iPy = currentSnapshot.iY;
-                                newSnapshot.stage = 0;
-                                stack.Push(newSnapshot);
-                                continue;
                             }
                         }
                         retVal = null;
                         break;
                     case 1:
-                        currentSnapshot.jx = retVal;
-
-                        if (currentSnapshot.jx != null)
+                        if (retVal != null)
                         {
                             retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
                             continue;
@@ -580,8 +554,7 @@ namespace EpPathFinding.cs
                         stack.Push(newSnapshot);
                         break;
                     case 2:
-                        currentSnapshot.jy = retVal;
-                        if (currentSnapshot.jy != null)
+                        if (retVal != null)
                         {
                             retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
                             continue;
@@ -614,9 +587,7 @@ namespace EpPathFinding.cs
                         retVal = null;
                         break;
                     case 3:
-                        currentSnapshot.jx = retVal;
-                        
-                        if (currentSnapshot.jx != null)
+                        if (retVal != null)
                         {
                             retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
                             continue;
@@ -634,8 +605,7 @@ namespace EpPathFinding.cs
                         stack.Push(newSnapshot);
                         break;
                     case 4:
-                        currentSnapshot.jy = retVal;
-                        if (currentSnapshot.jy != null)
+                        if (retVal != null)
                         {
                             retVal = new GridPos(currentSnapshot.iX, currentSnapshot.iY);
                             continue;
