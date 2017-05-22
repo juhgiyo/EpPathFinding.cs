@@ -100,7 +100,8 @@ namespace EpPathFindingDemo
              searchGrid = new StaticGrid(width, height);
             // searchGrid = new DynamicGrid();
             //searchGrid = new DynamicGridWPool(SingletonHolder<NodePool>.Instance);
-            jumpParam = new JumpPointParam(searchGrid, true, cbCrossCorners.Checked, cbCrossAdjacentPoint.Checked, HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
+
+             jumpParam = new JumpPointParam(searchGrid, true, Util.GetDiagonalMovement(cbCrossCorners.Checked, cbCrossAdjacentPoint.Checked), HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
             jumpParam.UseRecursive = cbUseRecursive.Checked;
             
         }
@@ -317,8 +318,7 @@ namespace EpPathFindingDemo
 
                 }
             }
-            jumpParam.CrossCorner = cbCrossCorners.Checked;
-            jumpParam.CrossAdjacentPoint = cbCrossAdjacentPoint.Checked;
+            jumpParam.DiagonalMovement = Util.GetDiagonalMovement(cbCrossCorners.Checked, cbCrossAdjacentPoint.Checked);
             jumpParam.UseRecursive = cbUseRecursive.Checked;
             jumpParam.Reset(startPos, endPos);
             List<GridPos> resultList = JumpPointFinder.FindPath(jumpParam);

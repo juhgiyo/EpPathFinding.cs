@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EpPathFinding.cs
 {
-    class Util
+    public class Util
     {
         public static DiagonalMovement GetDiagonalMovement(bool iCrossCorners, bool iCrossAdjacentPoint)
         {

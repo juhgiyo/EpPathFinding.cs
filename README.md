@@ -133,14 +133,14 @@ If `iAllowEndNodeUnWalkable` is false the FindPath will return the empty path if
 JumpPointParam jpParam = new JumpPointParam(searchGrid,false);   
 ```
 
-#### Cross Corner ####
+#### DiagonalMovement.IfAtLeastOneWalkable (Cross Corner) ####
 When instantiating the `JumpPointParam`, you may pass in additional parameter to make the search able to walk diagonally when one of the side is unwalkable grid:  
 ```
 Note that it automatically sets to true as a default when the parameter is not specified.
 ```
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true,true);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,true,DiagonalMovement.IfAtLeastOneWalkable);   
 ```
 
 
@@ -148,11 +148,11 @@ To make it unable to walk diagonally when one of the side is unwalkable and rath
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true,false);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,true,DiagonalMovement.OnlyWhenNoObstacles);   
 ```
 
 
-#### Cross Adjacent Point ####
+#### DiagonalMovement.Always (Cross Adjacent Point) ####
 When instantiating the `JumpPointParam`, you may pass in additional parameters to indicate specific strategies to use.  
 ```
 Note that this option will be ignored if the `Cross Corner` option is false.
@@ -161,15 +161,7 @@ In order to make search able to walk diagonally across corner of two diagonal un
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true,true,true);   
-```
-
-
-To make it unable to walk diagonally across two diagonal unwalkable corners: 
-
-
-```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true,true,false);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,true,DiagonalMovement.Always);   
 ```
 
 
