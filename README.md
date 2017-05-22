@@ -167,6 +167,7 @@ To make it unable to walk diagonally:
 
 
 ```c#
+// Special thanks to Nil Amar for the idea!
 JumpPointParam jpParam = new JumpPointParam(searchGrid,true,DiagonalMovement.Never);   
 ```
 
