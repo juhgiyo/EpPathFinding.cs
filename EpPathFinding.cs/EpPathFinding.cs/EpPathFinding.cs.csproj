@@ -58,7 +58,7 @@
     <Compile Include="PathFinder\NodePool.cs" />
     <Compile Include="PathFinder\ParamBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util.cs" />
+    <Compile Include="PathFinder\Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
