@@ -15,7 +15,7 @@ It comes along with a demo to show how the agorithm execute as similar to Xueqia
 Unity Integration Guide
 ------------
 
-Add `EpPathFinding.cs\PathFinder` folder to your `Unity Project's Assets` folder. Then within the script file, you want to use the `EpPathFinding.cs`, just add `using EpPathFinding.cs;` namespace at the top of the file, and use it as the guide below.
+Copy `EpPathFinding.cs\PathFinder` folder intto your `Unity Project's Assets` folder. Then within the script file, you want to use the `EpPathFinding.cs`, just add `using EpPathFinding.cs;` namespace at the top of the file, and use it as the guide below.
 
 
 (If you have a problem when compiling, please refer to [Unity Forum](http://forum.unity3d.com/threads/monodevelop-problems-with-default-parameters.67867/#post-898994)) 
@@ -23,7 +23,7 @@ Add `EpPathFinding.cs\PathFinder` folder to your `Unity Project's Assets` folder
 
 Also `EpPathFinding.cs` depends on [C5](https://github.com/sestoft/C5).
 
-You can simply copy the `C5.dll` in `UnityC5Dll` folder, to your `Unity Project's Assets` folder.
+Pre-compiled C5.dll for Unity is included in `EpPathFinding3D.cs\PathFinder\UnityC5` folder.
 
 (Please refer to [C5 on Unity3D](https://github.com/sestoft/C5#c5-on-unity3d), if you have any dependency issue with C5.)
 
