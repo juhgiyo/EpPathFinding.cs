@@ -23,6 +23,7 @@ Add `EpPathFinding.cs\PathFinder` folder to your `Unity Project's Assets` folder
 
 Also `EpPathFinding.cs` depends on [C5](https://github.com/sestoft/C5).
 
+You can simply copy the C5.dll in `UnityC5Dll` folder, to your `Unity Project's Assets` folder.
 
 (Please refer to [C5 on Unity3D](https://github.com/sestoft/C5#c5-on-unity3d), if you have any dependency issue with C5.)
 
