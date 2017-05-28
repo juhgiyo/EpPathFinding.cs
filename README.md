@@ -180,7 +180,7 @@ To use the `MANHATTAN` heuristic:
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true,true,true, Heuristic.MANHATTAN); 
+JumpPointParam jpParam = new JumpPointParam(searchGrid,true, DiagonalMovement.Always, Heuristic.MANHATTAN); 
 ```
 
 
