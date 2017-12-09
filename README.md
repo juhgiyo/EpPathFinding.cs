@@ -119,19 +119,19 @@ Advanced Usage
 #### Find the path even the end node is unwalkable  ####
 When instantiating the `JumpPointParam`, you may pass in additional parameter to make the search able to find path even the end node is unwalkable grid:   
 ```
-Note that it automatically sets to true as a default when the parameter is not specified.
+Note that it automatically sets to ALLOW as a default when the parameter is not specified.
 ```
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true);
+JumpPointParam jpParam = new JumpPointParam(searchGrid,EndNodeUnWalkableTreatment.ALLOW);
 ```
 
 
-If `iAllowEndNodeUnWalkable` is false the FindPath will return the empty path if the end node is unwalkable: 
+If `iAllowEndNodeUnWalkable` is DISALLOW the FindPath will return the empty path if the end node is unwalkable: 
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,false);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,EndNodeUnWalkableTreatment.DISALLOW);   
 ```
 
 
@@ -141,7 +141,7 @@ In order to make search able to walk diagonally across corner of two diagonal un
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true,DiagonalMovement.Always);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,EndNodeUnWalkableTreatment.ALLOW,DiagonalMovement.Always);   
 ```
 
 
@@ -149,7 +149,7 @@ JumpPointParam jpParam = new JumpPointParam(searchGrid,true,DiagonalMovement.Alw
 When instantiating the `JumpPointParam`, to make the search able to walk diagonally when one of the side is unwalkable grid:  
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true,DiagonalMovement.IfAtLeastOneWalkable);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,EndNodeUnWalkableTreatment.ALLOW,DiagonalMovement.IfAtLeastOneWalkable);   
 ```
 
 
@@ -159,7 +159,7 @@ To make it unable to walk diagonally when one of the side is unwalkable and rath
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true,DiagonalMovement.OnlyWhenNoObstacles);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,EndNodeUnWalkableTreatment.ALLOW,DiagonalMovement.OnlyWhenNoObstacles);   
 ```
 
 #### DiagonalMovement.Never ####
@@ -169,7 +169,7 @@ To make it unable to walk diagonally:
 
 ```c#
 // Special thanks to Nil Amar for the idea!
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true,DiagonalMovement.Never);   
+JumpPointParam jpParam = new JumpPointParam(searchGrid,EndNodeUnWalkableTreatment.ALLOW,DiagonalMovement.Never);   
 ```
 
 
@@ -180,7 +180,7 @@ To use the `MANHATTAN` heuristic:
 
 
 ```c#
-JumpPointParam jpParam = new JumpPointParam(searchGrid,true, DiagonalMovement.Always, Heuristic.MANHATTAN); 
+JumpPointParam jpParam = new JumpPointParam(searchGrid,EndNodeUnWalkableTreatment.ALLOW, DiagonalMovement.Always, Heuristic.MANHATTAN); 
 ```
 
 
@@ -254,16 +254,16 @@ BaseGrid seachGrid = new PartialGridWPool(nodePool, new GridRect(1,3,15,30);
 Rest of the functionality like `SetWalkableAt`, `Reset`, etc. are same as `DynamicGridWPool`. 
 
 
-#### UseRecursive ####
-You may use recursive function or loop function to find the path. This can be simply done by setting UseRecursive flag in JumpPointParam:
+#### IterationType ####
+You may use recursive function or loop function to find the path. This can be simply done by setting IterationType flag in JumpPointParam:
 ```
-Note that the default is false, which uses loop function.
+Note that the default is IterationType.LOOP, which uses loop function.
 ```
 
 ```c#
 // To use recursive function
 JumpPointParam jpParam = new JumpPointParam(...);
-jpParam.UseRecursive = true;  
+jpParam.IterationType = IterationType.RECURSIVE;  
 ```
 
 
@@ -272,7 +272,7 @@ To change back to loop function
 
 ```c#
 // To change back to loop function 
-jpParam.UseRecursive = false; 
+jpParam.IterationType = IterationType.LOOP; 
 ```
 
 #### Extendability ####
