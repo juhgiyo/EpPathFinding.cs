@@ -160,7 +160,7 @@ namespace EpPathFinding.cs
                     if (iY > m_gridRect.maxY || m_notSet)
                         m_gridRect.maxY = iY;
                     m_nodes.Add(new GridPos(pos.x, pos.y), new Node(pos.x, pos.y, iWalkable));
-                    m_notSet = false;
+                    //m_notSet = false;
                 }
             }
             else

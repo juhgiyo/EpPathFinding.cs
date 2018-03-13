@@ -108,7 +108,8 @@ namespace EpPathFinding.cs
 
         private void setBoundingBox()
         {
-              foreach (KeyValuePair<GridPos, Node> pair in m_nodePool.Nodes)
+            m_notSet = true;
+            foreach (KeyValuePair<GridPos, Node> pair in m_nodePool.Nodes)
             {
                 if (pair.Key.x < m_gridRect.minX || m_notSet)
                     m_gridRect.minX = pair.Key.x;
@@ -137,7 +138,7 @@ namespace EpPathFinding.cs
                     m_gridRect.minY = iY;
                 if (iY > m_gridRect.maxY || m_notSet)
                     m_gridRect.maxY = iY;
-                m_notSet = false;
+                //m_notSet = false;
             }
             else
             {
