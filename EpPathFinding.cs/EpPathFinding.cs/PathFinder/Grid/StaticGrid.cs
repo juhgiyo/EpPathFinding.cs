@@ -38,6 +38,7 @@ An Interface for the StaticGrid Class.
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 namespace EpPathFinding.cs
 {
@@ -124,11 +125,13 @@ namespace EpPathFinding.cs
             return this.m_nodes[iX][iY];
         }
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool IsWalkableAt(int iX, int iY)
         {
             return isInside(iX, iY) && this.m_nodes[iX][iY].walkable;
         }
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected bool isInside(int iX, int iY)
         {
             return (iX >= 0 && iX < width) && (iY >= 0 && iY < height);
