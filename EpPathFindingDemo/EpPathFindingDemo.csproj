@@ -120,9 +120,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EpPathFinding.cs\EpPathFinding.cs\EpPathFinding.cs.csproj">
-      <Project>{4BC2B4B0-2A38-4274-98A2-37CEF5F03B42}</Project>
-      <Name>EpPathFinding.cs</Name>
+    <ProjectReference Include="..\EpPathFinding\EpPathFinding.csproj">
+      <Project>{4bc2b4b0-2a38-4274-98a2-37cef5f03b42}</Project>
+      <Name>EpPathFinding</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

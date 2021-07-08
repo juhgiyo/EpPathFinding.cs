@@ -1,9 +1,9 @@
-/*! 
-@file PartialGridWPool.cs
+﻿/*! 
+@file DynamicGridWPool.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 		<http://github.com/juhgiyo/eppathfinding.cs>
 @date July 16, 2013
-@brief PartialGrid with Pool Interface
+@brief DynamicGrid with Pool Interface
 @version 2.0
 
 @section LICENSE
@@ -32,23 +32,27 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-An Interface for the PartialGrid with Pool Class.
+An Interface for the DynamicGrid with Pool Class.
 
 */
 using System;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace EpPathFinding.cs
+
+namespace EpPathFinding
 {
-    public class PartialGridWPool : BaseGrid
+    public class DynamicGridWPool : BaseGrid
     {
-        private NodePool m_nodePool;
+         private bool m_notSet;
+         private NodePool m_nodePool;
 
         public override int width
         {
             get
             {
+                if (m_notSet)
+                    setBoundingBox();
                 return m_gridRect.maxX - m_gridRect.minX + 1;
             }
             protected set
@@ -61,6 +65,8 @@ namespace EpPathFinding.cs
         {
             get
             {
+                if (m_notSet)
+                    setBoundingBox();
                 return m_gridRect.maxY - m_gridRect.minY + 1;
             }
             protected set
@@ -69,34 +75,23 @@ namespace EpPathFinding.cs
             }
         }
 
-
-        public PartialGridWPool(NodePool iNodePool, GridRect iGridRect = null)
+        public DynamicGridWPool(NodePool iNodePool)
             : base()
         {
-            if (iGridRect == null)
-                m_gridRect = new GridRect();
-            else
-                m_gridRect = iGridRect;
+            m_gridRect = new GridRect();
+            m_gridRect.minX = 0;
+            m_gridRect.minY = 0;
+            m_gridRect.maxX = 0;
+            m_gridRect.maxY = 0;
+            m_notSet = true;
             m_nodePool = iNodePool;
         }
 
-        public PartialGridWPool(PartialGridWPool b)
+        public DynamicGridWPool(DynamicGridWPool b)
             : base(b)
         {
+            m_notSet = b.m_notSet;
             m_nodePool = b.m_nodePool;
-        }
-       
-        public void SetGridRect(GridRect iGridRect)
-        {
-            m_gridRect = iGridRect;
-        }
-
-
-        public bool IsInside(int iX, int iY)
-        {
-            if (iX < m_gridRect.minX || iX > m_gridRect.maxX || iY < m_gridRect.minY || iY > m_gridRect.maxY)
-                return false;
-            return true;
         }
 
         public override Node GetNodeAt(int iX, int iY)
@@ -111,32 +106,57 @@ namespace EpPathFinding.cs
             return IsWalkableAt(pos);
         }
 
-        public override bool SetWalkableAt(int iX, int iY, bool iWalkable)
+        private void setBoundingBox()
         {
-            if (!IsInside(iX,iY))
-                return false;
-            GridPos pos = new GridPos(iX, iY);
-            m_nodePool.SetNode(pos, iWalkable);
-            return true;
+            m_notSet = true;
+            foreach (KeyValuePair<GridPos, Node> pair in m_nodePool.Nodes)
+            {
+                if (pair.Key.x < m_gridRect.minX || m_notSet)
+                    m_gridRect.minX = pair.Key.x;
+                if (pair.Key.x > m_gridRect.maxX || m_notSet)
+                    m_gridRect.maxX = pair.Key.x;
+                if (pair.Key.y < m_gridRect.minY || m_notSet)
+                    m_gridRect.minY = pair.Key.y;
+                if (pair.Key.y > m_gridRect.maxY || m_notSet)
+                    m_gridRect.maxY = pair.Key.y;
+                m_notSet = false;
+            }
+            m_notSet = false;
         }
 
-        public bool IsInside(GridPos iPos)
+        public override bool SetWalkableAt(int iX, int iY, bool iWalkable)
         {
-            return IsInside(iPos.x, iPos.y);
+            GridPos pos = new GridPos(iX, iY);
+            m_nodePool.SetNode(pos, iWalkable);
+            if (iWalkable)
+            {
+                if (iX < m_gridRect.minX || m_notSet)
+                    m_gridRect.minX = iX;
+                if (iX > m_gridRect.maxX || m_notSet)
+                    m_gridRect.maxX = iX;
+                if (iY < m_gridRect.minY || m_notSet)
+                    m_gridRect.minY = iY;
+                if (iY > m_gridRect.maxY || m_notSet)
+                    m_gridRect.maxY = iY;
+                //m_notSet = false;
+            }
+            else
+            {
+                if (iX == m_gridRect.minX || iX == m_gridRect.maxX || iY == m_gridRect.minY || iY == m_gridRect.maxY)
+                    m_notSet = true;
+                
+            }
+            return true;
         }
 
         public override Node GetNodeAt(GridPos iPos)
         {
-            if (!IsInside(iPos))
-                return null;
             return m_nodePool.GetNode(iPos);
         }
 
         public override bool IsWalkableAt(GridPos iPos)
         {
-            if (!IsInside(iPos))
-                return false;
-            return m_nodePool.Nodes.ContainsKey(iPos);
+            return  m_nodePool.Nodes.ContainsKey(iPos);
         }
 
         public override bool SetWalkableAt(GridPos iPos, bool iWalkable)
@@ -144,37 +164,18 @@ namespace EpPathFinding.cs
             return SetWalkableAt(iPos.x, iPos.y, iWalkable);
         }
 
+
         public override void Reset()
         {
-            int rectCount=(m_gridRect.maxX-m_gridRect.minX) * (m_gridRect.maxY-m_gridRect.minY);
-            if (m_nodePool.Nodes.Count > rectCount)
+            foreach (KeyValuePair<GridPos, Node> keyValue in m_nodePool.Nodes)
             {
-                GridPos travPos = new GridPos(0, 0);
-                for (int xTrav = m_gridRect.minX; xTrav <= m_gridRect.maxX; xTrav++)
-                {
-                    travPos.x = xTrav;
-                    for (int yTrav = m_gridRect.minY; yTrav <= m_gridRect.maxY; yTrav++)
-                    {
-                        travPos.y = yTrav;
-                        Node curNode=m_nodePool.GetNode(travPos);
-                        if (curNode!=null)
-                            curNode.Reset();
-                    }
-                }
-            }
-            else
-            {
-                foreach (KeyValuePair<GridPos, Node> keyValue in m_nodePool.Nodes)
-                {
-                    keyValue.Value.Reset();
-                }
+                keyValue.Value.Reset();
             }
         }
 
-
         public override BaseGrid Clone()
         {
-            PartialGridWPool tNewGrid = new PartialGridWPool(m_nodePool,m_gridRect);
+            DynamicGridWPool tNewGrid = new DynamicGridWPool(m_nodePool);
             return tNewGrid;
         }
     }

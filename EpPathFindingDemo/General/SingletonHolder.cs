@@ -41,7 +41,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace EpPathFinding.cs
+namespace EpPathFinding
 {
     public class SingletonHolder<T> where T : new()
     {

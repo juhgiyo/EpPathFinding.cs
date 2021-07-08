@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EpPathFinding.cs
+namespace EpPathFinding
 {
     public delegate float HeuristicDelegate(int iDx, int iDy);
 

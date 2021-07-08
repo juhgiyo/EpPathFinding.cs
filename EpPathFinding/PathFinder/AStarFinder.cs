@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 
 
-namespace EpPathFinding.cs
+namespace EpPathFinding
 {
     public class AStarParam : ParamBase
     {

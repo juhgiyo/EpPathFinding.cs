@@ -42,7 +42,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace EpPathFinding.cs
+namespace EpPathFinding
 {
     enum BoxType { Start, End, Wall, Normal };
 

@@ -8,8 +8,8 @@
     <ProjectGuid>{4BC2B4B0-2A38-4274-98A2-37CEF5F03B42}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EpPathFinding.cs</RootNamespace>
-    <AssemblyName>EpPathFinding.cs</AssemblyName>
+    <RootNamespace>EpPathFinding</RootNamespace>
+    <AssemblyName>EpPathFinding</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

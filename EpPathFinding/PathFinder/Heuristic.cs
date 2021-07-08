@@ -39,7 +39,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace EpPathFinding.cs
+namespace EpPathFinding
 {
     public enum HeuristicMode
     {
