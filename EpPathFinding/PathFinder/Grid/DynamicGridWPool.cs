@@ -35,17 +35,15 @@ THE SOFTWARE.
 An Interface for the DynamicGrid with Pool Class.
 
 */
-using System;
 using System.Collections.Generic;
-using System.Collections;
 
 
 namespace EpPathFinding
 {
     public class DynamicGridWPool : BaseGrid
     {
-         private bool m_notSet;
-         private NodePool m_nodePool;
+        private bool m_notSet;
+        private NodePool m_nodePool;
 
         public override int width
         {
@@ -144,7 +142,7 @@ namespace EpPathFinding
             {
                 if (iX == m_gridRect.minX || iX == m_gridRect.maxX || iY == m_gridRect.minY || iY == m_gridRect.maxY)
                     m_notSet = true;
-                
+
             }
             return true;
         }
@@ -156,7 +154,7 @@ namespace EpPathFinding
 
         public override bool IsWalkableAt(GridPos iPos)
         {
-            return  m_nodePool.Nodes.ContainsKey(iPos);
+            return m_nodePool.Nodes.ContainsKey(iPos);
         }
 
         public override bool SetWalkableAt(GridPos iPos, bool iWalkable)

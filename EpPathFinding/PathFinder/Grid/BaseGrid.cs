@@ -37,7 +37,6 @@ An Interface for the BaseGrid Class.
 */
 using System;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace EpPathFinding
 {
@@ -90,7 +89,7 @@ namespace EpPathFinding
             this.startToCurNodeLen = 0;
             // this must be initialized as null to verify that its value never initialized
             // 0 is not good candidate!!
-            this.heuristicCurNodeToEndLen = null ;
+            this.heuristicCurNodeToEndLen = null;
             this.isOpened = false;
             this.isClosed = false;
             this.parent = null;
@@ -105,7 +104,7 @@ namespace EpPathFinding
                 return 0;
             return -1;
         }
- 
+
 
         public static List<GridPos> Backtrace(Node iNode)
         {

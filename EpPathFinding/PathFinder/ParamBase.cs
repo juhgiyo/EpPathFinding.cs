@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace EpPathFinding
+﻿namespace EpPathFinding
 {
     public delegate float HeuristicDelegate(int iDx, int iDy);
 
@@ -35,7 +30,7 @@ namespace EpPathFinding
             DiagonalMovement = param.DiagonalMovement;
             m_startNode = param.m_startNode;
             m_endNode = param.m_endNode;
-            
+
         }
 
         internal abstract void _reset(GridPos iStartPos, GridPos iEndPos, BaseGrid iSearchGrid = null);

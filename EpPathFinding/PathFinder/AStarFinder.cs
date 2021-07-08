@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 #endif
 using C5;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 
@@ -22,7 +21,7 @@ namespace EpPathFinding
         public float Weight;
 
         public AStarParam(BaseGrid iGrid, GridPos iStartPos, GridPos iEndPos, float iweight, DiagonalMovement iDiagonalMovement = DiagonalMovement.Always, HeuristicMode iMode = HeuristicMode.EUCLIDEAN)
-            : base(iGrid,iStartPos,iEndPos, iDiagonalMovement,iMode)
+            : base(iGrid, iStartPos, iEndPos, iDiagonalMovement, iMode)
         {
             Weight = iweight;
         }

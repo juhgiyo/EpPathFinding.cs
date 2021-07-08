@@ -35,11 +35,6 @@ THE SOFTWARE.
 An Interface for the GridLine Class.
 
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace EpPathFinding
@@ -48,7 +43,7 @@ namespace EpPathFinding
     {
         public int fromX, fromY, toX, toY;
         public Pen pen;
-        
+
         public GridLine(GridBox iFrom, GridBox iTo)
         {
             this.fromX = iFrom.boxRec.X + 9;
@@ -57,14 +52,14 @@ namespace EpPathFinding
             this.toY = iTo.boxRec.Y + 9;
             pen = new Pen(Color.Yellow);
             pen.Width = 2;
-            
-            
+
+
         }
 
         public void drawLine(Graphics iPaper)
         {
             iPaper.DrawLine(pen, fromX, fromY, toX, toY);
-            
+
         }
 
 

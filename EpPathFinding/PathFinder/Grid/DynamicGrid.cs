@@ -35,9 +35,7 @@ THE SOFTWARE.
 An Interface for the DynamicGrid Class.
 
 */
-using System;
 using System.Collections.Generic;
-using System.Collections;
 
 
 namespace EpPathFinding
@@ -146,7 +144,7 @@ namespace EpPathFinding
             {
                 if (m_nodes.ContainsKey(pos))
                 {
-                   // this.m_nodes[pos].walkable = iWalkable;
+                    // this.m_nodes[pos].walkable = iWalkable;
                     return true;
                 }
                 else

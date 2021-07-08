@@ -36,23 +36,19 @@ An Interface for the GridBox Class.
 
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace EpPathFinding
 {
     enum BoxType { Start, End, Wall, Normal };
 
-    class GridBox:IDisposable
+    class GridBox : IDisposable
     {
         public int x, y, width, height;
         public SolidBrush brush;
         public Rectangle boxRec;
         public BoxType boxType;
-        public GridBox(int iX, int iY,BoxType iType)
+        public GridBox(int iX, int iY, BoxType iType)
         {
             this.x = iX;
             this.y = iY;
@@ -71,14 +67,14 @@ namespace EpPathFinding
                 case BoxType.Wall:
                     brush = new SolidBrush(Color.Gray);
                     break;
-            
+
             }
             width = 18;
             height = 18;
             boxRec = new Rectangle(x, y, width, height);
         }
 
-        public void DrawBox(Graphics iPaper,BoxType iType)
+        public void DrawBox(Graphics iPaper, BoxType iType)
         {
             if (iType == boxType)
             {
@@ -88,7 +84,7 @@ namespace EpPathFinding
             }
         }
 
-        
+
         public void SwitchBox()
         {
             switch (this.boxType)
@@ -113,8 +109,8 @@ namespace EpPathFinding
         {
             if (this.brush != null)
                 this.brush.Dispose();
-           this.brush = new SolidBrush(Color.WhiteSmoke);
-           this.boxType = BoxType.Normal;
+            this.brush = new SolidBrush(Color.WhiteSmoke);
+            this.boxType = BoxType.Normal;
         }
 
         public void SetStartBox()
@@ -136,7 +132,7 @@ namespace EpPathFinding
 
         public void Dispose()
         {
-            if(this.brush!=null)
+            if (this.brush != null)
                 this.brush.Dispose();
 
         }

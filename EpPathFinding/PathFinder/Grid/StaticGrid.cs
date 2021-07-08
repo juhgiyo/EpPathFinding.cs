@@ -35,9 +35,6 @@ THE SOFTWARE.
 An Interface for the StaticGrid Class.
 
 */
-using System;
-using System.Collections.Generic;
-using System.Collections;
 
 namespace EpPathFinding
 {
@@ -49,13 +46,13 @@ namespace EpPathFinding
 
         private Node[][] m_nodes;
 
-        public StaticGrid(int iWidth, int iHeight, bool[][] iMatrix = null):base()
+        public StaticGrid(int iWidth, int iHeight, bool[][] iMatrix = null) : base()
         {
             width = iWidth;
             height = iHeight;
             m_gridRect.minX = 0;
             m_gridRect.minY = 0;
-            m_gridRect.maxX = iWidth-1;
+            m_gridRect.maxX = iWidth - 1;
             m_gridRect.maxY = iHeight - 1;
             this.m_nodes = buildNodes(iWidth, iHeight, iMatrix);
         }
@@ -69,7 +66,7 @@ namespace EpPathFinding
                 tMatrix[widthTrav] = new bool[b.height];
                 for (int heightTrav = 0; heightTrav < b.height; heightTrav++)
                 {
-                    if(b.IsWalkableAt(widthTrav,heightTrav))
+                    if (b.IsWalkableAt(widthTrav, heightTrav))
                         tMatrix[widthTrav][heightTrav] = true;
                     else
                         tMatrix[widthTrav][heightTrav] = false;
@@ -77,7 +74,7 @@ namespace EpPathFinding
             }
             this.m_nodes = buildNodes(b.width, b.height, tMatrix);
         }
-       
+
         private Node[][] buildNodes(int iWidth, int iHeight, bool[][] iMatrix)
         {
 

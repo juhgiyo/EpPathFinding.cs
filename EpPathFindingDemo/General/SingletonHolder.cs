@@ -35,11 +35,6 @@ THE SOFTWARE.
 An Interface for the SingletonHolder Class.
 
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
 
 namespace EpPathFinding
 {

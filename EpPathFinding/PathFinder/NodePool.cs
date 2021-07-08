@@ -35,9 +35,7 @@ THE SOFTWARE.
 An Interface for the NodePool Class.
 
 */
-using System;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace EpPathFinding
 {

@@ -35,16 +35,11 @@ THE SOFTWARE.
 An Interface for the ResultBox Class.
 
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace EpPathFinding
 {
-    enum ResultBoxType { Opened,Closed };
+    enum ResultBoxType { Opened, Closed };
     class ResultBox
     {
         public int x, y, width, height;
@@ -64,8 +59,8 @@ namespace EpPathFinding
                 case ResultBoxType.Closed:
                     brush = new SolidBrush(Color.LightGreen);
                     break;
-              
-            
+
+
             }
             width = 18;
             height = 18;
@@ -77,13 +72,13 @@ namespace EpPathFinding
             boxRec.X = x;
             boxRec.Y = y;
             iPaper.FillRectangle(brush, boxRec);
-         
+
         }
 
 
         public void Dispose()
         {
-            if(this.brush!=null)
+            if (this.brush != null)
                 this.brush.Dispose();
 
         }

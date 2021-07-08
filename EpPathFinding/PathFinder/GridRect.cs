@@ -35,9 +35,6 @@ THE SOFTWARE.
 An Interface for the GridRect Struct.
 
 */
-using System;
-using System.Collections.Generic;
-using System.Collections;
 
 namespace EpPathFinding
 {

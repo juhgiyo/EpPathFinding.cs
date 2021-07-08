@@ -35,16 +35,11 @@ THE SOFTWARE.
 An Interface for the SearchGridForm Class.
 
 */
+using EpPathFinding;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using EpPathFinding;
 
 namespace EpPathFindingDemo
 {
@@ -72,8 +67,8 @@ namespace EpPathFindingDemo
             this.DoubleBuffered = true;
 
             m_resultBox = new List<ResultBox>();
-            this.Width = (width+1) * 20;
-            this.Height = (height+1) * 20 +100;
+            this.Width = (width + 1) * 20;
+            this.Height = (height + 1) * 20 + 100;
             this.MaximumSize = new Size(this.Width, this.Height);
             this.MaximizeBox = false;
 
@@ -84,10 +79,10 @@ namespace EpPathFindingDemo
                 m_rectangles[widthTrav] = new GridBox[height];
                 for (int heightTrav = 0; heightTrav < height; heightTrav++)
                 {
-                    if(widthTrav==(width/3) && heightTrav==(height/2))
+                    if (widthTrav == (width / 3) && heightTrav == (height / 2))
                         m_rectangles[widthTrav][heightTrav] = new GridBox(widthTrav * 20, heightTrav * 20 + 50, BoxType.Start);
                     else if (widthTrav == 41 && heightTrav == (height / 2))
-                        m_rectangles[widthTrav][heightTrav] = new GridBox(widthTrav * 20 , heightTrav * 20 + 50, BoxType.End);
+                        m_rectangles[widthTrav][heightTrav] = new GridBox(widthTrav * 20, heightTrav * 20 + 50, BoxType.End);
                     else
                         m_rectangles[widthTrav][heightTrav] = new GridBox(widthTrav * 20, heightTrav * 20 + 50, BoxType.Normal);
 
@@ -102,11 +97,11 @@ namespace EpPathFindingDemo
 
             m_resultLine = new List<GridLine>();
 
-             searchGrid = new StaticGrid(width, height);
+            searchGrid = new StaticGrid(width, height);
             // searchGrid = new DynamicGrid();
             //searchGrid = new DynamicGridWPool(SingletonHolder<NodePool>.Instance);
 
-            jumpParam = new JumpPointParam(searchGrid, EndNodeUnWalkableTreatment.ALLOW,(DiagonalMovement)cbbJumpType.SelectedIndex, HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
+            jumpParam = new JumpPointParam(searchGrid, EndNodeUnWalkableTreatment.ALLOW, (DiagonalMovement)cbbJumpType.SelectedIndex, HeuristicMode.EUCLIDEAN);//new JumpPointParam(searchGrid, startPos, endPos, cbCrossCorners.Checked, HeuristicMode.EUCLIDEANSQR);
             jumpParam.CurIterationType = cbUseRecursive.Checked ? IterationType.RECURSIVE : IterationType.LOOP;
         }
 
@@ -114,27 +109,27 @@ namespace EpPathFindingDemo
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            
+
             paper = e.Graphics;
             //Draw
-            
+
             for (int widthTrav = 0; widthTrav < width; widthTrav++)
             {
                 for (int heightTrav = 0; heightTrav < height; heightTrav++)
                 {
-                    m_rectangles[widthTrav][heightTrav].DrawBox(paper,BoxType.Normal);
+                    m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Normal);
                 }
             }
-            
 
-            
+
+
             for (int resultTrav = 0; resultTrav < m_resultBox.Count; resultTrav++)
             {
                 m_resultBox[resultTrav].drawBox(paper);
             }
-            
 
-            
+
+
             for (int widthTrav = 0; widthTrav < width; widthTrav++)
             {
                 for (int heightTrav = 0; heightTrav < height; heightTrav++)
@@ -144,7 +139,7 @@ namespace EpPathFindingDemo
                     m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Wall);
                 }
             }
-             
+
             for (int resultTrav = 0; resultTrav < m_resultLine.Count; resultTrav++)
             {
 
@@ -191,7 +186,7 @@ namespace EpPathFindingDemo
 
                         }
                     }
-                    
+
                     return;
                 }
                 else
@@ -233,7 +228,7 @@ namespace EpPathFindingDemo
                                             this.Invalidate();
                                             break;
                                     }
-                                    
+
 
                                 }
                             }
@@ -242,9 +237,9 @@ namespace EpPathFindingDemo
                         }
                     }
                 }
-              
+
             }
-            
+
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -257,26 +252,26 @@ namespace EpPathFindingDemo
                     {
                         if (m_rectangles[widthTrav][heightTrav].boxRec.IntersectsWith(new Rectangle(e.Location, new Size(1, 1))))
                         {
-                            m_lastBoxType=m_rectangles[widthTrav][heightTrav].boxType;
+                            m_lastBoxType = m_rectangles[widthTrav][heightTrav].boxType;
                             m_lastBoxSelect = m_rectangles[widthTrav][heightTrav];
-                            switch(m_lastBoxType)
+                            switch (m_lastBoxType)
                             {
                                 case BoxType.Normal:
                                 case BoxType.Wall:
-                                m_rectangles[widthTrav][heightTrav].SwitchBox();
-                                this.Invalidate();
-                                break;
+                                    m_rectangles[widthTrav][heightTrav].SwitchBox();
+                                    this.Invalidate();
+                                    break;
                                 case BoxType.Start:
                                 case BoxType.End:
-                                   
-                                break;
+
+                                    break;
                             }
                         }
 
 
                     }
                 }
-                
+
             }
         }
 
@@ -309,15 +304,15 @@ namespace EpPathFindingDemo
                     {
                         searchGrid.SetWalkableAt(new GridPos(widthTrav, heightTrav), false);
                     }
-                    if(m_rectangles[widthTrav][heightTrav].boxType==BoxType.Start)
+                    if (m_rectangles[widthTrav][heightTrav].boxType == BoxType.Start)
                     {
-                        startPos.x=widthTrav;
-                        startPos.y=heightTrav;
+                        startPos.x = widthTrav;
+                        startPos.y = heightTrav;
                     }
-                    if(m_rectangles[widthTrav][heightTrav].boxType==BoxType.End)
+                    if (m_rectangles[widthTrav][heightTrav].boxType == BoxType.End)
                     {
-                        endPos.x=widthTrav;
-                        endPos.y=heightTrav;
+                        endPos.x = widthTrav;
+                        endPos.y = heightTrav;
                     }
 
                 }
@@ -326,16 +321,16 @@ namespace EpPathFindingDemo
             jumpParam.CurIterationType = cbUseRecursive.Checked ? IterationType.RECURSIVE : IterationType.LOOP;
             jumpParam.Reset(startPos, endPos);
             List<GridPos> resultList = JumpPointFinder.FindPath(jumpParam);
-            
-            for (int resultTrav = 0; resultTrav < resultList.Count-1; resultTrav++)
+
+            for (int resultTrav = 0; resultTrav < resultList.Count - 1; resultTrav++)
             {
-                m_resultLine.Add(new GridLine(m_rectangles[resultList[resultTrav].x][resultList[resultTrav].y],m_rectangles[resultList[resultTrav+1].x][resultList[resultTrav+1].y]));
+                m_resultLine.Add(new GridLine(m_rectangles[resultList[resultTrav].x][resultList[resultTrav].y], m_rectangles[resultList[resultTrav + 1].x][resultList[resultTrav + 1].y]));
             }
             for (int widthTrav = 0; widthTrav < jumpParam.SearchGrid.width; widthTrav++)
             {
                 for (int heightTrav = 0; heightTrav < jumpParam.SearchGrid.height; heightTrav++)
                 {
-                    if(jumpParam.SearchGrid.GetNodeAt(widthTrav, heightTrav)==null)
+                    if (jumpParam.SearchGrid.GetNodeAt(widthTrav, heightTrav) == null)
                         continue;
                     if (jumpParam.SearchGrid.GetNodeAt(widthTrav, heightTrav).isOpened)
                     {
@@ -389,7 +384,7 @@ namespace EpPathFindingDemo
             {
                 for (int heightTrav = 0; heightTrav < height; heightTrav++)
                 {
-                   
+
                     switch (m_rectangles[widthTrav][heightTrav].boxType)
                     {
                         case BoxType.Normal:
@@ -400,7 +395,7 @@ namespace EpPathFindingDemo
                             m_rectangles[widthTrav][heightTrav].SetNormalBox();
                             break;
                     }
-                   
+
 
 
                 }

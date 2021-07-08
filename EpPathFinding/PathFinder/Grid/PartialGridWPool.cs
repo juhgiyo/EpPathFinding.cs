@@ -35,9 +35,7 @@ THE SOFTWARE.
 An Interface for the PartialGrid with Pool Class.
 
 */
-using System;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace EpPathFinding
 {
@@ -85,7 +83,7 @@ namespace EpPathFinding
         {
             m_nodePool = b.m_nodePool;
         }
-       
+
         public void SetGridRect(GridRect iGridRect)
         {
             m_gridRect = iGridRect;
@@ -113,7 +111,7 @@ namespace EpPathFinding
 
         public override bool SetWalkableAt(int iX, int iY, bool iWalkable)
         {
-            if (!IsInside(iX,iY))
+            if (!IsInside(iX, iY))
                 return false;
             GridPos pos = new GridPos(iX, iY);
             m_nodePool.SetNode(pos, iWalkable);
@@ -146,7 +144,7 @@ namespace EpPathFinding
 
         public override void Reset()
         {
-            int rectCount=(m_gridRect.maxX-m_gridRect.minX) * (m_gridRect.maxY-m_gridRect.minY);
+            int rectCount = (m_gridRect.maxX - m_gridRect.minX) * (m_gridRect.maxY - m_gridRect.minY);
             if (m_nodePool.Nodes.Count > rectCount)
             {
                 GridPos travPos = new GridPos(0, 0);
@@ -156,8 +154,8 @@ namespace EpPathFinding
                     for (int yTrav = m_gridRect.minY; yTrav <= m_gridRect.maxY; yTrav++)
                     {
                         travPos.y = yTrav;
-                        Node curNode=m_nodePool.GetNode(travPos);
-                        if (curNode!=null)
+                        Node curNode = m_nodePool.GetNode(travPos);
+                        if (curNode != null)
                             curNode.Reset();
                     }
                 }
@@ -174,7 +172,7 @@ namespace EpPathFinding
 
         public override BaseGrid Clone()
         {
-            PartialGridWPool tNewGrid = new PartialGridWPool(m_nodePool,m_gridRect);
+            PartialGridWPool tNewGrid = new PartialGridWPool(m_nodePool, m_gridRect);
             return tNewGrid;
         }
     }
